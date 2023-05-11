@@ -1,0 +1,38 @@
+# Configured with the help of https://viggy28.dev/article/cloudrun-cicd/
+
+stages:
+  - deploy
+
+deploy_test:
+  image: google/cloud-sdk:latest
+  stage: deploy
+
+  script:
+    - echo "====== Deploy to test server ======"
+    # Activate gloud service account with input credentials
+    - echo $CLOUDRUN_CICD_SA_KEY_TEST > ${HOME}/service_key.json
+    - gcloud auth activate-service-account --key-file ${HOME}/service_key.json
+    - gcloud config set project paintrack-test
+    - gcloud builds submit --tag gcr.io/paintrack-test/paintrack-server
+    - gcloud run deploy paintrack-server --image gcr.io/paintrack-test/paintrack-server:latest --platform managed --region us-central1 --allow-unauthenticated
+  environment:
+    name: test
+  only:
+  - test
+
+deploy_prod:
+  image: google/cloud-sdk:latest
+  stage: deploy
+
+  script:
+    - echo "====== Deploy to prod server ======"
+    # Activate gloud service account with input credentials
+    - echo $CLOUDRUN_CICD_SA_KEY_PROD > ${HOME}/service_key.json
+    - gcloud auth activate-service-account --key-file ${HOME}/service_key.json
+    - gcloud config set project pain-app-273717
+    - gcloud builds submit --tag gcr.io/pain-app-273717/paintrack-server
+    - gcloud run deploy paintrack-server --image gcr.io/pain-app-273717/paintrack-server:latest --platform managed --region us-central1 --allow-unauthenticated
+  environment:
+    name: prod
+  only:
+  - master

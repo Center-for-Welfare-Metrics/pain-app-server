@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "rootDir": ".",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "strict": false,
+    "baseUrl": ".",
+    "allowJs": true,
+    "paths": {
+      "@utils/*": ["./src/utils/*"],
+      "@models/*": ["./src/models/*"],
+      "@controllers/*": ["./src/controllers/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@middlewares/*": ["./src/routes/middlewares/*"],
+      "@generators/*": ["./src/generators/*"],
+      "@external-api/*": ["./src/external-api/*"],
+      "@api/*": ["./src/api/*"],
+      "@app-config/*": ["app-config/*"]
+    }
+  }
+}

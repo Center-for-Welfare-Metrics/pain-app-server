@@ -1,0 +1,7 @@
+@host = http://localhost:8080/
+@token = token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDIyYjA2ZmFiNTdmZTFkOGM4YjdmMDciLCJuYW1lIjoiSGVyaWtsZSIsImVtYWlsIjoiaGVyaWtsZS5tZXNxdWl0YUBnbWFpbC5jb20iLCJfX3YiOjAsInJvbGUiOiI2MDMwODY4OGExMGM4YTQ2MWMwOTc0MTQiLCJ1cGRhdGVkQXQiOiIyMDIxLTAyLTIwVDA3OjQwOjI1LjY3MVoiLCJpYXQiOjE2MTQ3NDY1MjAsImV4cCI6MTYxNDc4OTcyMH0.3sPM_MJv2gay1ZIlzyJpTUDUclCHrzJ3UobYpg_cy9g
+
+###
+###
+
+get {{host}}processograms/all
