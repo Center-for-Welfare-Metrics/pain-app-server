@@ -29,12 +29,6 @@ generateEndpoints(router, EpisodeModel, [
       middleware: verifyToken(),
     },
   },
-  // {
-  //   method: methods.GET_BY_ID,
-  //   config: {
-  //     populateFields: ["units", "patientId"],
-  //   },
-  // },
   {
     method: methods.DELETE_BY_ID,
     middleware: verifyToken(),
