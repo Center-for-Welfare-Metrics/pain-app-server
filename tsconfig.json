@@ -6,7 +6,7 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": false,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "allowJs": true,
     "paths": {
       "@utils/*": ["./src/utils/*"],
