@@ -19,6 +19,6 @@
       "@api/*": ["./src/api/*"],
       "@app-config/*": ["app-config/*"]
     },
-    "typeRoots": ["./typings"]
+    "typeRoots": ["types"]
   }
 }
