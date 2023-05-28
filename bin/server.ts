@@ -26,4 +26,4 @@ app.use(express.static(__dirname, { dotfiles: "allow" }));
 routes(app);
 
 const server = new http.Server(app);
-server.listen(process.env.PORT || 8080);
+server.listen(process.env.PORT);

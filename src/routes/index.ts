@@ -1,42 +1,8 @@
-import express, { Express } from "express";
-import userRouter from "@routes/user";
-import authRouter from "@routes/auth";
-import patientRouter from "@routes/patient";
-import productionSystemRouter from "@routes/zoo/production_system";
-import episodeRouter from "@routes/episode";
-import trackRouter from "@routes/track";
-import burdenTrackRouter from "@routes/zoo/burden-track";
-import segmentRouter from "@routes/segment";
-import burdenSegmentRouter from "@routes/zoo/burden-segment";
-import attributeRouter from "@routes/attribute";
-import issueRouter from "@routes/issue";
-import burdenRouter from "@routes/zoo/burden";
-import publicRouter from "@routes/zoo/public";
-import harmRouter from "@routes/zoo/harm";
-import circumstanceRouter from "@routes/external/circumstance";
-import processogramRouter from "@routes/external/processogram";
-import referenceRouter from "@routes/external/others";
-import { handleError } from "@middlewares/error";
+import { Express } from "express";
+import authRouter from "@routes/services/auth";
 
 const routes = (app: Express) => {
   app.use("/auth", authRouter);
-  app.use("/users", userRouter);
-  app.use("/patients", patientRouter);
-  app.use("/production_system", productionSystemRouter);
-  app.use("/episodes", episodeRouter);
-  app.use("/tracks", trackRouter);
-  app.use("/burden-track", burdenTrackRouter);
-  app.use("/segments", segmentRouter);
-  app.use("/burden-segments", burdenSegmentRouter);
-  app.use("/attributes", attributeRouter);
-  app.use("/issues", issueRouter);
-  app.use("/burdens", burdenRouter);
-  app.use("/public", publicRouter);
-  app.use("/harm", harmRouter);
-  app.use("/circumstances", circumstanceRouter);
-  app.use("/processograms", processogramRouter);
-  app.use("/reference", referenceRouter);
-  app.use("*", handleError);
 };
 
 export default routes;
