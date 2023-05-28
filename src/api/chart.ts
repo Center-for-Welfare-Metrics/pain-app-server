@@ -1,7 +1,7 @@
 import RunPop from "@api/stagepop";
 
-import { ProductionSystemModel } from "@models/zoo/production-system";
-import { ChartModel } from "@models/zoo/chart";
+// import { ProductionSystemModel } from "@models/zoo/production-system";
+// import { ChartModel } from "@models/zoo/chart";
 
 const extract_harm_data_step_one = (harms) => {
   let harms_ = [];
@@ -139,34 +139,32 @@ const extract_harm_data_step_two = async (harms_) => {
 };
 
 const run = async (production_system_id, callback = (chart) => {}) => {
-  ProductionSystemModel.findById(production_system_id)
-    .populate({
-      path: "burdens",
-      populate: {
-        path: "color",
-      },
-    })
-    .then((production_system) => {
-      console.log(production_system_id);
-      console.log(production_system);
-      if (production_system) {
-        let harms = production_system.burdens;
-
-        let harms_ = extract_harm_data_step_one(harms);
-
-        extract_harm_data_step_two(harms_).then((translated) => {
-          ChartModel.findOneAndUpdate(
-            { productionSystemId: production_system_id },
-            { plotInfo: translated },
-            { upsert: true, new: true }
-          )
-            .populate("plotInfo.harmType")
-            .then((chart) => {
-              callback(chart);
-            });
-        });
-      }
-    });
+  // ProductionSystemModel.findById(production_system_id)
+  //   .populate({
+  //     path: "burdens",
+  //     populate: {
+  //       path: "color",
+  //     },
+  //   })
+  //   .then((production_system) => {
+  //     console.log(production_system_id);
+  //     console.log(production_system);
+  //     if (production_system) {
+  //       let harms = production_system.burdens;
+  //       let harms_ = extract_harm_data_step_one(harms);
+  //       extract_harm_data_step_two(harms_).then((translated) => {
+  //         ChartModel.findOneAndUpdate(
+  //           { productionSystemId: production_system_id },
+  //           { plotInfo: translated },
+  //           { upsert: true, new: true }
+  //         )
+  //           .populate("plotInfo.harmType")
+  //           .then((chart) => {
+  //             callback(chart);
+  //           });
+  //       });
+  //     }
+  //   });
 };
 
 export default run;

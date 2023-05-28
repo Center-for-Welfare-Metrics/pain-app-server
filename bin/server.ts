@@ -16,8 +16,7 @@ database();
 middlewaresAppConfig(app);
 
 app.get("/", (_request: Request, response: Response) => {
-  const target = "Passando cara número 2";
-  response.send(`Hello ${target}!`);
+  response.send(`Hello Word! HEHEHEHE`);
 });
 
 app.use(express.static(__dirname, { dotfiles: "allow" }));
