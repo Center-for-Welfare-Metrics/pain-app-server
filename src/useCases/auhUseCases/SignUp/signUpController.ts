@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { SignUpUseCase } from "./signUpUseCase";
 import { body } from "express-validator";
+import { VerifyIfEmailExists } from "src/implementations/mongoose/auth";
 
 type SignUpBody = {
   email: string;
@@ -27,8 +28,15 @@ export const SignUpController = async (
   }
 };
 
-export const SignUpValidator = [
-  body("email").isEmail(),
+export const SignUpValidator = () => [
+  body("email")
+    .isEmail()
+    .custom(async (email) => {
+      const user = await VerifyIfEmailExists(email);
+      if (user) {
+        throw new Error("Email already in use");
+      }
+    }),
   body("name").isString(),
   body("password").isString(),
   body("terms").isBoolean(),

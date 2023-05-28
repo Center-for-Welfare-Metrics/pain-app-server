@@ -11,25 +11,19 @@ type SignUpUseCase = {
 export const SignUpUseCase = async (params: SignUpUseCase) => {
   const { email, name, password } = params;
 
-  const emailExists = await VerifyIfEmailExists(email);
+  const passwordHashed = hashPassword(password);
 
-  if (!emailExists) {
-    const passwordHashed = hashPassword(password);
+  const newUser = await SignUp({
+    email,
+    name,
+    password: passwordHashed,
+  });
 
-    const newUser = await SignUp({
-      email,
-      name,
-      password: passwordHashed,
-    });
-
-    return {
-      user: newUser,
-      token: generateJwt({
-        email: newUser.email,
-        name: newUser.name,
-      }),
-    };
-  }
-
-  throw new Error("Email already exists");
+  return {
+    user: newUser,
+    token: generateJwt({
+      email: newUser.email,
+      name: newUser.name,
+    }),
+  };
 };

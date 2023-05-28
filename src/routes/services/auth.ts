@@ -1,3 +1,4 @@
+import { validate } from "@utils/validate";
 import { Router } from "express";
 import {
   SignUpController,
@@ -6,6 +7,6 @@ import {
 
 const router = Router();
 
-router.post("/register", SignUpValidator, SignUpController);
+router.post("/register", SignUpValidator(), validate, SignUpController);
 
 export default router;
