@@ -18,7 +18,6 @@
       "@external-api/*": ["./src/external-api/*"],
       "@api/*": ["./src/api/*"],
       "@app-config/*": ["app-config/*"]
-    },
-    "typeRoots": ["types"]
+    }
   }
 }

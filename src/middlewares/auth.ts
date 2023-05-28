@@ -13,7 +13,7 @@ export const useAuth = (request: Request, response: Response) => {
     const user = verifyJwt(token);
     const { email, name } = user as any;
 
-    request.user = {
+    request["user"] = {
       email,
       name,
     };
