@@ -1,7 +1,7 @@
-import { GetMe } from "src/implementations/mongoose/auth";
+import { GetUserByEmail } from "src/implementations/mongoose/auth";
 
 export const GetMeUseCase = async (email: string) => {
-  const me = GetMe(email);
+  const me = GetUserByEmail(email);
 
   return me;
 };

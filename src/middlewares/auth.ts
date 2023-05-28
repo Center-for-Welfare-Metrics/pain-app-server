@@ -8,11 +8,9 @@ export const useAuth = (request: Request, response: Response) => {
     return response.status(401).json({ message: "Token not provided" });
   }
 
-  const [, token] = authHeader.split(" ");
-
   try {
+    const [, token] = authHeader.split(" ");
     const user = verifyJwt(token);
-    console.log(user);
     const { email, name } = user as any;
 
     request.user = {

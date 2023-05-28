@@ -51,7 +51,7 @@ export const VerifyIfEmailExists = async (email: string) => {
   return false;
 };
 
-export const GetMe = async (email: string) => {
+export const GetUserByEmail = async (email: string) => {
   const user = await UserModel.findOne({ email });
 
   if (user) {
