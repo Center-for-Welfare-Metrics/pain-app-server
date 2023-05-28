@@ -10,3 +10,5 @@ export const generateJwt = (content: JwtContent) =>
 
 export const verifyJwt = (token: string) =>
   jwt.verify(token, process.env.APP_SECRET);
+
+export const decodeJwt = (token: string) => jwt.decode(token, { json: true });

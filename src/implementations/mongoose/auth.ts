@@ -29,32 +29,34 @@ type SignInParams = {
 export const SignIn = async (params: SignInParams) => {
   const { email, password } = params;
 
-  try {
-    const user = await UserModel.findOne({ email });
-    if (!user) {
-      throw new Error();
+  const user = await UserModel.findOne({ email });
+  if (!user) {
+    throw new Error();
+  } else {
+    if (user.password === password) {
+      return user;
     } else {
-      if (user.password === password) {
-        return user;
-      } else {
-        throw new Error();
-      }
+      throw new Error();
     }
-  } catch (error) {
-    throw error;
   }
 };
 
 export const VerifyIfEmailExists = async (email: string) => {
-  try {
-    const user = await UserModel.exists({ email });
+  const user = await UserModel.exists({ email });
 
-    if (user) {
-      return true;
-    }
-
-    return false;
-  } catch (error) {
-    throw error;
+  if (user) {
+    return true;
   }
+
+  return false;
+};
+
+export const GetMe = async (email: string) => {
+  const user = await UserModel.findOne({ email });
+
+  if (user) {
+    return user;
+  }
+
+  throw new Error();
 };
