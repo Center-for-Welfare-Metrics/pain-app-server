@@ -1,4 +1,4 @@
-import { GetEpisodeById } from "src/implementations/mongoose/episodes";
+import { GetEpisodeById } from "@implementations/mongoose/episodes";
 
 type GetEpisodeByIdUseCaseParams = {
   episode_id: string;

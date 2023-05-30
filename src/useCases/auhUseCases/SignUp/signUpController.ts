@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { SignUpUseCase } from "./signUpUseCase";
 import { body } from "express-validator";
-import { VerifyIfEmailExists } from "src/implementations/mongoose/auth";
+import { VerifyIfEmailExists } from "@implementations/mongoose/auth";
 
 type SignUpBody = {
   email: string;

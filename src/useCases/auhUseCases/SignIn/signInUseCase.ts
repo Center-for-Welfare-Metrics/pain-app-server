@@ -1,6 +1,6 @@
 import { checkPassword, hashPassword } from "@utils/encryption";
 import { generateJwt } from "@utils/jwt";
-import { GetUserByEmail } from "src/implementations/mongoose/auth";
+import { GetUserByEmail } from "@implementations/mongoose/auth";
 
 type SignInUseCase = {
   email: string;

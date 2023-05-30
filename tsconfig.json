@@ -9,15 +9,21 @@
     "baseUrl": "./",
     "allowJs": true,
     "paths": {
-      "@utils/*": ["./src/utils/*"],
-      "@models/*": ["./src/models/*"],
+      "@utils/*": ["src/utils/*"],
+      "@models/*": ["src/models/*"],
       "@controllers/*": ["./src/controllers/*"],
-      "@routes/*": ["./src/routes/*"],
-      "@middlewares/*": ["./src/routes/middlewares/*"],
-      "@generators/*": ["./src/generators/*"],
+      "@routes/*": ["src/routes/*"],
+      "@generators/*": ["src/generators/*"],
       "@external-api/*": ["./src/external-api/*"],
-      "@api/*": ["./src/api/*"],
-      "@app-config/*": ["app-config/*"]
+      "@api/*": ["src/api/*"],
+      "@app-config/*": ["app-config/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@useCases/*": ["src/useCases/*"],
+      "@implementations/*": ["src/implementations/*"]
     }
+  },
+  "exclude": ["node_modules", "dist", "tests"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   }
 }

@@ -1,10 +1,10 @@
 import express, { Request, Response } from "express";
 import http from "http";
-import middlewaresAppConfig from "app-config/middlewares";
-import routes from "@routes/index";
 import dotenv from "dotenv";
-import logging from "app-config/logging";
-import database from "app-config/database";
+import routes from "@routes/index";
+import middlewaresAppConfig from "@app-config/middlewares";
+import logging from "@app-config/logging";
+import database from "@app-config/database";
 
 const app = express();
 

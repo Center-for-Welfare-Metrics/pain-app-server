@@ -1,6 +1,6 @@
 import { hashPassword } from "@utils/encryption";
 import { generateJwt } from "@utils/jwt";
-import { SignUp, VerifyIfEmailExists } from "src/implementations/mongoose/auth";
+import { SignUp, VerifyIfEmailExists } from "@implementations/mongoose/auth";
 
 type SignUpUseCase = {
   email: string;

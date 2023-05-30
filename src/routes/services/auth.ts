@@ -1,15 +1,15 @@
 import { validate } from "@utils/validate";
 import { Router } from "express";
-import { useAuth } from "src/middlewares/auth";
+import { useAuth } from "@middlewares/auth";
 import {
   SignInController,
   SignInValidator,
-} from "src/useCases/auhUseCases/SignIn/signInController";
+} from "@useCases/auhUseCases/SignIn/signInController";
 import {
   SignUpController,
   SignUpValidator,
-} from "src/useCases/auhUseCases/SignUp/signUpController";
-import { GetMeController } from "src/useCases/auhUseCases/getMe/getMeController";
+} from "@useCases/auhUseCases/SignUp/signUpController";
+import { GetMeController } from "@useCases/auhUseCases/getMe/getMeController";
 
 const router = Router();
 
