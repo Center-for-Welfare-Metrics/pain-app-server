@@ -1,7 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { decodeJwt, verifyJwt } from "@utils/jwt";
 
-export const useAuth = (request: Request, response: Response) => {
+export const useAuth = (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
   const authHeader = request.headers.authorization;
 
   if (!authHeader) {
@@ -18,7 +22,7 @@ export const useAuth = (request: Request, response: Response) => {
       name,
     };
 
-    return response.status(200).json(user);
+    return next();
   } catch (error) {
     return response.status(401).json({ message: "Invalid token" });
   }

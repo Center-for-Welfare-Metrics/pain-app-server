@@ -10,7 +10,7 @@ type SignUpBody = {
 };
 
 export const SignUpController = async (
-  request: Request<any, SignUpBody>,
+  request: Request<any, any, SignUpBody>,
   response: Response
 ) => {
   const { email, name, password } = request.body;

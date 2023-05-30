@@ -8,7 +8,7 @@ type SignInBody = {
 };
 
 export const SignInController = async (
-  request: Request<any, SignInBody>,
+  request: Request<any, any, SignInBody>,
   response: Response
 ) => {
   const { email, password } = request.body;
