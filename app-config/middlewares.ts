@@ -10,7 +10,7 @@ const setupMiddlewares = (app) => {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(cors());
-  app.use(helmet);
+  app.use(helmet());
   // Log requests
   app.use(
     morgan("tiny", {
