@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 type JwtContent = {
   email: string;
   name: string;
+  _id: string;
 };
 
 export const generateJwt = (content: JwtContent) =>

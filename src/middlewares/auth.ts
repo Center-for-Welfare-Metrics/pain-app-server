@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { decodeJwt, verifyJwt } from "@utils/jwt";
+import { verifyJwt } from "@utils/jwt";
 
 export const useAuth = (
   request: Request,
@@ -15,11 +15,12 @@ export const useAuth = (
   try {
     const [, token] = authHeader.split(" ");
     const user = verifyJwt(token);
-    const { email, name } = user as any;
+    const { email, name, _id } = user as any;
 
     request["user"] = {
       email,
       name,
+      _id,
     };
 
     return next();

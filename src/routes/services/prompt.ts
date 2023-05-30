@@ -5,6 +5,11 @@ import {
   GenerateCompletionController,
   GenerateCompletionValidator,
 } from "@useCases/promptUseCases/generateCompletion/generateCompletionController";
+import {
+  SavePromptController,
+  SavePromptValidator,
+} from "@useCases/promptUseCases/savePrompt/savePromptController";
+import { GetPromptController } from "@useCases/promptUseCases/getPrompt/getPromptController";
 
 const router = Router();
 
@@ -16,5 +21,9 @@ router.post(
   validate,
   GenerateCompletionController
 );
+
+router.post("/", SavePromptValidator(), validate, SavePromptController);
+
+router.get("/", GetPromptController);
 
 export default router;

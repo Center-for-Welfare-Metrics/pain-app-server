@@ -23,6 +23,7 @@ export const SignInUseCase = async (params: SignInUseCase) => {
     token: generateJwt({
       email: newUser.email,
       name: newUser.name,
+      _id: newUser._id.toString(),
     }),
   };
 };
