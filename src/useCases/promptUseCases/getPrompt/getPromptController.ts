@@ -13,8 +13,8 @@ export const GetPromptController = async (
       user_id,
     });
 
-    response.send(201).json(prompt);
+    return response.status(200).json(prompt);
   } catch (error) {
-    response.status(500).json({ message: error.message });
+    return response.status(500).json({ message: error.message });
   }
 };
