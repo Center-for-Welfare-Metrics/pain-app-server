@@ -10,10 +10,11 @@ import {
   SavePromptValidator,
 } from "@useCases/promptUseCases/savePrompt/savePromptController";
 import { GetPromptController } from "@useCases/promptUseCases/getPrompt/getPromptController";
+import { useSuper } from "@middlewares/super";
 
 const router = Router();
 
-router.use(useAuth);
+router.use(useAuth, useSuper);
 
 router.post(
   "/generate",

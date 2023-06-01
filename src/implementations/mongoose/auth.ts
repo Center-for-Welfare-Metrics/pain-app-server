@@ -60,3 +60,13 @@ export const GetUserByEmail = async (email: string) => {
 
   throw new Error();
 };
+
+export const GetUserById = async (id: string) => {
+  const user = await UserModel.findById(id);
+
+  if (user) {
+    return user;
+  }
+
+  throw new Error();
+};
