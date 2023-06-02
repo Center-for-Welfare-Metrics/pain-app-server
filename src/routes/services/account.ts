@@ -9,7 +9,7 @@ import {
 
 const router = Router();
 
-router.use(useAuth, useSuper);
+router.use(useAuth);
 
 router.patch("/role", SetUserRoleValidator(), validate, SetUserRoleController);
 
