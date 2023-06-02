@@ -6,7 +6,7 @@ export const GetMeController = async (request: Request, response: Response) => {
 
   try {
     const me = await GetMeUseCase(user.email);
-    response.status(201).json(me);
+    response.status(200).json(me);
   } catch (error) {
     response.status(500).json({ message: error.message });
   }

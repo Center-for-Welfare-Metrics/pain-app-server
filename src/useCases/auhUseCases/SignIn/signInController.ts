@@ -19,7 +19,7 @@ export const SignInController = async (
       password,
     });
 
-    response.status(201).json(user);
+    response.status(200).json(user);
   } catch (error) {
     response.status(500).json({ message: error.message });
   }

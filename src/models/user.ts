@@ -6,6 +6,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   provider: { type: String, required: false },
   super: { type: Boolean, default: false },
+  role: { type: String, enum: ["doctor", "veterinarian"], required: false },
 });
 
 userSchema.methods.toJSON = function () {

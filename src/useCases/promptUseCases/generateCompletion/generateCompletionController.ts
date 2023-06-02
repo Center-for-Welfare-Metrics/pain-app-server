@@ -17,7 +17,7 @@ export const GenerateCompletionController = async (
       prompt,
     });
 
-    response.status(201).json(completion);
+    response.status(200).json(completion);
   } catch (error) {
     response.status(500).json({ message: error.message });
   }
