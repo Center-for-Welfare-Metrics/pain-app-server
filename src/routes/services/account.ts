@@ -1,7 +1,6 @@
 import { validate } from "@utils/validate";
 import { Router } from "express";
 import { useAuth } from "@middlewares/auth";
-import { useSuper } from "@middlewares/super";
 import {
   SetUserRoleController,
   SetUserRoleValidator,
