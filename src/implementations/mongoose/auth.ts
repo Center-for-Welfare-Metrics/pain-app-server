@@ -9,16 +9,12 @@ type SignUpParams = {
 export const SignUpImplementation = async (params: SignUpParams) => {
   const { email, name, password } = params;
 
-  try {
-    const newUser = await UserModel.create({
-      email,
-      name,
-      password,
-    });
-    return newUser;
-  } catch (error) {
-    throw error;
-  }
+  const newUser = await UserModel.create({
+    email,
+    name,
+    password,
+  });
+  return newUser;
 };
 
 type SignInParams = {
