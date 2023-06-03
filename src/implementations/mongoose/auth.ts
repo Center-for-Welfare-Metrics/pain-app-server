@@ -6,7 +6,7 @@ type SignUpParams = {
   password: string;
 };
 
-export const SignUp = async (params: SignUpParams) => {
+export const SignUpImplementation = async (params: SignUpParams) => {
   const { email, name, password } = params;
 
   try {
@@ -26,7 +26,7 @@ type SignInParams = {
   password: string;
 };
 
-export const SignIn = async (params: SignInParams) => {
+export const SignInImplementation = async (params: SignInParams) => {
   const { email, password } = params;
 
   const user = await UserModel.findOne({ email });
@@ -41,7 +41,7 @@ export const SignIn = async (params: SignInParams) => {
   }
 };
 
-export const VerifyIfEmailExists = async (email: string) => {
+export const VerifyIfEmailExistsImplementation = async (email: string) => {
   const user = await UserModel.exists({ email });
 
   if (user) {
@@ -51,7 +51,7 @@ export const VerifyIfEmailExists = async (email: string) => {
   return false;
 };
 
-export const GetUserByEmail = async (email: string) => {
+export const GetUserByEmailImplementation = async (email: string) => {
   const user = await UserModel.findOne({ email });
 
   if (user) {
@@ -61,7 +61,7 @@ export const GetUserByEmail = async (email: string) => {
   throw new Error();
 };
 
-export const GetUserById = async (id: string) => {
+export const GetUserByIdImplementation = async (id: string) => {
   const user = await UserModel.findById(id);
 
   if (user) {

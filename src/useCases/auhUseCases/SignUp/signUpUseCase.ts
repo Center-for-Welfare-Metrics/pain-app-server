@@ -1,6 +1,6 @@
 import { hashPassword } from "@utils/encryption";
 import { generateJwt } from "@utils/jwt";
-import { SignUp, VerifyIfEmailExists } from "@implementations/mongoose/auth";
+import { SignUpImplementation } from "@implementations/mongoose/auth";
 
 type SignUpUseCase = {
   email: string;
@@ -13,7 +13,7 @@ export const SignUpUseCase = async (params: SignUpUseCase) => {
 
   const passwordHashed = hashPassword(password);
 
-  const newUser = await SignUp({
+  const newUser = await SignUpImplementation({
     email,
     name,
     password: passwordHashed,

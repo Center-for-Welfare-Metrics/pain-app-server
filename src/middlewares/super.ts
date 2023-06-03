@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyJwt } from "@utils/jwt";
-import { GetUserById } from "@implementations/mongoose/auth";
+import { GetUserByIdImplementation } from "@implementations/mongoose/auth";
 
 export const useSuper = async (
   request: Request,
@@ -10,7 +10,7 @@ export const useSuper = async (
   try {
     const user_id = request["user"]._id;
 
-    const user = await GetUserById(user_id);
+    const user = await GetUserByIdImplementation(user_id);
 
     if (!user) {
       throw new Error();
