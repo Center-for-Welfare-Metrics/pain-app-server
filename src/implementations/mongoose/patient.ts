@@ -16,7 +16,7 @@ export const CreatePatientImplementation = async (
     name,
     birth_date,
     about,
-    user_id,
+    creator_id: user_id,
   });
   return newPatient;
 };
