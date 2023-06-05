@@ -21,10 +21,35 @@ export const CreatePatientImplementation = async (
   return newPatient;
 };
 
-export const ListPatientsImplementation = async () => {
-  const patients = await PatientModel.find();
+type ListPatientsParams = {
+  user_id: string;
+  limit: number;
+  page: number;
+};
+
+export const ListPatientsImplementation = async (
+  params: ListPatientsParams
+) => {
+  const { user_id, limit, page } = params;
+
+  const patients = await PatientModel.find({ creator_id: user_id })
+    .limit(limit)
+    .skip(page * limit);
 
   return patients;
+};
+
+type CountPatientsParams = {
+  user_id: string;
+};
+
+export const CountPatientsImplementation = async (
+  params: CountPatientsParams
+) => {
+  const { user_id } = params;
+  const count = await PatientModel.countDocuments({ creator_id: user_id });
+
+  return count;
 };
 
 export const GetPatientByIdImplementation = async (id: string) => {
