@@ -1,4 +1,5 @@
 import { PatientModel } from "@models/patient";
+import { getSortObject } from "@utils/sortBy";
 
 type CreatePatientImplementationParams = {
   name: string;
@@ -25,14 +26,18 @@ type ListPatientsParams = {
   user_id: string;
   limit: number;
   page: number;
+  sortBy?: string;
 };
 
 export const ListPatientsImplementation = async (
   params: ListPatientsParams
 ) => {
-  const { user_id, limit, page } = params;
+  const { user_id, limit, page, sortBy } = params;
+
+  const sortObject = getSortObject(sortBy);
 
   const patients = await PatientModel.find({ creator_id: user_id })
+    .sort(sortObject)
     .limit(limit)
     .skip(page * limit);
 
