@@ -4,6 +4,7 @@ import { body } from "express-validator";
 
 type GenerateCompletionBody = {
   prompt: string;
+  title: string;
   attributes?: any;
 };
 
@@ -11,12 +12,13 @@ export const SavePromptController = async (
   request: Request<any, any, GenerateCompletionBody>,
   response: Response
 ) => {
-  const { prompt, attributes } = request.body;
+  const { prompt, attributes, title } = request.body;
 
-  const user_id = request["user"]._id;
+  const user_id = request["user"]?._id;
 
   try {
     await SavePromptUseCase({
+      title,
       prompt,
       attributes,
       user_id,
@@ -28,4 +30,8 @@ export const SavePromptController = async (
   }
 };
 
-export const SavePromptValidator = () => [body("prompt").isString()];
+export const SavePromptValidator = () => [
+  body("prompt").isString(),
+  body("title").isString(),
+  body("attributes").optional().isObject(),
+];
