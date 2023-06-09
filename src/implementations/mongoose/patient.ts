@@ -66,3 +66,20 @@ export const GetPatientByIdImplementation = async (id: string) => {
 
   throw new Error();
 };
+
+type UpdatePatientParams = {
+  patient_id: string;
+  update: {
+    name?: string;
+    birth_date?: string;
+    about?: string;
+  };
+};
+
+export const UpdatePatientImplementation = async (
+  params: UpdatePatientParams
+) => {
+  const { patient_id, update } = params;
+
+  await PatientModel.findByIdAndUpdate(patient_id, update);
+};
