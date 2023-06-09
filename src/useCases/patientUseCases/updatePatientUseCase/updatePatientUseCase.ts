@@ -24,8 +24,10 @@ export const UpdatePatientUseCase = async (
     throw new Error();
   }
 
-  await UpdatePatientImplementation({
+  const updated = await UpdatePatientImplementation({
     patient_id,
     update,
   });
+
+  return updated;
 };

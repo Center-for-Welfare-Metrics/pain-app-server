@@ -81,5 +81,13 @@ export const UpdatePatientImplementation = async (
 ) => {
   const { patient_id, update } = params;
 
-  await PatientModel.findByIdAndUpdate(patient_id, update);
+  const patientUpdate = await PatientModel.findByIdAndUpdate(
+    patient_id,
+    update,
+    {
+      new: true,
+    }
+  );
+
+  return patientUpdate;
 };

@@ -23,7 +23,7 @@ export const UpdatePatientController = async (
   try {
     const user_id = req["user"]._id;
 
-    await UpdatePatientUseCase({
+    const updated = await UpdatePatientUseCase({
       patient_id,
       update: CleanUpUndefined({
         name,
@@ -32,12 +32,14 @@ export const UpdatePatientController = async (
       }),
       user_id,
     });
+
+    res.status(200).json(updated);
   } catch (err) {
     res.sendStatus(500);
   }
 };
 
-export const UpdatePatientControllerValidator = () => [
+export const UpdatePatientValidator = () => [
   param("patient_id").isMongoId(),
   body("name").optional().isString(),
   body("birth_date").optional().isString(),
