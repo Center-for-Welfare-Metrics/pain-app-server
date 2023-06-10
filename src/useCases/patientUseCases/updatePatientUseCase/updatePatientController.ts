@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UpdatePatientUseCase } from "./updatePatientUseCase";
 import { CleanUpUndefined } from "@utils/controller-utils";
 import { body, param } from "express-validator";
+import { GetPatientByIdImplementation } from "@implementations/mongoose/patient";
 
 type UpdatePatientRequestBody = {
   name?: string;
@@ -21,8 +22,6 @@ export const UpdatePatientController = async (
   const { name, birth_date, about } = req.body;
 
   try {
-    const user_id = req["user"]._id;
-
     const updated = await UpdatePatientUseCase({
       patient_id,
       update: CleanUpUndefined({
@@ -30,7 +29,6 @@ export const UpdatePatientController = async (
         birth_date,
         about,
       }),
-      user_id,
     });
 
     res.status(200).json(updated);
@@ -40,7 +38,21 @@ export const UpdatePatientController = async (
 };
 
 export const UpdatePatientValidator = () => [
-  param("patient_id").isMongoId(),
+  param("patient_id")
+    .isMongoId()
+    .custom(async (patient_id, { req }) => {
+      const user_id = req["user"]._id;
+
+      const patient = await GetPatientByIdImplementation(patient_id);
+
+      if (!patient) {
+        throw new Error("Patient not found");
+      }
+
+      if (patient.creator_id.toString() !== user_id.toString()) {
+        throw new Error("Patient not found");
+      }
+    }),
   body("name").optional().isString(),
   body("birth_date").optional().isString(),
   body("about").optional().isString(),
