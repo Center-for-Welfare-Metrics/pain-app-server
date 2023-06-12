@@ -11,6 +11,10 @@ import {
   GetPatiengByIdValidator,
   GetPatientByIdController,
 } from "@useCases/patientUseCases/getPatientByIdUseCase/getPatientByIdController";
+import {
+  UpdatePatientController,
+  UpdatePatientValidator,
+} from "@useCases/patientUseCases/updatePatientUseCase/updatePatientController";
 
 const router = Router();
 
@@ -25,6 +29,13 @@ router.get(
   GetPatiengByIdValidator(),
   validate,
   GetPatientByIdController
+);
+
+router.patch(
+  "/:patient_id",
+  UpdatePatientValidator(),
+  validate,
+  UpdatePatientController
 );
 
 export default router;

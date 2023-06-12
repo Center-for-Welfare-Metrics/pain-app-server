@@ -4,6 +4,7 @@ import { ListPatientsUseCase } from "./listPatientsUseCase";
 type ListPatientsRequestQuery = {
   page: number;
   limit: number;
+  sortBy?: string;
 };
 
 export const ListPatientsController = async (
@@ -11,7 +12,7 @@ export const ListPatientsController = async (
   response: Response
 ) => {
   try {
-    const { page, limit } = request.query;
+    const { page, limit, sortBy } = request.query;
 
     const user_id = request["user"]._id;
 
@@ -19,6 +20,7 @@ export const ListPatientsController = async (
       user_id,
       page,
       limit,
+      sortBy,
     });
 
     return response.status(200).json(patientsListWithPagination);

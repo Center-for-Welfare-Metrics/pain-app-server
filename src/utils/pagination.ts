@@ -40,12 +40,19 @@ export const PaginationMiddleware = (
   next();
 };
 
+type MakePaginationParams = {
+  data: any[];
+  page?: number;
+  totalCount?: number;
+  limit?: number;
+};
+
 export const MakePagination = ({
-  data = [],
+  data,
   page = 0,
   totalCount = 0,
   limit = DEFAULT_LIMIT,
-}) => {
+}: MakePaginationParams) => {
   const currentCount = Math.min((page + 1) * limit, totalCount);
   const totalPages = Math.ceil(totalCount / limit);
 

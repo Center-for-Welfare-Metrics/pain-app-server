@@ -8,17 +8,19 @@ type ListPatientsUseCaseParams = {
   user_id: string;
   limit: number;
   page: number;
+  sortBy?: string;
 };
 
 export const ListPatientsUseCase = async (
   params: ListPatientsUseCaseParams
 ) => {
-  const { user_id, limit, page } = params;
+  const { user_id, limit, page, sortBy } = params;
 
   const patients = await ListPatientsImplementation({
     user_id,
     limit,
     page,
+    sortBy,
   });
 
   const patientsCount = await CountPatientsImplementation({ user_id });

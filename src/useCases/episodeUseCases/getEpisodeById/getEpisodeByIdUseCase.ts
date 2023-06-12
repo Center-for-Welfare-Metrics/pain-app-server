@@ -1,13 +1,15 @@
-import { GetEpisodeById } from "@implementations/mongoose/episodes";
+import { GetEpisodeByIdImplementation } from "@implementations/mongoose/episodes";
 
 type GetEpisodeByIdUseCaseParams = {
   episode_id: string;
 };
 
-export const GetEpisodeByIdUseCase = (params: GetEpisodeByIdUseCaseParams) => {
+export const GetEpisodeByIdUseCase = async (
+  params: GetEpisodeByIdUseCaseParams
+) => {
   const { episode_id } = params;
 
-  const episode = GetEpisodeById({ episode_id });
+  const episode = await GetEpisodeByIdImplementation({ episode_id });
 
   return episode;
 };
