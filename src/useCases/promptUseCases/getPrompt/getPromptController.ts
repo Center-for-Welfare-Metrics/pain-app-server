@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { GetPromptUseCase } from "./getPromptUseCase";
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 type GetPromptRequestParams = {
   prompt_id: string;
@@ -25,3 +25,5 @@ export const GetPromptController = async (
     return response.status(500).json({ message: error.message });
   }
 };
+
+export const GetPromptValidator = () => [param("prompt_id").isMongoId()];
