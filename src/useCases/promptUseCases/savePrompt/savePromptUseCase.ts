@@ -1,18 +1,20 @@
-import { SavePrompt } from "@implementations/mongoose/prompt";
-import { Configuration, OpenAIApi } from "openai";
+import { SavePromptImplementation } from "@implementations/mongoose/prompt";
 
 type SavePromptUseCaseParams = {
+  title: string;
   prompt: string;
   user_id: string;
   attributes?: any;
 };
 
 export const SavePromptUseCase = async ({
+  title,
   prompt,
   user_id,
   attributes,
 }: SavePromptUseCaseParams) => {
-  await SavePrompt({
+  await SavePromptImplementation({
+    title,
     prompt,
     user_id,
     attributes,

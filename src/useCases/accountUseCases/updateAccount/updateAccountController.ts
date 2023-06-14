@@ -17,7 +17,7 @@ export const UpdateAccountController = async (
     const user_id = request["user"]._id;
 
     const user_updated = await UpdateAccountUseCase({
-      update: CleanUpUndefined({ name }),
+      update: CleanUpUndefined<UpdateAccountRequestBody>({ name }),
       user_id,
     });
 

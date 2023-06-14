@@ -11,6 +11,11 @@ import {
 } from "@useCases/promptUseCases/savePrompt/savePromptController";
 import { GetPromptController } from "@useCases/promptUseCases/getPrompt/getPromptController";
 import { useSuper } from "@middlewares/super";
+import { ListPromptsController } from "@useCases/promptUseCases/listPromptsUseCase/listPromptsController";
+import {
+  UpdatePromptController,
+  UpdatePromptValidator,
+} from "@useCases/promptUseCases/updatePromptUseCase/updatePromptController";
 
 const router = Router();
 
@@ -25,6 +30,15 @@ router.post(
 
 router.post("/", SavePromptValidator(), validate, SavePromptController);
 
-router.get("/", GetPromptController);
+router.get("/", ListPromptsController);
+
+router.get("/:prompt_id", GetPromptController);
+
+router.patch(
+  "/:prompt_id",
+  UpdatePromptValidator(),
+  validate,
+  UpdatePromptController
+);
 
 export default router;
