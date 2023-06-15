@@ -4,7 +4,7 @@ type GenerateCompletionUseCaseParams = {
   prompt: string;
 };
 
-const MODEL = "gpt-3.5-turbo";
+const MODEL = "gpt-3.5-turbo-16k";
 
 export const GenerateCompletionUseCase = async ({
   prompt,
