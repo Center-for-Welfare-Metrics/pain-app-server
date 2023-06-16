@@ -11,7 +11,7 @@
   "author": "Santiago",
   "license": "ISC",
   "dependencies": {
-    "@grpc/grpc-js": "^1.8.14",
+    "@grpc/grpc-js": "^1.8.15",
     "@grpc/proto-loader": "^0.7.7",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
@@ -20,15 +20,15 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.1.4",
     "exceljs": "^4.3.0",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.2.1",
+    "mongoose": "^7.3.0",
     "morgan": "^1.10.0",
-    "openai": "^3.2.1",
+    "openai": "^3.3.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "winston": "^3.9.0"
@@ -38,13 +38,13 @@
     "@types/convert-units": "^2.3.5",
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.2",
-    "eslint-config-standard": "^17.0.0",
+    "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-standard": "^5.0.0",
     "ts-node-dev": "^2.0.0",
     "tsconfig-replace-paths": "^0.0.14",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.3"
   }
 }

@@ -1,19 +1,21 @@
-import { PromptModel } from "@models/prompt";
+import { PromptModel, PromptOptions } from "@models/prompt";
 
 type SavePromptParams = {
   title: string;
   user_id: string;
   prompt: string;
+  options: PromptOptions;
   attributes?: any;
 };
 
 export const SavePromptImplementation = async (params: SavePromptParams) => {
-  const { user_id, title, prompt, attributes } = params;
+  const { user_id, title, prompt, attributes, options } = params;
 
   const promptCreated = await PromptModel.create({
     title,
     user: user_id,
     prompt,
+    options,
     attributes,
   });
 
@@ -65,6 +67,7 @@ type UpdatePromptParams = {
     title?: string;
     prompt?: string;
     attributes?: any;
+    options?: PromptOptions;
   };
 };
 

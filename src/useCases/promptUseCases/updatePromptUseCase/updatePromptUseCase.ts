@@ -1,4 +1,5 @@
 import { UpdatePromptImplementation } from "@implementations/mongoose/prompt";
+import { PromptOptions } from "@models/prompt";
 
 type UpdaetPromptUseCaseParams = {
   prompt_id: string;
@@ -7,6 +8,7 @@ type UpdaetPromptUseCaseParams = {
     title?: string;
     prompt?: string;
     attributes?: any;
+    options?: PromptOptions;
   };
 };
 
