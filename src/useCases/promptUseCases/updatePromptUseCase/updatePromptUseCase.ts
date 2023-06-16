@@ -16,7 +16,6 @@ export const UpdatePromptUseCase = async (
   params: UpdaetPromptUseCaseParams
 ) => {
   const { prompt_id, user_id, update } = params;
-
   await UpdatePromptImplementation({
     user_id,
     prompt_id,

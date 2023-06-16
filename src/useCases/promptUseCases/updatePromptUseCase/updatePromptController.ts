@@ -23,7 +23,7 @@ export const UpdatePromptController = async (
   const user_id = req["user"]._id;
   const { prompt_id } = req.params;
   const { title, prompt, attributes, options } = req.body;
-
+  console.log(options);
   try {
     await UpdatePromptUseCase({
       prompt_id,
@@ -32,12 +32,14 @@ export const UpdatePromptController = async (
         title,
         prompt,
         attributes,
-        options: {
-          frequency_penalty: options?.frequency_penalty,
-          presence_penalty: options?.presence_penalty,
-          temperature: options?.temperature,
-          top_p: options?.top_p,
-        },
+        options: options
+          ? {
+              frequency_penalty: options?.frequency_penalty,
+              presence_penalty: options?.presence_penalty,
+              temperature: options?.temperature,
+              top_p: options?.top_p,
+            }
+          : undefined,
       }),
     });
 

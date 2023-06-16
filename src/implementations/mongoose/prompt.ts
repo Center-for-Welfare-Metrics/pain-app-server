@@ -75,7 +75,7 @@ export const UpdatePromptImplementation = async (
   params: UpdatePromptParams
 ) => {
   const { prompt_id, user_id, update } = params;
-
+  console.log(update);
   const prompt = await PromptModel.findOneAndUpdate(
     { _id: prompt_id, user: user_id },
     update
