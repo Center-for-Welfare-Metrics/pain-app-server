@@ -8,6 +8,10 @@ type GenerateCompletionUseCaseParams = {
 
 const MODEL = "gpt-3.5-turbo-16k";
 
+const getOptionValue = (value) => {
+  return value ?? undefined;
+};
+
 export const GenerateCompletionUseCase = async ({
   prompt,
   options,
@@ -17,19 +21,24 @@ export const GenerateCompletionUseCase = async ({
     apiKey: process.env.OPENAI_APIKEY,
   });
   const openai = new OpenAIApi(configuration);
-  console.log(options);
+
   const response = await openai.createChatCompletion({
     model: MODEL,
     messages: [
       {
         role: "user",
-        content: prompt,
+        content:
+          prompt + `\nfinal instructions: use markdown to format the text`,
       },
     ],
-    frequency_penalty: options.frequency_penalty,
-    presence_penalty: options.presence_penalty,
-    temperature: options.temperature === 1 ? undefined : options.temperature,
-    top_p: options.top_p === 1 ? undefined : options.top_p,
+    frequency_penalty: getOptionValue(options.frequency_penalty),
+    presence_penalty: getOptionValue(options.presence_penalty),
+    temperature:
+      options.temperature === 1
+        ? undefined
+        : getOptionValue(options.temperature),
+    top_p: options.top_p === 1 ? undefined : getOptionValue(options.top_p),
+    max_tokens: 10000,
   });
 
   const text = response.data.choices[0].message.content;

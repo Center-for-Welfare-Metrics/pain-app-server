@@ -23,7 +23,6 @@ export const UpdatePromptController = async (
   const user_id = req["user"]._id;
   const { prompt_id } = req.params;
   const { title, prompt, attributes, options } = req.body;
-  console.log(options);
   try {
     await UpdatePromptUseCase({
       prompt_id,
