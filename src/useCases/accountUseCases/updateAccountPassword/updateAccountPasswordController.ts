@@ -24,9 +24,7 @@ export const UpdateAccountPasswordController = async (
 
     return response.sendStatus(204);
   } catch (err) {
-    return response.status(400).json({
-      message: err.message || "Unexpected error.",
-    });
+    return response.sendStatus(500);
   }
 };
 

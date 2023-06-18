@@ -1,6 +1,15 @@
 import { Schema, model } from "mongoose";
 
-const userSchema = new Schema(
+export interface IUser {
+  email: string;
+  name: string;
+  password: string;
+  provider?: string;
+  super?: boolean;
+  role?: string;
+}
+
+const userSchema = new Schema<IUser>(
   {
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
@@ -20,4 +29,4 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-export const UserModel = model("user", userSchema);
+export const UserModel = model<IUser>("user", userSchema);

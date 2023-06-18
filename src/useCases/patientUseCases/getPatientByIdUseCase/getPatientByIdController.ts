@@ -22,7 +22,7 @@ export const GetPatientByIdController = async (
 
     return response.status(200).json(patient);
   } catch (err) {
-    return response.status(500).json({ message: err.message });
+    return response.sendStatus(500);
   }
 };
 

@@ -31,9 +31,9 @@ export const SavePromptController = async (
       user_id,
     });
 
-    response.status(200).json(promptCreated);
+    return response.status(200).json(promptCreated);
   } catch (error) {
-    response.status(500).json({ message: error.message });
+    return response.sendStatus(500);
   }
 };
 

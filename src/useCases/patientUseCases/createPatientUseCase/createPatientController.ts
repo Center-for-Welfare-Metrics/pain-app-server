@@ -26,7 +26,7 @@ export const CreatePatientController = async (
 
     return res.status(201).json(newPatient);
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    return res.sendStatus(500);
   }
 };
 

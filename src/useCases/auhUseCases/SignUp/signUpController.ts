@@ -24,7 +24,7 @@ export const SignUpController = async (
 
     response.status(201).json(user);
   } catch (error) {
-    response.status(500).json({ message: error.message });
+    return response.sendStatus(500);
   }
 };
 

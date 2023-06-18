@@ -25,6 +25,6 @@ export const ListPatientsController = async (
 
     return response.status(200).json(patientsListWithPagination);
   } catch (err) {
-    return response.status(500).json({ message: err.message });
+    return response.sendStatus(500);
   }
 };

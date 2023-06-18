@@ -5,6 +5,7 @@ export type PromptOptions = {
   presence_penalty?: number;
   temperature?: number;
   top_p?: number;
+  isMain?: boolean;
 };
 
 const promptSchema = new Schema(
@@ -14,6 +15,7 @@ const promptSchema = new Schema(
     user: { type: Schema.Types.ObjectId, ref: "user", required: true },
     attributes: { type: JSON, required: false },
     options: { type: JSON, required: false },
+    isMain: { type: Boolean, default: false },
   },
   {
     timestamps: true,

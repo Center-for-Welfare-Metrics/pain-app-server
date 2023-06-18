@@ -23,7 +23,7 @@ export const CreateEpisodeController = async (
 
     return response.status(201).json(episode);
   } catch (error) {
-    return response.status(500).json({ message: "Internal server error" });
+    return response.sendStatus(500);
   }
 };
 

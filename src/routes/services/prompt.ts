@@ -24,6 +24,11 @@ import {
   DeletePromptValidator,
 } from "@useCases/promptUseCases/deletePromptUseCase/deletePromptController";
 import { GetLastUpdatedPromptController } from "@useCases/promptUseCases/getLastUpdatedPromptUseCase/getLastUpdatedPromptController";
+import {
+  setMainPromptController,
+  setMainPromptValidator,
+} from "@useCases/promptUseCases/setMainPromptUseCase/setMainPromptController";
+import { GetMainPromptCreatorController } from "@useCases/promptUseCases/getMainPromptCreatorUseCase/getMainPromptCreatorController";
 
 const router = Router();
 
@@ -57,5 +62,14 @@ router.delete(
   validate,
   DeletePromptController
 );
+
+router.patch(
+  "/:prompt_id/main",
+  setMainPromptValidator(),
+  validate,
+  setMainPromptController
+);
+
+router.get("/main/creator", GetMainPromptCreatorController);
 
 export default router;

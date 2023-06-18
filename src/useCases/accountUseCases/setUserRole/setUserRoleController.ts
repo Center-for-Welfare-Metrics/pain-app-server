@@ -18,7 +18,7 @@ export const SetUserRoleController = async (
 
     res.sendStatus(204);
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    return res.sendStatus(500);
   }
 };
 

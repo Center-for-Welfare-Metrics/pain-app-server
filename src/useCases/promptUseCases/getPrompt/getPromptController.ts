@@ -22,7 +22,7 @@ export const GetPromptController = async (
 
     return response.status(200).json(prompt);
   } catch (error) {
-    return response.status(500).json({ message: error.message });
+    return response.sendStatus(500);
   }
 };
 

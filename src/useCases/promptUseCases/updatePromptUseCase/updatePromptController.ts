@@ -44,7 +44,7 @@ export const UpdatePromptController = async (
 
     return res.sendStatus(200);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.sendStatus(500);
   }
 };
 

@@ -23,9 +23,7 @@ export const UpdateAccountController = async (
 
     return response.status(200).json(user_updated);
   } catch (err) {
-    return response.status(400).json({
-      message: err.message || "Unexpected error.",
-    });
+    return response.sendStatus(500);
   }
 };
 

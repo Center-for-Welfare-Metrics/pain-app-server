@@ -9,6 +9,6 @@ export const ListPromptsController = async (req: Request, res: Response) => {
 
     return res.status(200).json(prompts);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.sendStatus(500);
   }
 };

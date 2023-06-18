@@ -75,7 +75,6 @@ export const UpdatePromptImplementation = async (
   params: UpdatePromptParams
 ) => {
   const { prompt_id, user_id, update } = params;
-  console.log(update);
   const prompt = await PromptModel.findOneAndUpdate(
     { _id: prompt_id, user: user_id },
     update
@@ -133,4 +132,38 @@ export const GetLastUpdatedPromptImplementation = async (
   });
 
   return prompt;
+};
+
+type SetMainPromptParams = {
+  prompt_id: string;
+};
+
+export const setMainPromptImplementation = async (
+  params: SetMainPromptParams
+) => {
+  const { prompt_id } = params;
+
+  const prompt = await PromptModel.findOneAndUpdate(
+    { _id: prompt_id },
+    { isMain: true }
+  );
+
+  if (!prompt) {
+    throw new Error();
+  }
+};
+
+export const unsetMainPromptImplementation = async () => {
+  await PromptModel.findOneAndUpdate({ isMain: true }, { isMain: false });
+
+  return true;
+};
+
+export const getMainPromptCreatorImplementation = async () => {
+  const prompt = await PromptModel.findOne({ isMain: true }).populate({
+    path: "user",
+    select: "name -_id",
+  });
+
+  return prompt.user as any as { name: string };
 };
