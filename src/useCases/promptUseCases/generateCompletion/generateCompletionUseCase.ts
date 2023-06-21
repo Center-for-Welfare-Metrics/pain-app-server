@@ -1,4 +1,5 @@
 import { PromptOptions } from "@models/prompt";
+import { finalInstructions } from "@utils/prompt/generate";
 import { Configuration, OpenAIApi } from "openai";
 
 type GenerateCompletionUseCaseParams = {
@@ -27,8 +28,7 @@ export const GenerateCompletionUseCase = async ({
     messages: [
       {
         role: "user",
-        content:
-          prompt + `\nfinal instructions: use markdown to format the text`,
+        content: prompt + finalInstructions,
       },
     ],
     frequency_penalty: getOptionValue(options.frequency_penalty),

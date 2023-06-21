@@ -167,3 +167,9 @@ export const getMainPromptCreatorImplementation = async () => {
 
   return prompt.user as any as { name: string };
 };
+
+export const getMainPromptImplementation = async () => {
+  const prompt = await PromptModel.findOne({ isMain: true });
+
+  return prompt;
+};
