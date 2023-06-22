@@ -1,4 +1,4 @@
-import { PromptModel, PromptOptions } from "@models/prompt";
+import { IAttributesConfig, PromptModel, PromptOptions } from "@models/prompt";
 
 type SavePromptParams = {
   title: string;
@@ -6,10 +6,12 @@ type SavePromptParams = {
   prompt: string;
   options: PromptOptions;
   attributes?: any;
+  attributesConfig?: IAttributesConfig;
 };
 
 export const SavePromptImplementation = async (params: SavePromptParams) => {
-  const { user_id, title, prompt, attributes, options } = params;
+  const { user_id, title, prompt, attributes, options, attributesConfig } =
+    params;
 
   const promptCreated = await PromptModel.create({
     title,
@@ -17,6 +19,7 @@ export const SavePromptImplementation = async (params: SavePromptParams) => {
     prompt,
     options,
     attributes,
+    attributesConfig,
   });
 
   return promptCreated;
@@ -68,6 +71,7 @@ type UpdatePromptParams = {
     prompt?: string;
     attributes?: any;
     options?: PromptOptions;
+    attributesConfig?: IAttributesConfig;
   };
 };
 
@@ -172,4 +176,18 @@ export const getMainPromptImplementation = async () => {
   const prompt = await PromptModel.findOne({ isMain: true });
 
   return prompt;
+};
+
+type GetPromptAttributesByIdParams = {
+  prompt_id: string;
+};
+
+export const getPromptAttributesById = async (
+  params: GetPromptAttributesByIdParams
+) => {
+  const { prompt_id } = params;
+
+  const prompt = await PromptModel.findById(prompt_id);
+
+  return prompt.attributes;
 };

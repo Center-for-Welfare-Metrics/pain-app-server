@@ -2,8 +2,11 @@ import { Request, Response } from "express";
 import { UpdatePromptUseCase } from "./updatePromptUseCase";
 import { CleanUpUndefined } from "@utils/controller-utils";
 import { body, param } from "express-validator";
-import { PromptOptions } from "@models/prompt";
-import { commonPromptOptionsValidation } from "@utils/prompt/validate";
+import { IAttributesConfig, PromptOptions } from "@models/prompt";
+import {
+  commonPromptAttributesConfigValidation,
+  commonPromptOptionsValidation,
+} from "@utils/prompt/validate";
 
 type UpdatePromptRequestParams = {
   prompt_id: string;
@@ -14,6 +17,7 @@ type UpdatePromptRequestBody = {
   prompt?: string;
   options?: PromptOptions;
   attributes?: any;
+  attributesConfig?: IAttributesConfig;
 };
 
 export const UpdatePromptController = async (
@@ -22,7 +26,7 @@ export const UpdatePromptController = async (
 ) => {
   const user_id = req["user"]._id;
   const { prompt_id } = req.params;
-  const { title, prompt, attributes, options } = req.body;
+  const { title, prompt, attributes, options, attributesConfig } = req.body;
   try {
     await UpdatePromptUseCase({
       prompt_id,
@@ -31,6 +35,7 @@ export const UpdatePromptController = async (
         title,
         prompt,
         attributes,
+        attributesConfig,
         options: options
           ? {
               frequency_penalty: options?.frequency_penalty,
@@ -54,4 +59,8 @@ export const UpdatePromptValidator = () => [
   body("prompt").optional().isString(),
   body("attributes").optional().isObject(),
   body("options").isObject().custom(commonPromptOptionsValidation).optional(),
+  body("attributesConfig")
+    .optional()
+    .isObject()
+    .custom(commonPromptAttributesConfigValidation),
 ];

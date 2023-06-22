@@ -2,13 +2,14 @@ import {
   CountPromptsImplementation,
   SavePromptImplementation,
 } from "@implementations/mongoose/prompt";
-import { PromptOptions } from "@models/prompt";
+import { IAttributesConfig, PromptOptions } from "@models/prompt";
 
 type SavePromptUseCaseParams = {
   prompt: string;
   user_id: string;
   options: PromptOptions;
   attributes?: any;
+  attributesConfig?: IAttributesConfig;
 };
 
 export const SavePromptUseCase = async ({
@@ -16,6 +17,7 @@ export const SavePromptUseCase = async ({
   user_id,
   options,
   attributes,
+  attributesConfig,
 }: SavePromptUseCaseParams) => {
   const promptsCount = await CountPromptsImplementation({ user_id });
 
@@ -27,6 +29,7 @@ export const SavePromptUseCase = async ({
     user_id,
     options,
     attributes,
+    attributesConfig,
   });
 
   return promptCreated;

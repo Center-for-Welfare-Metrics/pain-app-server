@@ -4,7 +4,10 @@ import { PromptModel, PromptOptions } from "@models/prompt";
 export const GetMainPromptAttributesImplementation = async () => {
   const prompt = await PromptModel.findOne({ isMain: true });
 
-  return prompt.attributes;
+  return {
+    attributes: prompt?.attributes,
+    attributesConfig: prompt?.attributesConfig,
+  };
 };
 
 type SaveGEneratedAiResponseIMplementation = {
