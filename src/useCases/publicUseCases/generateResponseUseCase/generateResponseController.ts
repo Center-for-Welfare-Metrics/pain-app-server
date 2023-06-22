@@ -53,7 +53,7 @@ export const GenerateResponseValidator = () => [
     .isObject()
     .custom(async (attributes) => {
       const mainPromptAttributes =
-        await GetMainPromptAttributesImplementation();
+        await GetMainPromptAttributesImplementation().attributes;
 
       const attributesKeys = Object.keys(attributes);
       const mainPromptAttributesKeys = Object.keys(mainPromptAttributes);
