@@ -27,6 +27,24 @@ export const commonPromptAttributesConfigValidation = async (
   attributesConfig: IAttributesConfig,
   { req }
 ) => {
+  const isAcceptable = [
+    "label",
+    "placeholder",
+    "helperText",
+    "isTextArea",
+    "isRequired",
+  ];
+
+  const attributesConfigKeys = Object.keys(attributesConfig);
+
+  const attributesConfigKeysAreValid = attributesConfigKeys.every((key) =>
+    isAcceptable.includes(key)
+  );
+
+  if (!attributesConfigKeysAreValid) {
+    throw new Error("attributesConfig keys are not valid");
+  }
+
   const attributes = req.body?.attributes;
   let allKeys = [];
   if (!attributes) {
@@ -71,6 +89,15 @@ export const commonPromptAttributesConfigValidation = async (
 
   if (!isTextAreaKeysAreValid) {
     throw new Error("isTextArea keys are not valid");
+  }
+
+  const isRequiredKeys = Object.keys(attributesConfig.isRequired ?? {});
+  const isRequiredKeysAreValid = isRequiredKeys.every((key) =>
+    allKeys.includes(key)
+  );
+
+  if (!isRequiredKeysAreValid) {
+    throw new Error("isRequired keys are not valid");
   }
 
   return true;

@@ -13,6 +13,7 @@ export type IAttributesConfig = {
   placeholder: CommonKeyStringPair;
   helperText: CommonKeyStringPair;
   isTextArea: CommonKeyBooleanPair;
+  isRequired: CommonKeyBooleanPair;
 };
 
 export type PromptOptions = {
