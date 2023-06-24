@@ -4,16 +4,19 @@ import {
   finalInstructions,
   getPromptWithAttributes,
 } from "@utils/prompt/generate";
+import { Response } from "express";
 import { Configuration, OpenAIApi } from "openai";
 
 type GenerateResponseUseCaseParams = {
   attributes: any;
+  res: Response;
 };
 
 const MODEL = "gpt-3.5-turbo-16k";
 
 export const GenerateResponseUseCase = async ({
   attributes,
+  res,
 }: GenerateResponseUseCaseParams) => {
   const mainPrompt = await getMainPromptImplementation();
 
@@ -28,24 +31,21 @@ export const GenerateResponseUseCase = async ({
 
   const openai = new OpenAIApi(configuration);
 
-  const response = await openai.createChatCompletion({
-    model: MODEL,
-    messages: [
-      {
-        role: "user",
-        content: promptWithAttributes + finalInstructions,
-      },
-    ],
-    max_tokens: 10000,
-  });
+  const response = await openai.createChatCompletion(
+    {
+      model: MODEL,
+      messages: [
+        {
+          role: "user",
+          content: promptWithAttributes + finalInstructions,
+        },
+      ],
+      max_tokens: 10000,
+      stream: true,
+    },
+    { responseType: "stream" }
+  );
 
-  const text = response.data.choices[0].message.content;
-
-  SaveGeneratedAiResponseImplementation({
-    attributes,
-    gptResponse: text,
-    prompt_id: mainPrompt._id.toString(),
-  });
-
-  return text;
+  // @ts-ignore
+  return response.data.pipe(res);
 };

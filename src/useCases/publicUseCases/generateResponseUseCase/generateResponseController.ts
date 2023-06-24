@@ -14,8 +14,11 @@ export const GenerateResponseController = async (
 ) => {
   try {
     const { attributes } = req.body;
-    const generatedResponse = await GenerateResponseUseCase({ attributes });
-    return res.status(200).json(generatedResponse);
+    return GenerateResponseUseCase({
+      attributes,
+      res,
+    });
+    // return res.status(200).json(generatedResponse);
   } catch (err) {
     return res.sendStatus(500);
   }
@@ -27,7 +30,6 @@ export const GenerateResponseValidator = () => [
     .custom(async (recaptchaToken) => {
       const client = new RecaptchaEnterpriseServiceClient();
       const projectPath = client.projectPath(process.env.GOOGLE_PROJECT_ID);
-
       const request = {
         assessment: {
           event: {
@@ -38,15 +40,12 @@ export const GenerateResponseValidator = () => [
         parent: projectPath,
       };
       const [response] = await client.createAssessment(request);
-
       if (!response.tokenProperties.valid) {
         throw new Error("Invalid recaptcha token");
       }
-
       if (response.riskAnalysis.score < 0.5) {
         throw new Error("Invalid recaptcha token");
       }
-
       return true;
     }),
   body("attributes")
@@ -54,18 +53,16 @@ export const GenerateResponseValidator = () => [
     .custom(async (attributes) => {
       const mainPromptAttributes =
         await GetMainPromptAttributesImplementation();
-
       const attributesKeys = Object.keys(attributes);
-      const mainPromptAttributesKeys = Object.keys(mainPromptAttributes.attributes);
-
+      const mainPromptAttributesKeys = Object.keys(
+        mainPromptAttributes.attributes
+      );
       const attributesKeysAreValid = attributesKeys.every((key) =>
         mainPromptAttributesKeys.includes(key)
       );
-
       if (!attributesKeysAreValid) {
         throw new Error("Invalid attributes");
       }
-
       return true;
     }),
 ];
