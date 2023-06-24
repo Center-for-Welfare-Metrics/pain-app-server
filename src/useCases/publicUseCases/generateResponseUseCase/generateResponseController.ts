@@ -25,44 +25,44 @@ export const GenerateResponseController = async (
 };
 
 export const GenerateResponseValidator = () => [
-  body("recaptchaToken")
-    .isString()
-    .custom(async (recaptchaToken) => {
-      const client = new RecaptchaEnterpriseServiceClient();
-      const projectPath = client.projectPath(process.env.GOOGLE_PROJECT_ID);
-      const request = {
-        assessment: {
-          event: {
-            token: recaptchaToken,
-            siteKey: process.env.GOOGLE_RECAPTCHA_SITE_KEY,
-          },
-        },
-        parent: projectPath,
-      };
-      const [response] = await client.createAssessment(request);
-      if (!response.tokenProperties.valid) {
-        throw new Error("Invalid recaptcha token");
-      }
-      if (response.riskAnalysis.score < 0.5) {
-        throw new Error("Invalid recaptcha token");
-      }
-      return true;
-    }),
-  body("attributes")
-    .isObject()
-    .custom(async (attributes) => {
-      const mainPromptAttributes =
-        await GetMainPromptAttributesImplementation();
-      const attributesKeys = Object.keys(attributes);
-      const mainPromptAttributesKeys = Object.keys(
-        mainPromptAttributes.attributes
-      );
-      const attributesKeysAreValid = attributesKeys.every((key) =>
-        mainPromptAttributesKeys.includes(key)
-      );
-      if (!attributesKeysAreValid) {
-        throw new Error("Invalid attributes");
-      }
-      return true;
-    }),
+  // body("recaptchaToken")
+  //   .isString()
+  //   .custom(async (recaptchaToken) => {
+  //     const client = new RecaptchaEnterpriseServiceClient();
+  //     const projectPath = client.projectPath(process.env.GOOGLE_PROJECT_ID);
+  //     const request = {
+  //       assessment: {
+  //         event: {
+  //           token: recaptchaToken,
+  //           siteKey: process.env.GOOGLE_RECAPTCHA_SITE_KEY,
+  //         },
+  //       },
+  //       parent: projectPath,
+  //     };
+  //     const [response] = await client.createAssessment(request);
+  //     if (!response.tokenProperties.valid) {
+  //       throw new Error("Invalid recaptcha token");
+  //     }
+  //     if (response.riskAnalysis.score < 0.5) {
+  //       throw new Error("Invalid recaptcha token");
+  //     }
+  //     return true;
+  //   }),
+  // body("attributes")
+  //   .isObject()
+  //   .custom(async (attributes) => {
+  //     const mainPromptAttributes =
+  //       await GetMainPromptAttributesImplementation();
+  //     const attributesKeys = Object.keys(attributes);
+  //     const mainPromptAttributesKeys = Object.keys(
+  //       mainPromptAttributes.attributes
+  //     );
+  //     const attributesKeysAreValid = attributesKeys.every((key) =>
+  //       mainPromptAttributesKeys.includes(key)
+  //     );
+  //     if (!attributesKeysAreValid) {
+  //       throw new Error("Invalid attributes");
+  //     }
+  //     return true;
+  //   }),
 ];
