@@ -27,6 +27,31 @@ type GetEpisodesListParams = {
   limit: number;
 };
 
+type UpdateEpisodeParams = {
+  episode_id: string;
+  update: {
+    name?: string;
+    location?: string;
+    diagnosis?: string;
+    start_date?: string;
+    comment?: string;
+  };
+};
+
+export const UpdateEpisodeImplementation = async (
+  params: UpdateEpisodeParams
+) => {
+  const { episode_id, update } = params;
+
+  const episode_updated = await EpisodeModel.findByIdAndUpdate(
+    episode_id,
+    update,
+    { new: true }
+  );
+
+  return episode_updated;
+};
+
 export const GetEpisodesListImplementation = async (
   params: GetEpisodesListParams
 ) => {

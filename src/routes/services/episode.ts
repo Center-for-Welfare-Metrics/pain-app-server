@@ -14,6 +14,10 @@ import {
   ListEpisodesController,
   ListEpisodesValidator,
 } from "@useCases/episodeUseCases/listEpisodesUseCase/listEpisodesController";
+import {
+  UpdateEpisodeController,
+  UpdateEpisodeValidator,
+} from "@useCases/episodeUseCases/updateEpisodeUseCase/updateEpisodeController";
 
 const router = Router();
 
@@ -34,6 +38,13 @@ router.get(
   GetEpisodeByIdValidator(),
   validate,
   GetEpisodeByIdController
+);
+
+router.patch(
+  "/:episode_id",
+  UpdateEpisodeValidator(),
+  validate,
+  UpdateEpisodeController
 );
 
 export default router;
