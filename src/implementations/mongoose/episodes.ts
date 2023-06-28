@@ -114,3 +114,17 @@ export const GetEpisodeByIdImplementation = async (
 
   return episode;
 };
+
+type DeleteEpisodesByPatientIdParams = {
+  patient_id: string;
+};
+
+export const DeleteEpisodesByPatientIdImplementation = async (
+  params: DeleteEpisodesByPatientIdParams
+) => {
+  const { patient_id } = params;
+
+  const episodes = await EpisodeModel.deleteMany({ patient_id });
+
+  return episodes;
+};

@@ -91,3 +91,17 @@ export const UpdatePatientImplementation = async (
 
   return patientUpdate;
 };
+
+type DeletePatientParams = {
+  patient_id: string;
+};
+
+export const DeletePatientImplementation = async (
+  params: DeletePatientParams
+) => {
+  const { patient_id } = params;
+
+  const patient = await PatientModel.findByIdAndDelete(patient_id);
+
+  return patient;
+};

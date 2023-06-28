@@ -15,6 +15,10 @@ import {
   UpdatePatientController,
   UpdatePatientValidator,
 } from "@useCases/patientUseCases/updatePatientUseCase/updatePatientController";
+import {
+  DeletePatientController,
+  DeletePatientValidator,
+} from "@useCases/patientUseCases/deletePatientUseCase/deletePatientController";
 
 const router = Router();
 
@@ -36,6 +40,13 @@ router.patch(
   UpdatePatientValidator(),
   validate,
   UpdatePatientController
+);
+
+router.delete(
+  "/:patient_id",
+  DeletePatientValidator(),
+  validate,
+  DeletePatientController
 );
 
 export default router;
