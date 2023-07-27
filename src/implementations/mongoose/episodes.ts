@@ -21,12 +21,6 @@ export const CreateEpisodeImplementation = async (
   return episode_created;
 };
 
-type GetEpisodesListParams = {
-  patient_id: string;
-  page: number;
-  limit: number;
-};
-
 type UpdateEpisodeParams = {
   episode_id: string;
   update: {
@@ -50,19 +44,6 @@ export const UpdateEpisodeImplementation = async (
   );
 
   return episode_updated;
-};
-
-export const GetEpisodesListImplementation = async (
-  params: GetEpisodesListParams
-) => {
-  const { patient_id, page, limit } = params;
-
-  const episodes = await EpisodeModel.find({ patient_id })
-    .limit(limit)
-    .skip(page * limit)
-    .sort({ createdAt: -1 });
-
-  return episodes;
 };
 
 type ListEpisodesParams = {

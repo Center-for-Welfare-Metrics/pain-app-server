@@ -5,6 +5,7 @@ import account from "@routes/services/account";
 import patient from "@routes/services/patient";
 import episode from "@routes/services/episode";
 import publicRoutes from "@routes/services/public";
+import track from "@routes/services/track";
 
 const routes = (app: Express) => {
   app.use("/auth", authRouter);
@@ -13,6 +14,7 @@ const routes = (app: Express) => {
   app.use("/patient", patient);
   app.use("/episode", episode);
   app.use("/public", publicRoutes);
+  app.use("/track", track);
 };
 
 export default routes;

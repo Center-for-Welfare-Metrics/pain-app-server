@@ -1,8 +1,9 @@
 import { Schema, model } from "mongoose";
 
+type ITrackPainType = "psychological" | "physical";
 export interface ITrack {
   name: string;
-  pain_type: string;
+  pain_type: ITrackPainType;
   episode_id: string;
   comment?: string;
 }
@@ -14,6 +15,7 @@ const trackSchema = new Schema(
       type: String,
       enum: ["psychological", "physical"],
       required: true,
+      default: "physical",
     },
     episode_id: { type: Schema.Types.ObjectId, ref: "episode", required: true },
     comment: { type: String },
@@ -23,4 +25,4 @@ const trackSchema = new Schema(
   }
 );
 
-export const TrackModel = model("track", trackSchema);
+export const TrackModel = model<ITrack>("track", trackSchema);

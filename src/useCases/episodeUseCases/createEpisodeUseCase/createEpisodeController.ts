@@ -39,7 +39,7 @@ export const CreateEpisodeValidator = () => [
         throw new Error("Patient not found");
       }
 
-      if (patient.creator_id.toString() !== user_id.toString()) {
+      if (patient.creator_id.toString() !== user_id) {
         throw new Error("Patient not found");
       }
     }),
