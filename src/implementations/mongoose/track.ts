@@ -1,4 +1,4 @@
-import { TrackModel } from "@models/track";
+import { ITrackPainType, TrackModel } from "@models/track";
 
 type CreateTrackParams = {
   name: string;
@@ -44,4 +44,35 @@ export const CountTracksImplementation = async (params: CountTracksParams) => {
   const count = await TrackModel.countDocuments({ episode_id });
 
   return count;
+};
+
+type UpdateTrackParams = {
+  track_id: string;
+  update: {
+    name?: string;
+    comment?: string;
+    pain_type?: ITrackPainType;
+  };
+};
+
+export const UpdateTrackImplementation = async (params: UpdateTrackParams) => {
+  const { track_id, update } = params;
+
+  const track_updated = await TrackModel.findByIdAndUpdate(track_id, update, {
+    new: true,
+  });
+
+  return track_updated;
+};
+
+type GetTrackById = {
+  track_id: string;
+};
+
+export const GetTrackByIdImplementation = async (params: GetTrackById) => {
+  const { track_id } = params;
+
+  const track = await TrackModel.findById(track_id);
+
+  return track;
 };

@@ -1,6 +1,12 @@
 import { Schema, model } from "mongoose";
 
-type ITrackPainType = "psychological" | "physical";
+export type ITrackPainType = "psychological" | "physical";
+
+export const TrackPainTypeEnum: ITrackPainType[] = [
+  "psychological",
+  "physical",
+];
+
 export interface ITrack {
   name: string;
   pain_type: ITrackPainType;

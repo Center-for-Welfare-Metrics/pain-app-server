@@ -10,6 +10,10 @@ import {
   ListTracksController,
   ListTracksValidator,
 } from "@useCases/trackUseCases/listTracksUseCase/listTracksController";
+import {
+  UpdateTrackController,
+  UpdateTrackValidator,
+} from "@useCases/trackUseCases/updateTrackUseCase/updateTrackController";
 
 const router = Router();
 
@@ -23,6 +27,13 @@ router.get(
   validate,
   PaginationMiddleware,
   ListTracksController
+);
+
+router.patch(
+  "/:track_id",
+  UpdateTrackValidator(),
+  validate,
+  UpdateTrackController
 );
 
 export default router;

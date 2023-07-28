@@ -33,7 +33,7 @@ export const ListTracksValidator = () => [
   query("episode_id")
     .isMongoId()
     .custom(async (episode_id: string, { req }) => {
-      const user_id = req["user"]._id;
+      const user_id = req.user._id;
 
       const episode = await GetEpisodeByIdImplementation({
         episode_id,
