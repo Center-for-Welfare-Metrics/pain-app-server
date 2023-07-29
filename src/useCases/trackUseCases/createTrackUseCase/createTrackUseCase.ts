@@ -1,3 +1,4 @@
+import { InitializeTrackImplementation } from "@implementations/mongoose/segment";
 import {
   CountTracksImplementation,
   CreateTrackImplementation,
@@ -14,10 +15,14 @@ export const CreateTrackUseCase = async (params: CreateTrackUseCaseParams) => {
 
   const track_name = `New Track ${tracksCount + 1}`;
 
-  const episode_create = await CreateTrackImplementation({
+  const track_created = await CreateTrackImplementation({
     episode_id,
     name: track_name,
   });
 
-  return episode_create;
+  const segments_created = await InitializeTrackImplementation({
+    track_id: track_created._id.toString(),
+  });
+
+  return { ...track_created, segments: segments_created };
 };

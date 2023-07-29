@@ -8,6 +8,7 @@ declare global {
       GOOGLE_RECAPTCHA_SITE_KEY: string;
       GOOGLE_PROJECT_ID: string;
       PORT: string;
+      ENV: string;
     }
   }
 }

@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { ISegment } from "./segment";
 
 export type ITrackPainType = "psychological" | "physical";
 
@@ -12,6 +13,7 @@ export interface ITrack {
   pain_type: ITrackPainType;
   episode_id: string;
   comment?: string;
+  segments?: ISegment[];
 }
 
 const trackSchema = new Schema(
@@ -30,5 +32,14 @@ const trackSchema = new Schema(
     timestamps: true,
   }
 );
+
+trackSchema.virtual("segments", {
+  ref: "segment",
+  localField: "_id",
+  foreignField: "track_id",
+});
+
+trackSchema.set("toObject", { virtuals: true });
+trackSchema.set("toJSON", { virtuals: true });
 
 export const TrackModel = model<ITrack>("track", trackSchema);

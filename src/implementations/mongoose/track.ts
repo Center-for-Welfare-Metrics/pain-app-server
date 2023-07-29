@@ -29,7 +29,8 @@ export const ListTracksImplementation = async (params: GetTrackListParams) => {
   const tracks = await TrackModel.find({ episode_id })
     .limit(limit)
     .skip(page * limit)
-    .sort({ createdAt: 1 });
+    .sort({ createdAt: 1 })
+    .populate("segments");
 
   return tracks;
 };
@@ -75,4 +76,16 @@ export const GetTrackByIdImplementation = async (params: GetTrackById) => {
   const track = await TrackModel.findById(track_id);
 
   return track;
+};
+
+type DeleteTrackParams = {
+  track_id: string;
+};
+
+export const DeleteTrackImplementation = async (params: DeleteTrackParams) => {
+  const { track_id } = params;
+
+  const track_deleted = await TrackModel.findByIdAndDelete(track_id);
+
+  return track_deleted;
 };

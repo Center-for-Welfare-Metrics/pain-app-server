@@ -9,6 +9,8 @@ export interface IUser {
   role?: string;
 }
 
+export const userRoleEnum = ["doctor", "veterinarian"];
+
 const userSchema = new Schema<IUser>(
   {
     email: { type: String, required: true, unique: true },
@@ -16,7 +18,7 @@ const userSchema = new Schema<IUser>(
     password: { type: String, required: true },
     provider: { type: String, required: false },
     super: { type: Boolean, default: false },
-    role: { type: String, enum: ["doctor", "veterinarian"], required: false },
+    role: { type: String, enum: userRoleEnum, required: false },
   },
   {
     timestamps: true,

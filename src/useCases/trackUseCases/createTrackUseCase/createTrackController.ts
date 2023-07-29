@@ -20,7 +20,11 @@ export const CreateTrackController = async (
 
     return response.status(201).json(Track);
   } catch (error) {
-    return response.sendStatus(500);
+    if (process.env.ENV === "DEV") {
+      return response.status(500).json({ error: error.message });
+    } else {
+      return response.sendStatus(500);
+    }
   }
 };
 

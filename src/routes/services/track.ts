@@ -14,6 +14,10 @@ import {
   UpdateTrackController,
   UpdateTrackValidator,
 } from "@useCases/trackUseCases/updateTrackUseCase/updateTrackController";
+import {
+  DeleteTrackController,
+  DeleteTrackValidator,
+} from "@useCases/trackUseCases/deleteTrackUseCase/deleteTrackController";
 
 const router = Router();
 
@@ -34,6 +38,13 @@ router.patch(
   UpdateTrackValidator(),
   validate,
   UpdateTrackController
+);
+
+router.delete(
+  "/:track_id",
+  DeleteTrackValidator(),
+  validate,
+  DeleteTrackController
 );
 
 export default router;
