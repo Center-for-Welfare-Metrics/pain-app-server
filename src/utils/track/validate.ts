@@ -4,6 +4,10 @@ import { GetTrackByIdImplementation } from "@implementations/mongoose/track";
 export const TrackPermissionValidate = async (track_id, { req }) => {
   const user_id = req.user._id;
 
+  TrackPermissionValidate(track_id, user_id);
+};
+
+export const TrackPermissionValidation = async (track_id, user_id) => {
   const track = await GetTrackByIdImplementation({ track_id });
 
   if (!track) {

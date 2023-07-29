@@ -89,29 +89,35 @@ type IIntensityType = "draw" | "values";
 type ISegmentTimeUnit = "minutes" | "hours" | "days";
 type ISegmentEstimativeType = "reported" | "measured" | "inferred";
 type ISegmentPainType = "acute" | "chronic";
-export interface ISegment {
-  name: string;
-  start: number;
-  end: number;
+
+export type ISegmentIntensities = {
+  type: IIntensityType;
+  draw?: any;
+  values?: any;
+  justification?: string;
+};
+
+export type ISegmentQuality = {
+  texture?: string;
+  depth?: string;
+  anatomy?: string;
+  comment?: string;
+};
+
+export type ISegment = {
+  name?: string;
+  start?: number;
+  end?: number;
   time_unit: ISegmentTimeUnit;
-  start_date: Date;
+  start_date?: string;
   estimative_type: ISegmentEstimativeType;
-  comment: string;
+  comment?: string;
   pain_type: ISegmentPainType;
-  intensities: {
-    type: IIntensityType;
-    draw: any;
-    values: any;
-    justification: string;
-  };
-  quality: {
-    texture: string;
-    depth: string;
-    anatomy: string;
-    comment: string;
-  };
+  intensities: ISegmentIntensities;
+  quality?: ISegmentQuality;
   interventions: IIntervention[];
   symptoms: ISymptom[];
-}
+  track_id: string;
+};
 
 export const SegmentModel = model<ISegment>("segment", segmentSchema);

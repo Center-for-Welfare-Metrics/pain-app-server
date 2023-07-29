@@ -3,22 +3,20 @@ import { CleanUpUndefined } from "@utils/controller-utils";
 import { body, param } from "express-validator";
 import { UpdateTrackUseCase } from "./updateTrackUseCase";
 import { ITrackPainType, TrackPainTypeEnum } from "@models/track";
-import { GetTrackByIdImplementation } from "@implementations/mongoose/track";
-import { GetEpisodeByIdImplementation } from "@implementations/mongoose/episodes";
 import { TrackPermissionValidate } from "@utils/track/validate";
 
-type UpdateEpisodeRequestParams = {
+type UpdateTrackRequestParams = {
   track_id: string;
 };
 
-type UpdateEpisodeRequestBody = {
+type UpdateTrackRequestBody = {
   name?: string;
   comment?: string;
   pain_type?: ITrackPainType;
 };
 
 export const UpdateTrackController = async (
-  request: Request<UpdateEpisodeRequestParams, any, UpdateEpisodeRequestBody>,
+  request: Request<UpdateTrackRequestParams, any, UpdateTrackRequestBody>,
   response: Response
 ) => {
   const { track_id } = request.params;

@@ -1,4 +1,4 @@
-import { SegmentModel } from "@models/segment";
+import { ISegment, SegmentModel } from "@models/segment";
 
 type CreateSegmentParams = {
   track_id: string;
@@ -25,17 +25,15 @@ export const InitializeTrackImplementation = async (
 ) => {
   const { track_id } = params;
 
-  const segments_created = await SegmentModel.create([
-    {
+  const itens = [];
+
+  for (let i = 0; i < 3; i++) {
+    itens.push({
       track_id,
-    },
-    {
-      track_id,
-    },
-    {
-      track_id,
-    },
-  ]);
+    });
+  }
+
+  const segments_created = await SegmentModel.create(itens);
 
   return segments_created;
 };
@@ -52,4 +50,39 @@ export const DeleteSegmentsByTrackIdImplementation = async (
   const segments_deleted = await SegmentModel.deleteMany({ track_id });
 
   return segments_deleted;
+};
+
+type UpdateSegmentParams = {
+  segment_id: string;
+  update: Partial<ISegment>;
+};
+
+export const UpdateSegmentImplementation = async (
+  params: UpdateSegmentParams
+) => {
+  const { segment_id, update } = params;
+
+  const segment_updated = await SegmentModel.findByIdAndUpdate(
+    segment_id,
+    update,
+    {
+      new: true,
+    }
+  );
+
+  return segment_updated;
+};
+
+type GetSegmentByIdParams = {
+  segment_id: string;
+};
+
+export const GetSegmentByIdImplementation = async (
+  params: GetSegmentByIdParams
+) => {
+  const { segment_id } = params;
+
+  const segment = await SegmentModel.findById(segment_id);
+
+  return segment;
 };
