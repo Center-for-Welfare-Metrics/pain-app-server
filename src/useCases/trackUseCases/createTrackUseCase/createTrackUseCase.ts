@@ -24,5 +24,7 @@ export const CreateTrackUseCase = async (params: CreateTrackUseCaseParams) => {
     track_id: track_created._id.toString(),
   });
 
-  return { ...track_created, segments: segments_created };
+  const track = track_created.toJSON();
+
+  return { ...track, segments: segments_created };
 };
