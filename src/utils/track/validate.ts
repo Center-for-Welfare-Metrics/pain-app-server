@@ -4,25 +4,29 @@ import { GetTrackByIdImplementation } from "@implementations/mongoose/track";
 export const TrackPermissionValidate = async (track_id, { req }) => {
   const user_id = req.user._id;
 
-  TrackPermissionValidate(track_id, user_id);
+  await TrackPermissionValidation(track_id, user_id);
 };
 
 export const TrackPermissionValidation = async (track_id, user_id) => {
-  const track = await GetTrackByIdImplementation({ track_id });
+  return new Promise(async (resolve, reject) => {
+    const track = await GetTrackByIdImplementation({ track_id });
 
-  if (!track) {
-    throw new Error("Track not found");
-  }
+    if (!track) {
+      throw new Error("Track not found");
+    }
 
-  const episode = await GetEpisodeByIdImplementation({
-    episode_id: track.episode_id.toString(),
+    const episode = await GetEpisodeByIdImplementation({
+      episode_id: track.episode_id.toString(),
+    });
+
+    if (!episode) {
+      throw new Error("Episode not found");
+    }
+
+    if (episode.creator_id.toString() !== user_id) {
+      throw new Error("Episode not found");
+    }
+
+    resolve(true);
   });
-
-  if (!episode) {
-    throw new Error("Episode not found");
-  }
-
-  if (episode.creator_id.toString() !== user_id) {
-    throw new Error("Episode not found");
-  }
 };

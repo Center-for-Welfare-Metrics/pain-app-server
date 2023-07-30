@@ -65,7 +65,7 @@ const segmentSchema = new Schema(
       default: "acute",
     },
     intensities: {
-      type: { type: String, enum: intensityTypeEnum, default: "draw" },
+      type: { type: String, enum: intensityTypeEnum, default: "values" },
       draw: { type: Object },
       values: { type: Object },
       justification: { type: String },

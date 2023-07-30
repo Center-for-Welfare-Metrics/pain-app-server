@@ -73,6 +73,6 @@ export const UpdateSegmentValidator = () => [
 
       const track_id = segment.track_id.toString();
 
-      TrackPermissionValidation(track_id, user_id);
+      await TrackPermissionValidation(track_id, user_id);
     }),
 ];
