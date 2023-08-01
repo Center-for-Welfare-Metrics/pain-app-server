@@ -12,8 +12,6 @@ type GenerateResponseUseCaseParams = {
   res: Response;
 };
 
-const MODEL = "gpt-3.5-turbo-16k";
-
 export const GenerateResponseUseCase = async ({
   attributes,
   res,
@@ -31,21 +29,26 @@ export const GenerateResponseUseCase = async ({
 
   const openai = new OpenAIApi(configuration);
 
-  const response = await openai.createChatCompletion(
-    {
-      model: MODEL,
-      messages: [
-        {
-          role: "user",
-          content: promptWithAttributes + finalInstructions,
-        },
-      ],
-      max_tokens: 10000,
-      stream: true,
-    },
-    { responseType: "stream" }
-  );
+  const GPT_MODEL_TO_USE = process.env.GPT_MODEL_TO_USE;
 
-  // @ts-ignore
-  return response.data.pipe(res);
+  try {
+    const response = await openai.createChatCompletion(
+      {
+        model: GPT_MODEL_TO_USE,
+        messages: [
+          {
+            role: "user",
+            content: promptWithAttributes + finalInstructions,
+          },
+        ],
+        stream: true,
+      },
+      { responseType: "stream" }
+    );
+    // @ts-ignore
+    return response.data.pipe(res);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: err.message });
+  }
 };

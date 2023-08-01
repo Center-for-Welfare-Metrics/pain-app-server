@@ -7,8 +7,6 @@ type GenerateCompletionUseCaseParams = {
   options: PromptOptions;
 };
 
-const MODEL = "gpt-3.5-turbo-16k";
-
 const getOptionValue = (value) => {
   return value ?? undefined;
 };
@@ -23,8 +21,10 @@ export const GenerateCompletionUseCase = async ({
   });
   const openai = new OpenAIApi(configuration);
 
+  const GPT_MODEL_TO_USE = process.env.GPT_MODEL_TO_USE;
+
   const response = await openai.createChatCompletion({
-    model: MODEL,
+    model: GPT_MODEL_TO_USE,
     messages: [
       {
         role: "user",
@@ -38,7 +38,6 @@ export const GenerateCompletionUseCase = async ({
         ? undefined
         : getOptionValue(options.temperature),
     top_p: options.top_p === 1 ? undefined : getOptionValue(options.top_p),
-    max_tokens: 10000,
   });
 
   const text = response.data.choices[0].message.content;
