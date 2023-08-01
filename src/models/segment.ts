@@ -34,6 +34,20 @@ export type ISymptom = {
   date: Date;
 };
 
+export type ISegmentValues = {
+  excruciating?: number;
+  disabling?: number;
+  hurful?: number;
+  annoying?: number;
+};
+
+const segmentValuesSchema = new Schema({
+  excruciating: { type: Number },
+  disabling: { type: Number },
+  hurful: { type: Number },
+  annoying: { type: Number },
+});
+
 export const intensityTypeEnum = ["draw", "values"];
 export const segmentTimeUnitEnum = ["minutes", "hours", "days"];
 export const segmentEstimativeTypeEnum = ["reported", "measured", "inferred"];
@@ -67,7 +81,7 @@ const segmentSchema = new Schema(
     intensities: {
       type: { type: String, enum: intensityTypeEnum, default: "values" },
       draw: { type: Object },
-      values: { type: Object },
+      values: segmentValuesSchema,
       justification: { type: String },
     },
     quality: {
@@ -93,7 +107,7 @@ type ISegmentPainType = "acute" | "chronic";
 export type ISegmentIntensities = {
   type: IIntensityType;
   draw?: any;
-  values?: any;
+  values?: ISegmentValues;
   justification?: string;
 };
 
