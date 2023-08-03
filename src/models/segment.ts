@@ -41,17 +41,40 @@ export type ISegmentValues = {
   annoying?: number;
 };
 
-const segmentValuesSchema = new Schema({
-  excruciating: { type: Number },
-  disabling: { type: Number },
-  hurful: { type: Number },
-  annoying: { type: Number },
-});
+const intensityValuesSchema = new Schema(
+  {
+    excruciating: { type: Number },
+    disabling: { type: Number },
+    hurful: { type: Number },
+    annoying: { type: Number },
+  },
+  {
+    _id: false,
+  }
+);
 
 export const intensityTypeEnum = ["draw", "values"];
 export const segmentTimeUnitEnum = ["minutes", "hours", "days"];
 export const segmentEstimativeTypeEnum = ["reported", "measured", "inferred"];
 export const segmentPainTypeEnum = ["acute", "chronic"];
+
+export const qualityTextureEnum = [
+  "stretching",
+  "stinging",
+  "burning",
+  "pressing",
+] as const;
+
+type IQualityTexture = (typeof qualityTextureEnum)[number];
+
+export const qualityDepthEnum = [
+  "muscular",
+  "visceral",
+  "superficial",
+  "bone",
+] as const;
+
+type IQualityDepth = (typeof qualityDepthEnum)[number];
 
 const segmentSchema = new Schema(
   {
@@ -81,12 +104,12 @@ const segmentSchema = new Schema(
     intensities: {
       type: { type: String, enum: intensityTypeEnum, default: "values" },
       draw: { type: Object },
-      values: segmentValuesSchema,
+      values: intensityValuesSchema,
       justification: { type: String },
     },
     quality: {
-      texture: { type: String },
-      depth: { type: String },
+      texture: { type: String, enum: qualityTextureEnum },
+      depth: { type: String, enum: qualityDepthEnum },
       anatomy: { type: String },
       comment: { type: String },
     },
@@ -112,8 +135,8 @@ export type ISegmentIntensities = {
 };
 
 export type ISegmentQuality = {
-  texture?: string;
-  depth?: string;
+  texture?: IQualityTexture;
+  depth?: IQualityDepth;
   anatomy?: string;
   comment?: string;
 };
