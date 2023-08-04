@@ -3,9 +3,10 @@ import { Schema, model } from "mongoose";
 const interventionSchema = new Schema(
   {
     name: { type: String, required: true },
-    date: { type: Date, required: true },
+    datetime: { type: Date, required: true },
     dose: { type: String, required: true },
     effective: { type: Boolean, required: true },
+    observation: { type: String },
   },
   {
     timestamps: true,
@@ -14,15 +15,17 @@ const interventionSchema = new Schema(
 
 export type IIntervention = {
   name: string;
-  date: Date;
+  datetime: Date;
   dose: string;
   effective: boolean;
+  observation?: string;
 };
 
 const symptomSchema = new Schema(
   {
     name: { type: String, required: true },
-    date: { type: Date, required: true },
+    datetime: { type: Date, required: true },
+    observation: { type: String },
   },
   {
     timestamps: true,
@@ -31,7 +34,8 @@ const symptomSchema = new Schema(
 
 export type ISymptom = {
   name: string;
-  date: Date;
+  datetime: Date;
+  observation?: string;
 };
 
 export type ISegmentValues = {
