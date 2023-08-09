@@ -22,6 +22,13 @@ episodeSchema.virtual("patient", {
   justOne: true,
 });
 
+episodeSchema.virtual("tracks_count", {
+  ref: "track",
+  localField: "_id",
+  foreignField: "episode_id",
+  count: true,
+});
+
 episodeSchema.set("toObject", { virtuals: true });
 episodeSchema.set("toJSON", { virtuals: true });
 

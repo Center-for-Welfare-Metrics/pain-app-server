@@ -60,12 +60,13 @@ export const ListEpisodesImplementation = async (
 
   const sortObject = getSortObject(sortBy);
 
-  const patients = await EpisodeModel.find({ patient_id })
+  const episodes = await EpisodeModel.find({ patient_id })
     .sort(sortObject)
     .limit(limit)
-    .skip(page * limit);
+    .skip(page * limit)
+    .populate("tracks_count");
 
-  return patients;
+  return episodes;
 };
 
 type CountEpisodesParams = {
