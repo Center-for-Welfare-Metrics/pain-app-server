@@ -86,3 +86,17 @@ export const GetSegmentByIdImplementation = async (
 
   return segment;
 };
+
+type DeleteSegmentByIdParams = {
+  segment_id: string;
+};
+
+export const DeleteSegmentByIdImplementation = async (
+  params: DeleteSegmentByIdParams
+) => {
+  const { segment_id } = params;
+
+  const segment_deleted = await SegmentModel.findByIdAndDelete(segment_id);
+
+  return segment_deleted;
+};

@@ -5,6 +5,14 @@ import {
   UpdateSegmentController,
   UpdateSegmentValidator,
 } from "@useCases/segmentUseCases/updateSegmentUseCase/updateSegementController";
+import {
+  CreateSegmentController,
+  CreateSegmentValidator,
+} from "@useCases/segmentUseCases/createSegmentUseCase/createSegmentController";
+import {
+  DeleteSegmentController,
+  DeleteSegmentValidator,
+} from "@useCases/segmentUseCases/deleteSegmentUseCase/deleteSegmentController";
 
 const router = Router();
 
@@ -15,6 +23,15 @@ router.patch(
   UpdateSegmentValidator(),
   validate,
   UpdateSegmentController
+);
+
+router.post("/", CreateSegmentValidator(), validate, CreateSegmentController);
+
+router.delete(
+  "/:segment_id",
+  DeleteSegmentValidator(),
+  validate,
+  DeleteSegmentController
 );
 
 export default router;
