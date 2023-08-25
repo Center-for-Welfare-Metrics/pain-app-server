@@ -7,8 +7,12 @@ const episodeSchema = new Schema(
     diagnosis: { type: String },
     start_date: { type: Date },
     comment: { type: String },
-    patient_id: { type: Schema.Types.ObjectId, ref: "patient", required: true },
-    creator_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
+    patient_id: {
+      type: Schema.Types.ObjectId,
+      ref: "patient",
+      required: false,
+    },
+    creator_id: { type: Schema.Types.ObjectId, ref: "user", required: false },
   },
   {
     timestamps: true,

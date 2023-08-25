@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { ListTracksUseCase } from "./listTrackUseCase";
 import { query } from "express-validator";
 import { GetPatientByIdImplementation } from "@implementations/mongoose/patient";
 import { GetEpisodeByIdImplementation } from "@implementations/mongoose/episodes";
-import { EpisodePermissionValidate } from "@utils/episode/validate";
+import { ListTracksUseCase } from "@useCases/trackUseCases/listTracksUseCase/listTrackUseCase";
+import { GuestEpisodePermissionValidate } from "@utils/episode/validate";
 
 type ListTracksRequestQuery = {
   page: number;
@@ -11,7 +11,7 @@ type ListTracksRequestQuery = {
   episode_id: string;
 };
 
-export const ListTracksController = async (
+export const ListTracksGuestController = async (
   request: Request<any, any, any, ListTracksRequestQuery>,
   response: Response
 ) => {
@@ -30,6 +30,6 @@ export const ListTracksController = async (
   }
 };
 
-export const ListTracksValidator = () => [
-  query("episode_id").isMongoId().custom(EpisodePermissionValidate),
+export const ListTracksGuestValidator = () => [
+  query("episode_id").isMongoId().custom(GuestEpisodePermissionValidate),
 ];

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { GetEpisodeByIdUseCase } from "./getEpisodeByIdUseCase";
 import { param } from "express-validator";
+import { EpisodePermissionValidate } from "@utils/episode/validate";
 
 type GetEpisodeByIdParams = {
   episode_id: string;
@@ -21,4 +22,6 @@ export const GetEpisodeByIdController = async (
   return response.sendStatus(404);
 };
 
-export const GetEpisodeByIdValidator = () => [param("episode_id").isMongoId()];
+export const GetEpisodeByIdValidator = () => [
+  param("episode_id").isMongoId().custom(EpisodePermissionValidate),
+];

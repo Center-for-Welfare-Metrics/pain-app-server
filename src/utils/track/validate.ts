@@ -30,3 +30,23 @@ export const TrackPermissionValidation = async (track_id, user_id) => {
     resolve(true);
   });
 };
+
+export const TrackGuestPermissionValidate = async (track_id) => {
+  const track = await GetTrackByIdImplementation({ track_id });
+
+  if (!track) {
+    throw new Error("Track not found");
+  }
+
+  const episode = await GetEpisodeByIdImplementation({
+    episode_id: track.episode_id.toString(),
+  });
+
+  if (!episode) {
+    throw new Error("Episode not found");
+  }
+
+  if (!!episode.creator_id?.toString()) {
+    throw new Error("Episode not found");
+  }
+};

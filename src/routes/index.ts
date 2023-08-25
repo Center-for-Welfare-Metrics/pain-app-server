@@ -7,6 +7,8 @@ import episode from "@routes/services/episode";
 import publicRoutes from "@routes/services/public";
 import segment from "@routes/services/segment";
 import track from "@routes/services/track";
+import episodeGuest from "@routes/services/guest/episode-guest";
+import trackGuest from "@routes/services/guest/track-guest";
 
 const routes = (app: Express) => {
   app.use("/auth", authRouter);
@@ -14,8 +16,10 @@ const routes = (app: Express) => {
   app.use("/account", account);
   app.use("/patient", patient);
   app.use("/episode", episode);
+  app.use("/episode-guest", episodeGuest);
   app.use("/public", publicRoutes);
   app.use("/track", track);
+  app.use("/track-guest", trackGuest);
   app.use("/segment", segment);
 };
 

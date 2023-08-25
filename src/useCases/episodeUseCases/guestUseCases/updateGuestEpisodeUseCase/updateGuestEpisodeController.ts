@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
-import { UpdateEpisodeUseCase } from "./updateEpisodeUSeCase";
+
 import { CleanUpUndefined } from "@utils/controller-utils";
 import { body, param } from "express-validator";
-import { EpisodePermissionValidate } from "@utils/episode/validate";
+import {
+  EpisodePermissionValidate,
+  GuestEpisodePermissionValidate,
+} from "@utils/episode/validate";
+import { UpdateEpisodeUseCase } from "../../updateEpisodeUseCase/updateEpisodeUSeCase";
 
 type UpdateEpisodeRequestParams = {
   episode_id: string;
@@ -16,7 +20,7 @@ type UpdateEpisodeRequestBody = {
   comment?: string;
 };
 
-export const UpdateEpisodeController = async (
+export const UpdateGuestEpisodeController = async (
   request: Request<UpdateEpisodeRequestParams, any, UpdateEpisodeRequestBody>,
   response: Response
 ) => {
@@ -41,8 +45,8 @@ export const UpdateEpisodeController = async (
   }
 };
 
-export const UpdateEpisodeValidator = () => [
-  param("episode_id").isMongoId().custom(EpisodePermissionValidate),
+export const UpdateGuestEpisodeValidator = () => [
+  param("episode_id").isMongoId().custom(GuestEpisodePermissionValidate),
   body("name").optional().isString(),
   body("location").optional().isString(),
   body("diagnosis").optional().isString(),

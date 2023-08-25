@@ -3,8 +3,8 @@ import { getSortObject } from "@utils/sortBy";
 
 type CreateEpisodeParams = {
   name: string;
-  patient_id: string;
-  creator_id: string;
+  patient_id?: string;
+  creator_id?: string;
 };
 
 export const CreateEpisodeImplementation = async (
