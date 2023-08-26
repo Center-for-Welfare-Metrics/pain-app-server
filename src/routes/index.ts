@@ -9,6 +9,7 @@ import segment from "@routes/services/segment";
 import track from "@routes/services/track";
 import episodeGuest from "@routes/services/guest/episode-guest";
 import trackGuest from "@routes/services/guest/track-guest";
+import segmentGuest from "@routes/services/guest/segment-guest";
 
 const routes = (app: Express) => {
   app.use("/auth", authRouter);
@@ -21,6 +22,7 @@ const routes = (app: Express) => {
   app.use("/track", track);
   app.use("/track-guest", trackGuest);
   app.use("/segment", segment);
+  app.use("/segment-guest", segmentGuest);
 };
 
 export default routes;

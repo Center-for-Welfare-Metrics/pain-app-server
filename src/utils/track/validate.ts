@@ -32,21 +32,29 @@ export const TrackPermissionValidation = async (track_id, user_id) => {
 };
 
 export const TrackGuestPermissionValidate = async (track_id) => {
-  const track = await GetTrackByIdImplementation({ track_id });
+  await TrackGuestPermissionValidateAsync(track_id);
+};
 
-  if (!track) {
-    throw new Error("Track not found");
-  }
+export const TrackGuestPermissionValidateAsync = async (track_id) => {
+  return new Promise(async (resolve, reject) => {
+    const track = await GetTrackByIdImplementation({ track_id });
 
-  const episode = await GetEpisodeByIdImplementation({
-    episode_id: track.episode_id.toString(),
+    if (!track) {
+      throw new Error("Track not found");
+    }
+
+    const episode = await GetEpisodeByIdImplementation({
+      episode_id: track.episode_id.toString(),
+    });
+
+    if (!episode) {
+      throw new Error("Episode not found");
+    }
+
+    if (!!episode.creator_id?.toString()) {
+      throw new Error("Episode not found");
+    }
+
+    resolve(true);
   });
-
-  if (!episode) {
-    throw new Error("Episode not found");
-  }
-
-  if (!!episode.creator_id?.toString()) {
-    throw new Error("Episode not found");
-  }
 };

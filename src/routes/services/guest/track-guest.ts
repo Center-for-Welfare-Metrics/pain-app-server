@@ -14,6 +14,10 @@ import {
   UpdateTrackGuestController,
   UpdateTrackGuestValidator,
 } from "@useCases/trackUseCases/guestUseCases/updateTrackGuestUseCase/updateTrackGuestController";
+import {
+  DeleteTrackGuestController,
+  DeleteTrackGuestValidator,
+} from "@useCases/trackUseCases/guestUseCases/deleteTrackGuestUseCase/deleteTrackGuestController";
 
 const router = Router();
 
@@ -39,11 +43,11 @@ router.patch(
   UpdateTrackGuestController
 );
 
-// router.delete(
-//   "/:track_id",
-//   DeleteTrackValidator(),
-//   validate,
-//   DeleteTrackController
-// );
+router.delete(
+  "/:track_id",
+  DeleteTrackGuestValidator(),
+  validate,
+  DeleteTrackGuestController
+);
 
 export default router;
