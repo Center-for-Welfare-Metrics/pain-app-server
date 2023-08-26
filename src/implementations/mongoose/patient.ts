@@ -39,7 +39,8 @@ export const ListPatientsImplementation = async (
   const patients = await PatientModel.find({ creator_id: user_id })
     .sort(sortObject)
     .limit(limit)
-    .skip(page * limit);
+    .skip(page * limit)
+    .populate("episodes_count");
 
   return patients;
 };

@@ -110,3 +110,23 @@ export const DeleteEpisodesByPatientIdImplementation = async (
 
   return episodes;
 };
+
+type AssignePatientAndCreatorToEpiodeParams = {
+  episode_id: string;
+  patient_id: string;
+  creator_id: string;
+};
+
+export const AssignePatientAndCreatorToEpiodeImplementation = async (
+  params: AssignePatientAndCreatorToEpiodeParams
+) => {
+  const { episode_id, patient_id, creator_id } = params;
+
+  const newEpisode = await EpisodeModel.findByIdAndUpdate(
+    episode_id,
+    { patient_id, creator_id },
+    { new: true }
+  );
+
+  return newEpisode;
+};

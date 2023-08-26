@@ -12,4 +12,14 @@ const patientSchema = new Schema(
   }
 );
 
+patientSchema.virtual("episodes_count", {
+  ref: "episode",
+  localField: "_id",
+  foreignField: "patient_id",
+  count: true,
+});
+
+patientSchema.set("toObject", { virtuals: true });
+patientSchema.set("toJSON", { virtuals: true });
+
 export const PatientModel = model("patient", patientSchema);

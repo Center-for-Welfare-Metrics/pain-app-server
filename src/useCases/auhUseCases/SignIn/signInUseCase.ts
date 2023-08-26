@@ -10,20 +10,20 @@ type SignInUseCase = {
 export const SignInUseCase = async (params: SignInUseCase) => {
   const { email, password } = params;
 
-  const newUser = await GetUserByEmailImplementation(email);
+  const user = await GetUserByEmailImplementation(email);
 
-  const isPasswordCorrect = checkPassword(password, newUser.password);
+  const isPasswordCorrect = checkPassword(password, user.password);
 
   if (!isPasswordCorrect) {
     throw new Error();
   }
 
   return {
-    user: newUser,
+    user: user,
     token: generateJwt({
-      email: newUser.email,
-      name: newUser.name,
-      _id: newUser._id.toString(),
+      email: user.email,
+      name: user.name,
+      _id: user._id.toString(),
     }),
   };
 };
