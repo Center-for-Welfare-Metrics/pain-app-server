@@ -11,12 +11,16 @@ export interface IUser {
 
 export const userRoleEnum = ["doctor", "veterinarian"];
 
+export const userProviderEnum = ["google", "facebook"] as const;
+
+export type UserProviders = (typeof userProviderEnum)[number];
+
 const userSchema = new Schema<IUser>(
   {
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    password: { type: String, required: true },
-    provider: { type: String, required: false },
+    password: { type: String, required: false },
+    provider: { type: String, enum: userProviderEnum, required: false },
     super: { type: Boolean, default: false },
     role: { type: String, enum: userRoleEnum, required: false },
   },
