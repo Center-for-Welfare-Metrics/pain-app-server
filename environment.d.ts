@@ -9,6 +9,9 @@ declare global {
       GOOGLE_PROJECT_ID: string;
       PORT: string;
       ENV: string;
+      GOOGLE_OATH_CLIENT_ID: string;
+      GOOGLE_OATH_SECRET_ID: string;
+      OAUTH_REDIRECT_TO: string;
     }
   }
 }

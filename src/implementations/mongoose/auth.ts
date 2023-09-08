@@ -1,18 +1,20 @@
-import { UserModel } from "@models/user";
+import { UserModel, UserProviders } from "@models/user";
 
 type SignUpParams = {
   email: string;
   name: string;
-  password: string;
+  password?: string;
+  provider?: UserProviders;
 };
 
 export const SignUpImplementation = async (params: SignUpParams) => {
-  const { email, name, password } = params;
+  const { email, name, password, provider } = params;
 
   const newUser = await UserModel.create({
     email,
     name,
     password,
+    provider,
   });
   return newUser;
 };
@@ -50,11 +52,7 @@ export const VerifyIfEmailExistsImplementation = async (email: string) => {
 export const GetUserByEmailImplementation = async (email: string) => {
   const user = await UserModel.findOne({ email });
 
-  if (user) {
-    return user;
-  }
-
-  throw new Error();
+  return user;
 };
 
 export const GetUserByIdImplementation = async (id: string) => {
