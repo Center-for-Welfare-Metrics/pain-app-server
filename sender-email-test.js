@@ -1,10 +1,10 @@
-import AWS from "aws-sdk";
+const AWS = require("aws-sdk");
 
-AWS.config.update({ region: "us-east-1", apiVersion: "2010-12-01" });
+AWS.config.update({ region: "us-east-1", apiVersion: "2012-10-17" });
 
 const SES = new AWS.SES({
-  accessKeyId: process.env.AWS_ID,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
+  accessKeyId: "",
+  secretAccessKey: "",
 });
 
 SES.createTemplate(
