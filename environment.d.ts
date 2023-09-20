@@ -12,6 +12,8 @@ declare global {
       GOOGLE_OATH_CLIENT_ID: string;
       GOOGLE_OATH_SECRET_ID: string;
       OAUTH_REDIRECT_TO: string;
+      AWS_ID: string;
+      AWS_SECRET_KEY: string;
     }
   }
 }
