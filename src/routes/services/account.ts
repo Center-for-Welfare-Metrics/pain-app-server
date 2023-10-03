@@ -13,20 +13,42 @@ import {
   UpdateAccountPasswordController,
   UpdateAccountPasswordValidator,
 } from "@useCases/accountUseCases/updateAccountPassword/updateAccountPasswordController";
+import {
+  RecoveryPasswordController,
+  RecoveryPasswordValidator,
+} from "@useCases/accountUseCases/recoveryPassword/recoveryPasswordController";
 
 const router = Router();
 
-router.use(useAuth);
-
-router.patch("/", UpdateAccountValidator(), validate, UpdateAccountController);
+router.patch(
+  "/",
+  useAuth,
+  UpdateAccountValidator(),
+  validate,
+  UpdateAccountController
+);
 
 router.patch(
   "/password",
+  useAuth,
   UpdateAccountPasswordValidator(),
   validate,
   UpdateAccountPasswordController
 );
 
-router.patch("/role", SetUserRoleValidator(), validate, SetUserRoleController);
+router.patch(
+  "/role",
+  useAuth,
+  SetUserRoleValidator(),
+  validate,
+  SetUserRoleController
+);
+
+router.post(
+  "/recovery-password",
+  RecoveryPasswordValidator(),
+  validate,
+  RecoveryPasswordController
+);
 
 export default router;

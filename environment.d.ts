@@ -14,6 +14,7 @@ declare global {
       OAUTH_REDIRECT_TO: string;
       AWS_ID: string;
       AWS_SECRET_KEY: string;
+      RECOVERY_PASSWORD_URL: string;
     }
   }
 }
