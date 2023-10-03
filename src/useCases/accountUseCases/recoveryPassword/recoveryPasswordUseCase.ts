@@ -41,8 +41,8 @@ export const RecoveryPasswordUseCase = async (
     name,
     browser_name,
     operating_system,
-    action_url: `${process.env.RECOVERY_PASSWORD_URL}/recovery-password/${token}`,
-    support_url: `${process.env.RECOVERY_PASSWORD_URL}/support`,
+    action_url: `${process.env.RECOVERY_PASSWORD_URL}/${token}`,
+    support_url: `${process.env.SUPPORT_URL}`,
   });
 
   return recoveryRecord;
