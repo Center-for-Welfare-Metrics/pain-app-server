@@ -4,11 +4,13 @@ export type RecoveryPassword = {
   user_id: string;
   token: string;
   expires_at: Date;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 const recoveryPasswordSchema = new Schema(
   {
-    user_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
+    email: { type: String, required: true, index: true },
     token: { type: String, required: true, index: true },
     expires_at: { type: Date, required: true },
   },

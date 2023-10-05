@@ -1,7 +1,7 @@
 import { RecoveryPasswordModel } from "@models/recovery-password";
 
 type RecoveryPasswordCreateTokenParams = {
-  user_id: string;
+  email: string;
   token: string;
   expires_at: Date;
 };
@@ -9,9 +9,9 @@ type RecoveryPasswordCreateTokenParams = {
 export const RecoveryPasswordCreateTokenImplementation = async (
   params: RecoveryPasswordCreateTokenParams
 ) => {
-  const { user_id, token, expires_at } = params;
+  const { email, token, expires_at } = params;
 
-  await RecoveryPasswordModel.create({ user_id, token, expires_at });
+  await RecoveryPasswordModel.create({ email, token, expires_at });
 };
 
 type RecoveryPasswordGetTokenParams = {
@@ -26,4 +26,30 @@ export const RecoveryPasswordGetTokenImplementation = async (
   const recoveryPassword = await RecoveryPasswordModel.findOne({ token });
 
   return recoveryPassword;
+};
+
+type GetRecoveryPasswordByEmailParams = {
+  email: string;
+};
+
+export const GetRecoveryPasswordByEmailImplementation = async (
+  params: GetRecoveryPasswordByEmailParams
+) => {
+  const { email } = params;
+
+  const recoveryPassword = await RecoveryPasswordModel.findOne({ email });
+
+  return recoveryPassword;
+};
+
+type RemoveRecoveryPasswordByEmailParams = {
+  email: string;
+};
+
+export const RemoveRecoveryPasswordByEmailImplementation = async (
+  params: RemoveRecoveryPasswordByEmailParams
+) => {
+  const { email } = params;
+
+  await RecoveryPasswordModel.deleteMany({ email });
 };

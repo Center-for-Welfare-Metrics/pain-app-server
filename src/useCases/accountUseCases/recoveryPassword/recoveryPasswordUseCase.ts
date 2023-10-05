@@ -1,10 +1,37 @@
+import { GetUserByEmailImplementation } from "@implementations/mongoose/auth";
 import {
-  GetUserByEmailImplementation,
-  GetUserByIdImplementation,
-} from "@implementations/mongoose/auth";
-import { RecoveryPasswordCreateTokenImplementation } from "@implementations/mongoose/recovery-password";
+  GetRecoveryPasswordByEmailImplementation,
+  RecoveryPasswordCreateTokenImplementation,
+  RemoveRecoveryPasswordByEmailImplementation,
+} from "@implementations/mongoose/recovery-password";
 import { sendRecoveryPasswordEmail } from "@utils/email/sender";
 import { v4 as uuidv4 } from "uuid";
+
+const checkIfTimeIsLessThan90Seconds = (createdAt: Date) => {
+  const now = new Date();
+
+  const diffInSeconds = (now.getTime() - createdAt.getTime()) / 1000;
+
+  return diffInSeconds < 90;
+};
+
+const userHaveToWaitToSendEmail = async (email: string) => {
+  const recoveryPasswordRecord = await GetRecoveryPasswordByEmailImplementation(
+    {
+      email,
+    }
+  );
+
+  if (!recoveryPasswordRecord) {
+    return false;
+  }
+
+  const createdAt = new Date(recoveryPasswordRecord?.createdAt);
+
+  const isLessThan90Seconds = checkIfTimeIsLessThan90Seconds(createdAt);
+
+  return isLessThan90Seconds;
+};
 
 type RecoveryPasswordUseCaseParams = {
   email: string;
@@ -17,6 +44,12 @@ export const RecoveryPasswordUseCase = async (
 ) => {
   const { email, browser_name, operating_system } = params;
 
+  const userHaveToWait = await userHaveToWaitToSendEmail(email);
+
+  if (userHaveToWait) {
+    throw new Error("Wait 90 seconds to try again");
+  }
+
   const token = uuidv4();
 
   const expires_at = new Date(Date.now() + 24 * 60 * 60 * 1000);
@@ -27,12 +60,12 @@ export const RecoveryPasswordUseCase = async (
     throw new Error("User not found");
   }
 
-  const user_id = user._id.toString();
+  RemoveRecoveryPasswordByEmailImplementation({ email });
 
   const recoveryRecord = await RecoveryPasswordCreateTokenImplementation({
     expires_at,
     token,
-    user_id,
+    email,
   });
 
   const name = user.name;
