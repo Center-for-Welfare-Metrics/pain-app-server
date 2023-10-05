@@ -28,6 +28,7 @@ export const RecoveryPasswordController = async (
 
     return response.sendStatus(200);
   } catch (err) {
+    console.log(err);
     return response.status(422).json({
       message: err.message,
     });
