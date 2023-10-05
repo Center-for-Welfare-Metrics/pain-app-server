@@ -27,8 +27,8 @@ export const ResetPasswordController = async (
 };
 
 export const ResetPasswordValidator = () => [
-  body("password").isString().isLength({ min: 4 }),
-  body("password_confirm").isString().isLength({ min: 4 }),
+  body("password").isString().isLength({ min: 8 }),
+  body("password_confirm").isString().isLength({ min: 8 }),
   body("token").isUUID(),
   body("password_confirm").custom((value, { req }) => {
     if (value !== req.body.password) {
