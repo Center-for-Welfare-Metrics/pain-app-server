@@ -2,6 +2,7 @@ import { RecoveryPasswordModel } from "@models/recovery-password";
 
 type RecoveryPasswordCreateTokenParams = {
   email: string;
+  user_id: string;
   token: string;
   expires_at: Date;
 };
@@ -9,9 +10,14 @@ type RecoveryPasswordCreateTokenParams = {
 export const RecoveryPasswordCreateTokenImplementation = async (
   params: RecoveryPasswordCreateTokenParams
 ) => {
-  const { email, token, expires_at } = params;
+  const { email, user_id, token, expires_at } = params;
 
-  await RecoveryPasswordModel.create({ email, token, expires_at });
+  await RecoveryPasswordModel.create({
+    email,
+    token,
+    expires_at,
+    user: user_id,
+  });
 };
 
 type RecoveryPasswordGetTokenParams = {

@@ -66,6 +66,7 @@ export const RecoveryPasswordUseCase = async (
     expires_at,
     token,
     email,
+    user_id: user._id.toString(),
   });
 
   const name = user.name;

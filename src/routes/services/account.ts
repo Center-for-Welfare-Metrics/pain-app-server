@@ -17,6 +17,10 @@ import {
   RecoveryPasswordController,
   RecoveryPasswordValidator,
 } from "@useCases/accountUseCases/recoveryPassword/recoveryPasswordController";
+import {
+  ResetPasswordController,
+  ResetPasswordValidator,
+} from "@useCases/accountUseCases/resetPassword/resetPasswordController";
 
 const router = Router();
 
@@ -49,6 +53,13 @@ router.post(
   RecoveryPasswordValidator(),
   validate,
   RecoveryPasswordController
+);
+
+router.patch(
+  "/reset-password",
+  ResetPasswordValidator(),
+  validate,
+  ResetPasswordController
 );
 
 export default router;
