@@ -5,7 +5,7 @@ import {
   getPromptWithAttributes,
 } from "@utils/prompt/generate";
 import { Response } from "express";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAi from "openai";
 
 type GenerateResponseUseCaseParams = {
   attributes: any;
@@ -22,29 +22,26 @@ export const GenerateResponseUseCase = async ({
 
   const promptWithAttributes = getPromptWithAttributes(prompt, attributes);
 
-  const configuration = new Configuration({
+  const configuration = {
     organization: process.env.OPENAI_ORGANIZATION,
     apiKey: process.env.OPENAI_APIKEY,
-  });
+  };
 
-  const openai = new OpenAIApi(configuration);
+  const openai = new OpenAi(configuration);
 
   const GPT_MODEL_TO_USE = process.env.GPT_MODEL_TO_USE;
 
   try {
-    const response = await openai.createChatCompletion(
-      {
-        model: GPT_MODEL_TO_USE,
-        messages: [
-          {
-            role: "user",
-            content: promptWithAttributes + finalInstructions,
-          },
-        ],
-        stream: true,
-      },
-      { responseType: "stream" }
-    );
+    const response = await openai.chat.completions.create({
+      model: GPT_MODEL_TO_USE,
+      messages: [
+        {
+          role: "user",
+          content: promptWithAttributes + finalInstructions,
+        },
+      ],
+      stream: true,
+    });
     // @ts-ignore
     return response.data.pipe(res);
   } catch (err) {
