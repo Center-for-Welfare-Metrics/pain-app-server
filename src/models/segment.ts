@@ -43,6 +43,7 @@ export type ISegmentValues = {
   disabling?: number;
   hurful?: number;
   annoying?: number;
+  no_pain?: number;
 };
 
 const intensityValuesSchema = new Schema(
@@ -51,6 +52,7 @@ const intensityValuesSchema = new Schema(
     disabling: { type: Number },
     hurful: { type: Number },
     annoying: { type: Number },
+    no_pain: { type: Number },
   },
   {
     _id: false,
