@@ -4,7 +4,7 @@ import { body } from "express-validator";
 import { GetPatientByIdImplementation } from "@implementations/mongoose/patient";
 
 type CreateEpisodeRequestBody = {
-  patient_id: string;
+  patient_id: string | undefined;
 };
 
 export const CreateEpisodeController = async (
@@ -29,6 +29,7 @@ export const CreateEpisodeController = async (
 
 export const CreateEpisodeValidator = () => [
   body("patient_id")
+    .optional()
     .isMongoId()
     .custom(async (patient_id, { req }) => {
       const user_id = req["user"]._id;
