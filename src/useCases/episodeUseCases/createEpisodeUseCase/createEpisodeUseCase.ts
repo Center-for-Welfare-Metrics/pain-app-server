@@ -2,10 +2,11 @@ import {
   CountEpisodesImplementation,
   CreateEpisodeImplementation,
 } from "@implementations/mongoose/episodes";
+import { AssigneUnsavedEpisodeUseCase } from "../assigneUnsavedEpisodeUseCase/assigneUnsavedEpisodeUseCase";
 
 type CreateEpisodeUseCaseParams = {
-  patient_id: string;
   user_id: string;
+  patient_id: string | undefined;
 };
 
 export const CreateEpisodeUseCase = async (
@@ -22,6 +23,15 @@ export const CreateEpisodeUseCase = async (
     patient_id,
     creator_id: user_id,
   });
+
+  if (!patient_id) {
+    const newEpisode = AssigneUnsavedEpisodeUseCase({
+      episode_id: episode_create._id.toString(),
+      user_id,
+    });
+
+    return newEpisode;
+  }
 
   return episode_create;
 };

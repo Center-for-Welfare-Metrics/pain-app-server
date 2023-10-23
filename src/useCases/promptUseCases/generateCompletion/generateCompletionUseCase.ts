@@ -1,6 +1,6 @@
 import { PromptOptions } from "@models/prompt";
 import { finalInstructions } from "@utils/prompt/generate";
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 
 type GenerateCompletionUseCaseParams = {
   prompt: string;
@@ -15,15 +15,16 @@ export const GenerateCompletionUseCase = async ({
   prompt,
   options,
 }: GenerateCompletionUseCaseParams) => {
-  const configuration = new Configuration({
+  const configuration = {
     organization: process.env.OPENAI_ORGANIZATION,
     apiKey: process.env.OPENAI_APIKEY,
-  });
-  const openai = new OpenAIApi(configuration);
+  };
+
+  const openai = new OpenAI(configuration);
 
   const GPT_MODEL_TO_USE = process.env.GPT_MODEL_TO_USE;
 
-  const response = await openai.createChatCompletion({
+  const response = await openai.chat.completions.create({
     model: GPT_MODEL_TO_USE,
     messages: [
       {
@@ -38,14 +39,15 @@ export const GenerateCompletionUseCase = async ({
         ? undefined
         : getOptionValue(options.temperature),
     top_p: options.top_p === 1 ? undefined : getOptionValue(options.top_p),
+    max_tokens: 4000,
   });
 
-  const text = response.data.choices[0].message.content;
+  const text = response.choices[0].message.content;
 
   return {
     response: text,
-    prompt_tokens: response.data?.usage?.prompt_tokens,
-    response_tokens: response.data?.usage?.completion_tokens,
-    total: response.data?.usage?.total_tokens,
+    prompt_tokens: response?.usage?.prompt_tokens,
+    response_tokens: response?.usage?.completion_tokens,
+    total: response?.usage?.total_tokens,
   };
 };
