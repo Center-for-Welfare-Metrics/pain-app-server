@@ -126,7 +126,7 @@ export const AssignePatientAndCreatorToEpiodeImplementation = async (
     episode_id,
     { patient_id, creator_id },
     { new: true }
-  );
+  ).populate("patient");
 
   return newEpisode;
 };
