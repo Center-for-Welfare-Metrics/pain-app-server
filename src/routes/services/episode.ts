@@ -18,6 +18,10 @@ import {
   UpdateEpisodeController,
   UpdateEpisodeValidator,
 } from "@useCases/episodeUseCases/updateEpisodeUseCase/updateEpisodeController";
+import {
+  DeleteEpisodeController,
+  DeleteEpisodeValidator,
+} from "@useCases/episodeUseCases/deleteEpisodeUseCase/deleteEpisodeController";
 
 const router = Router();
 
@@ -45,6 +49,13 @@ router.patch(
   UpdateEpisodeValidator(),
   validate,
   UpdateEpisodeController
+);
+
+router.delete(
+  "/:episode_id",
+  DeleteEpisodeValidator(),
+  validate,
+  DeleteEpisodeController
 );
 
 export default router;

@@ -89,3 +89,38 @@ export const DeleteTrackImplementation = async (params: DeleteTrackParams) => {
 
   return track_deleted;
 };
+
+type DeleteTrackByEpisodeIdParams = {
+  episode_id: string;
+};
+
+export const DeleteTrackByEpisodeIdImplementation = async (
+  params: DeleteTrackByEpisodeIdParams
+) => {
+  const { episode_id } = params;
+
+  const track_deleted = await TrackModel.deleteMany({ episode_id });
+
+  return track_deleted;
+};
+
+type CreateManyTracksParams = {
+  episode_id: string;
+  tracks: string[];
+};
+
+export const CreateManyTracksImplementation = async (
+  params: CreateManyTracksParams
+) => {
+  const { episode_id, tracks } = params;
+
+  const tracks_created = await TrackModel.insertMany(
+    tracks.map((track) => ({
+      name: track,
+      episode_id,
+      pain_type: "physical",
+    }))
+  );
+
+  return tracks_created;
+};

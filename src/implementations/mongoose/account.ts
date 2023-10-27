@@ -12,8 +12,8 @@ export const SetUserRoleImplementation = async (params: SetUserRoleParams) => {
   const user = await UserModel.findById(user_id);
 
   if (user) {
-    user.role = role;
-    await user.save();
+    // user.role = role;
+    // await user.save();
   } else {
     throw new Error();
   }
