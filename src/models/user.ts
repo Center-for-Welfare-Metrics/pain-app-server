@@ -6,10 +6,7 @@ export interface IUser {
   password: string;
   provider?: string;
   super?: boolean;
-  role?: string;
 }
-
-export const userRoleEnum = ["doctor", "veterinarian"];
 
 export const userProviderEnum = ["google", "facebook"] as const;
 
@@ -22,7 +19,6 @@ const userSchema = new Schema<IUser>(
     password: { type: String, required: false },
     provider: { type: String, enum: userProviderEnum, required: false },
     super: { type: Boolean, default: false },
-    role: { type: String, enum: userRoleEnum, required: false },
   },
   {
     timestamps: true,
