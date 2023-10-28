@@ -6,8 +6,8 @@ type CreatePatientUseCaseParams = {
   birth_date: string;
   user_id: string;
   type: PatientTypeEnum;
-  production_system: string | undefined;
-  life_fate: string | undefined;
+  production_system?: string;
+  life_fate?: string;
   about?: string;
 };
 
