@@ -1,22 +1,36 @@
-import { PatientModel } from "@models/patient";
+import { PatientModel, PatientTypeEnum } from "@models/patient";
 import { getSortObject } from "@utils/sortBy";
 
 type CreatePatientImplementationParams = {
   name: string;
   birth_date: string;
   user_id: string;
+  type: PatientTypeEnum;
+  production_system: string | undefined;
+  life_fate: string | undefined;
   about?: string;
 };
 
 export const CreatePatientImplementation = async (
   params: CreatePatientImplementationParams
 ) => {
-  const { name, birth_date, about, user_id } = params;
+  const {
+    name,
+    birth_date,
+    about,
+    user_id,
+    type,
+    life_fate,
+    production_system,
+  } = params;
 
   const newPatient = await PatientModel.create({
     name,
     birth_date,
     about,
+    type,
+    life_fate,
+    production_system,
     creator_id: user_id,
   });
   return newPatient;
@@ -74,6 +88,9 @@ type UpdatePatientParams = {
     name?: string;
     birth_date?: string;
     about?: string;
+    type?: PatientTypeEnum;
+    production_system?: string | undefined;
+    life_fate?: string | undefined;
   };
 };
 

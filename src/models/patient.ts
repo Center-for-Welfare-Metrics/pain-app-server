@@ -1,10 +1,17 @@
 import { Schema, model } from "mongoose";
 
+export const patientTypeEnum = ["human", "animal"] as const;
+
+export type PatientTypeEnum = (typeof patientTypeEnum)[number];
+
 const patientSchema = new Schema(
   {
     name: { type: String, required: true },
     birth_date: { type: Date, required: true },
     creator_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
+    type: { type: String, enum: patientTypeEnum, required: true },
+    production_system: { type: String, required: false },
+    life_fate: { type: String, required: false },
     about: { type: String, required: false },
   },
   {
