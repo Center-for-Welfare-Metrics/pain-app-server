@@ -3,11 +3,13 @@ import { UpdatePatientUseCase } from "./updatePatientUseCase";
 import { CleanUpUndefined } from "@utils/controller-utils";
 import { body, param } from "express-validator";
 import { GetPatientByIdImplementation } from "@implementations/mongoose/patient";
+import { PatientTypeEnum, patientTypeEnum } from "@models/patient";
 
 type UpdatePatientRequestBody = {
   name?: string;
   birth_date?: string;
   about?: string;
+  type?: PatientTypeEnum;
 };
 
 type UpdatePatientRequestParams = {
@@ -19,7 +21,7 @@ export const UpdatePatientController = async (
   res: Response
 ) => {
   const { patient_id } = req.params;
-  const { name, birth_date, about } = req.body;
+  const { name, birth_date, about, type } = req.body;
 
   try {
     const updated = await UpdatePatientUseCase({
@@ -28,6 +30,7 @@ export const UpdatePatientController = async (
         name,
         birth_date,
         about,
+        type
       }),
     });
 
@@ -54,6 +57,7 @@ export const UpdatePatientValidator = () => [
       }
     }),
   body("name").optional().isString(),
+  body("type").isIn(patientTypeEnum),
   body("birth_date").optional().isString(),
   body("about").optional().isString(),
 ];
