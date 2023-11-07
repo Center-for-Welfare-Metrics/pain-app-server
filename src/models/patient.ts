@@ -13,6 +13,9 @@ const patientSchema = new Schema(
     production_system: { type: String, required: false },
     life_fate: { type: String, required: false },
     about: { type: String, required: false },
+    location: { type: String, required: false },
+    common_name: { type: String, required: false },
+    scientific_name: { type: String, required: false },
   },
   {
     timestamps: true,

@@ -9,6 +9,9 @@ type UpdatePatientUseCaseParams = {
     name?: string;
     birth_date?: string;
     about?: string;
+    location?: string;
+    common_name?: string;
+    scientific_name?: string;
   };
 };
 

@@ -8,6 +8,9 @@ type UpdatePatientRequestBody = {
   name?: string;
   birth_date?: string;
   about?: string;
+  location?: string;
+  common_name?: string;
+  scientific_name?: string;
 };
 
 type UpdatePatientRequestParams = {
@@ -19,7 +22,8 @@ export const UpdatePatientController = async (
   res: Response
 ) => {
   const { patient_id } = req.params;
-  const { name, birth_date, about } = req.body;
+  const { name, birth_date, about, common_name, location, scientific_name } =
+    req.body;
 
   try {
     const updated = await UpdatePatientUseCase({

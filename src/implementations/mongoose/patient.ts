@@ -9,6 +9,9 @@ type CreatePatientImplementationParams = {
   production_system: string | undefined;
   life_fate: string | undefined;
   about?: string;
+  location?: string;
+  common_name?: string;
+  scientific_name?: string;
 };
 
 export const CreatePatientImplementation = async (
@@ -22,6 +25,9 @@ export const CreatePatientImplementation = async (
     type,
     life_fate,
     production_system,
+    common_name,
+    scientific_name,
+    location,
   } = params;
 
   const newPatient = await PatientModel.create({
@@ -32,6 +38,9 @@ export const CreatePatientImplementation = async (
     life_fate,
     production_system,
     creator_id: user_id,
+    common_name,
+    scientific_name,
+    location,
   });
   return newPatient;
 };
@@ -91,6 +100,9 @@ type UpdatePatientParams = {
     type?: PatientTypeEnum;
     production_system?: string | undefined;
     life_fate?: string | undefined;
+    common_name?: string;
+    scientific_name?: string;
+    location?: string;
   };
 };
 
