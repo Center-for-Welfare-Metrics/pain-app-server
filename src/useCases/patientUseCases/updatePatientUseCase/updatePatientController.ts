@@ -3,6 +3,7 @@ import { UpdatePatientUseCase } from "./updatePatientUseCase";
 import { CleanUpUndefined } from "@utils/controller-utils";
 import { body, param } from "express-validator";
 import { GetPatientByIdImplementation } from "@implementations/mongoose/patient";
+import { PatientTypeEnum, patientTypeEnum } from "@models/patient";
 
 type UpdatePatientRequestBody = {
   name?: string;
@@ -11,6 +12,7 @@ type UpdatePatientRequestBody = {
   location?: string;
   common_name?: string;
   scientific_name?: string;
+  type?: PatientTypeEnum;
 };
 
 type UpdatePatientRequestParams = {
@@ -22,8 +24,15 @@ export const UpdatePatientController = async (
   res: Response
 ) => {
   const { patient_id } = req.params;
-  const { name, birth_date, about, common_name, location, scientific_name } =
-    req.body;
+  const {
+    name,
+    birth_date,
+    about,
+    common_name,
+    location,
+    scientific_name,
+    type,
+  } = req.body;
 
   try {
     const updated = await UpdatePatientUseCase({
@@ -32,6 +41,10 @@ export const UpdatePatientController = async (
         name,
         birth_date,
         about,
+        type,
+        common_name,
+        location,
+        scientific_name,
       }),
     });
 
@@ -58,6 +71,10 @@ export const UpdatePatientValidator = () => [
       }
     }),
   body("name").optional().isString(),
+  body("type").isIn(patientTypeEnum),
   body("birth_date").optional().isString(),
   body("about").optional().isString(),
+  body("location").optional().isString(),
+  body("common_name").optional().isString(),
+  body("scientific_name").optional().isString(),
 ];
