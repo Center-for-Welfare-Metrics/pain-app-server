@@ -55,7 +55,7 @@ export const CreatePatientController = async (
 
 export const CreatePatientValidator = () => [
   body("name").isString().notEmpty(),
-  body("birth_date").isString().notEmpty(),
+  body("birth_date").isString().optional(),
   body("about").optional().isString(),
   body("type").isIn(patientTypeEnum),
   body("production_system").optional().isString(),
