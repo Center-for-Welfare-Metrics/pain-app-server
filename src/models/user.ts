@@ -31,4 +31,11 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
+userSchema.virtual("noPassword").get(function () {
+  return this.password === undefined;
+});
+
+userSchema.set("toObject", { virtuals: true });
+userSchema.set("toJSON", { virtuals: true });
+
 export const UserModel = model<IUser>("user", userSchema);
