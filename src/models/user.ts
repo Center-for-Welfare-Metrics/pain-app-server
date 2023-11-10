@@ -14,7 +14,7 @@ export type UserProviders = (typeof userProviderEnum)[number];
 
 const userSchema = new Schema<IUser>(
   {
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true, index: true },
     name: { type: String, required: true },
     password: { type: String, required: false },
     provider: { type: String, enum: userProviderEnum, required: false },
