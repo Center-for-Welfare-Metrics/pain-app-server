@@ -12,11 +12,11 @@ export const SignInUseCase = async (params: SignInUseCase) => {
 
   const user = await GetUserByEmailImplementation(email);
 
+  if (!user) throw new Error("User not found");
+
   const isPasswordCorrect = checkPassword(password, user.password);
 
-  if (!isPasswordCorrect) {
-    throw new Error("User not found");
-  }
+  if (!isPasswordCorrect) throw new Error("User not found");
 
   return {
     user: user,
