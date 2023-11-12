@@ -15,7 +15,7 @@ export const SignInUseCase = async (params: SignInUseCase) => {
   const isPasswordCorrect = checkPassword(password, user.password);
 
   if (!isPasswordCorrect) {
-    throw new Error();
+    throw new Error("User not found");
   }
 
   return {

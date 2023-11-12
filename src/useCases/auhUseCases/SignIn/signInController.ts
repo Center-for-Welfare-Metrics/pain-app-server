@@ -30,7 +30,9 @@ export const SignInController = async (
 
     response.status(200).json(user);
   } catch (error) {
-    return response.sendStatus(500);
+    return error.message === "User not found"
+      ? response.sendStatus(401)
+      : response.sendStatus(500);
   }
 };
 
