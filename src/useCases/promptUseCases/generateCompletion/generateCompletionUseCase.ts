@@ -29,7 +29,11 @@ export const GenerateCompletionUseCase = async ({
     messages: [
       {
         role: "user",
-        content: prompt + finalInstructions,
+        content: prompt,
+      },
+      {
+        role: "system",
+        content: finalInstructions,
       },
     ],
     frequency_penalty: getOptionValue(options.frequency_penalty),
@@ -39,7 +43,7 @@ export const GenerateCompletionUseCase = async ({
         ? undefined
         : getOptionValue(options.temperature),
     top_p: options.top_p === 1 ? undefined : getOptionValue(options.top_p),
-    max_tokens: 4000,
+    max_tokens: 4096,
   });
 
   const text = response.choices[0].message.content;

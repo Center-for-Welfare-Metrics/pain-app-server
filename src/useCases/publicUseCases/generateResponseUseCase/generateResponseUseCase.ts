@@ -32,18 +32,31 @@ export const GenerateResponseUseCase = async ({
   const GPT_MODEL_TO_USE = process.env.GPT_MODEL_TO_USE;
 
   try {
-    const response = await openai.chat.completions.create({
+    const stream = await openai.chat.completions.create({
       model: GPT_MODEL_TO_USE,
       messages: [
         {
           role: "user",
-          content: promptWithAttributes + finalInstructions,
+          content: promptWithAttributes,
+        },
+        {
+          role: "system",
+          content: finalInstructions,
         },
       ],
+      max_tokens: 4096,
       stream: true,
     });
-    // @ts-ignore
-    return response.data.pipe(res);
+
+    for await (const message of stream) {
+      const content = message.choices[0]?.delta?.content || "";
+
+      console.log(content);
+
+      res.write(content);
+    }
+
+    res.end();
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: err.message });

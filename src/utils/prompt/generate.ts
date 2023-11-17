@@ -9,4 +9,4 @@ export const getPromptWithAttributes = (prompt: string, attributes: any) => {
   return promptWithAttributes;
 };
 
-export const finalInstructions = `\nfinal instructions: use markdown to format the text, use # for main title and ## for subtitles`;
+export const finalInstructions = `use markdown to format the text, use # for main title and ## for subtitles, don't forget to generate the table only if requested above.`;
