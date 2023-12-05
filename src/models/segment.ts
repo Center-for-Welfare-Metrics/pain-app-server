@@ -97,8 +97,7 @@ const segmentSchema = new Schema(
     estimative_type: {
       type: String,
       enum: segmentEstimativeTypeEnum,
-      required: true,
-      default: "reported",
+      required: false,
     },
     comment: { type: String },
     pain_type: {
