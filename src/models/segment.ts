@@ -59,6 +59,27 @@ const intensityValuesSchema = new Schema(
   }
 );
 
+export const typeOfEvidenceEnum = [
+  "behavioral",
+  "neurological",
+  "physiological",
+  "pharmacological",
+];
+
+const JustificationSchema = new Schema({
+  title: { type: String, required: false },
+  type_of_evidence: { type: String, required: false, enum: typeOfEvidenceEnum },
+  description: { type: String, required: false },
+  sources: { type: String, required: false },
+  supports: {
+    excruciating: { type: Number, required: false, default: 0 },
+    disabling: { type: Number, required: false, default: 0 },
+    hurful: { type: Number, required: false, default: 0 },
+    annoying: { type: Number, required: false, default: 0 },
+    no_pain: { type: Number, required: false, default: 0 },
+  },
+});
+
 export const intensityTypeEnum = ["draw", "values"];
 export const segmentTimeUnitEnum = ["minutes", "hours", "days"];
 export const segmentEstimativeTypeEnum = ["reported", "measured", "inferred"];
@@ -111,6 +132,7 @@ const segmentSchema = new Schema(
       draw: { type: Object },
       values: intensityValuesSchema,
       justification: { type: String },
+      justifications: [JustificationSchema],
     },
     quality: {
       texture: { type: String, enum: qualityTextureEnum },
@@ -131,6 +153,19 @@ type IIntensityType = "draw" | "values";
 type ISegmentTimeUnit = "minutes" | "hours" | "days";
 type ISegmentEstimativeType = "reported" | "measured" | "inferred";
 type ISegmentPainType = "acute" | "chronic";
+type IJustificationType =
+  | "behavioral"
+  | "neurological"
+  | "physiological"
+  | "pharmacological";
+
+export type ISegmentJustification = {
+  title?: string;
+  type_of_evidence?: IJustificationType;
+  description?: string;
+  sources?: string;
+  supports?: ISegmentValues;
+};
 
 export type ISegmentIntensities = {
   type: IIntensityType;
