@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register bin/server.ts",
     "start": "node -r ts-node/register -r tsconfig-paths/register dist/bin/server.js",
-    "build": "tsc --project tsconfig.json && tsconfig-replace-paths --project tsconfig.json"
+    "build": "tsc --project tsconfig.json && tsconfig-replace-paths --project tsconfig.json",
+    "checkTs": "tsc --noEmit"
   },
   "author": "Santiago",
   "license": "ISC",
