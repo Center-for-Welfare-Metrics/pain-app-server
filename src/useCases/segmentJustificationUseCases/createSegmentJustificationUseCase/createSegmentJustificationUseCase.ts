@@ -22,11 +22,11 @@ export const CreateSegmentJustificationUseCase = async (
     description: "",
     sources: "",
     ranking: {
-      annoying: 0,
-      disabling: 0,
-      excruciating: 0,
-      hurful: 0,
-      no_pain: 0,
+      annoying: 2,
+      disabling: 2,
+      excruciating: 2,
+      hurful: 2,
+      no_pain: 2,
     },
     segment_id,
   });
