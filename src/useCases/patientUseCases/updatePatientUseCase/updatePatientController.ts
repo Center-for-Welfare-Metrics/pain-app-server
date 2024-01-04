@@ -72,7 +72,11 @@ export const UpdatePatientValidator = () => [
     }),
   body("name").optional().isString(),
   body("type").isIn(patientTypeEnum),
-  body("birth_date").optional().isString(),
+  body("birth_date")
+    .optional({
+      values: "null",
+    })
+    .isString(),
   body("about").optional().isString(),
   body("location").optional().isString(),
   body("common_name").optional().isString(),
