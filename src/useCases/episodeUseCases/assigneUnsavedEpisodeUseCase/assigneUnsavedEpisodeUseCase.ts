@@ -13,9 +13,6 @@ export const AssigneUnsavedEpisodeUseCase = async (
 
   const newPatient = await CreatePatientUseCase({
     user_id,
-    name: "New patient",
-    birth_date: new Date().toISOString(),
-    type: "human",
   });
 
   const newEpisode = await AssignePatientAndCreatorToEpiodeImplementation({
