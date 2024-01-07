@@ -22,6 +22,10 @@ import {
   DeleteEpisodeController,
   DeleteEpisodeValidator,
 } from "@useCases/episodeUseCases/deleteEpisodeUseCase/deleteEpisodeController";
+import {
+  ExportEpisodeController,
+  ExportEpisodeValidator,
+} from "@useCases/episodeUseCases/exportEpisodeUseCase/exportEpisodeController";
 
 const router = Router();
 
@@ -35,6 +39,13 @@ router.get(
   validate,
   PaginationMiddleware,
   ListEpisodesController
+);
+
+router.get(
+  "/export/:episode_id",
+  ExportEpisodeValidator(),
+  validate,
+  ExportEpisodeController
 );
 
 router.get(

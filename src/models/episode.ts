@@ -33,6 +33,12 @@ episodeSchema.virtual("tracks_count", {
   count: true,
 });
 
+episodeSchema.virtual("tracks", {
+  ref: "track",
+  localField: "_id",
+  foreignField: "episode_id",
+});
+
 episodeSchema.set("toObject", { virtuals: true });
 episodeSchema.set("toJSON", { virtuals: true });
 

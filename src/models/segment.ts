@@ -126,6 +126,15 @@ const segmentSchema = new Schema(
   }
 );
 
+segmentSchema.virtual("justifications", {
+  ref: "justification",
+  localField: "_id",
+  foreignField: "segment_id",
+});
+
+segmentSchema.set("toObject", { virtuals: true });
+segmentSchema.set("toJSON", { virtuals: true });
+
 type IIntensityType = "draw" | "values";
 type ISegmentTimeUnit = "minutes" | "hours" | "days";
 type ISegmentEstimativeType = "reported" | "measured" | "inferred";

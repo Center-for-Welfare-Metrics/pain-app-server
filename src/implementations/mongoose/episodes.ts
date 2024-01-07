@@ -144,3 +144,30 @@ export const DeleteEpisodeByIdImplementation = async (
 
   return episode;
 };
+
+type FullExportEpisodeParams = {
+  episode_id: string;
+};
+
+export const FullExportEpisodeImplementation = async (
+  params: FullExportEpisodeParams
+) => {
+  const { episode_id } = params;
+
+  const episode = (await EpisodeModel.findById(episode_id)).populate([
+    {
+      path: "tracks",
+      populate: {
+        path: "segments",
+        populate: {
+          path: "justifications",
+        },
+      },
+    },
+    {
+      path: "patient",
+    },
+  ]);
+
+  return episode;
+};
