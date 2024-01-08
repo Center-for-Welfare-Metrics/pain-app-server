@@ -1,44 +1,40 @@
 import { validate } from "@utils/validate";
 import { Router } from "express";
 import { useAuth } from "@middlewares/auth";
-import { UpdateSegmentValidator } from "@useCases/segmentUseCases/updateSegmentUseCase/updateSegementController";
 
 import { CreateJustificationController } from "@useCases/segmentJustificationUseCases/createSegmentJustificationUseCase/createSegmentJustificationController";
-import {
-  UpdateSegmentJustificationController,
-  UpdateSegmentJustificationValidator,
-} from "@useCases/segmentJustificationUseCases/updateSegmentJustificationUseCase/updateSegmentJustificationController";
+import { UpdateSegmentJustificationController } from "@useCases/segmentJustificationUseCases/updateSegmentJustificationUseCase/updateSegmentJustificationController";
 import { DeleteSegmentJustificationController } from "@useCases/segmentJustificationUseCases/deleteSegmentJustificationUseCase/deleteSegmentJustificationController";
 import { ListSegmentJustificationController } from "@useCases/segmentJustificationUseCases/listSegmentJustificationUseCase/listSegmentJustificationController";
+import { UpdateSegmentGuestValidator } from "@useCases/segmentUseCases/guestUseCases/updateSegmentGuestUseCase/updateSegementGuestController";
+import { UpdateSegmentJustificationValidatorGuest } from "@useCases/segmentJustificationUseCases/guestUseCases/updateSegmentJustificationUseCase/updateSegmentJustificationController";
 
 const router = Router();
 
-router.use(useAuth);
-
 router.post(
   "/:segment_id",
-  UpdateSegmentValidator(),
+  UpdateSegmentGuestValidator(),
   validate,
   CreateJustificationController
 );
 
 router.patch(
   "/:justification_id",
-  UpdateSegmentJustificationValidator(),
+  UpdateSegmentJustificationValidatorGuest(),
   validate,
   UpdateSegmentJustificationController
 );
 
 router.delete(
   "/:justification_id",
-  UpdateSegmentJustificationValidator(),
+  UpdateSegmentJustificationValidatorGuest(),
   validate,
   DeleteSegmentJustificationController
 );
 
 router.get(
   "/:segment_id",
-  UpdateSegmentValidator(),
+  UpdateSegmentGuestValidator(),
   validate,
   ListSegmentJustificationController
 );

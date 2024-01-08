@@ -96,3 +96,17 @@ export const GetJustificationsCountBySegmentIdImplementation = async (
 
   return count;
 };
+
+type GetJustificationById = {
+  justification_id: string;
+};
+
+export const GetJustificationByIdImplementation = async (
+  params: GetJustificationById
+) => {
+  const { justification_id } = params;
+
+  const justification = await SegmentJustification.findById(justification_id);
+
+  return justification;
+};

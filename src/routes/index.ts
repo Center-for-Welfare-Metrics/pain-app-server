@@ -11,6 +11,7 @@ import episodeGuest from "@routes/services/guest/episode-guest";
 import trackGuest from "@routes/services/guest/track-guest";
 import segmentGuest from "@routes/services/guest/segment-guest";
 import segmentJustification from "@routes/services/segment-justification";
+import segmentJustificationGuest from "@routes/services/guest/segment-justification";
 
 const routes = (app: Express) => {
   app.use("/auth", authRouter);
@@ -25,6 +26,7 @@ const routes = (app: Express) => {
   app.use("/segment", segment);
   app.use("/segment-guest", segmentGuest);
   app.use("/segment-justification", segmentJustification);
+  app.use("/segment-justification-guest", segmentJustificationGuest);
 };
 
 export default routes;

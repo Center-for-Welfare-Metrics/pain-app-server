@@ -2,10 +2,7 @@ import { Request, Response } from "express";
 
 import { CleanUpUndefined } from "@utils/controller-utils";
 import { body, param } from "express-validator";
-import {
-  EpisodePermissionValidate,
-  GuestEpisodePermissionValidate,
-} from "@utils/episode/validate";
+import { GuestEpisodePermissionValidate } from "@utils/episode/validate";
 import { UpdateEpisodeUseCase } from "../../updateEpisodeUseCase/updateEpisodeUSeCase";
 
 type UpdateEpisodeRequestParams = {

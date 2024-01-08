@@ -35,6 +35,7 @@ export type ISegmentJustification = {
   description?: string;
   sources?: string;
   ranking?: ISegmentValues;
+  segment_id: string;
 };
 
 export const SegmentJustification = model<ISegmentJustification>(
