@@ -26,3 +26,5 @@ routes(app);
 
 const server = new http.Server(app);
 server.listen(process.env.PORT);
+
+console.log("Running");
