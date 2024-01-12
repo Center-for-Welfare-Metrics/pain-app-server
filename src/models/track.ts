@@ -13,7 +13,6 @@ export interface ITrack {
   pain_type: ITrackPainType;
   episode_id: string;
   comment?: string;
-  segments?: ISegment[];
 }
 
 const trackSchema = new Schema(

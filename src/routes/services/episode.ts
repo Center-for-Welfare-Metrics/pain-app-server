@@ -26,6 +26,10 @@ import {
   ExportEpisodeController,
   ExportEpisodeValidator,
 } from "@useCases/episodeUseCases/exportEpisodeUseCase/exportEpisodeController";
+import {
+  ImportEpisodeController,
+  ImportEpisodeValidator,
+} from "@useCases/episodeUseCases/importEpisodeUseCase/importEpisodeController";
 
 const router = Router();
 
@@ -67,6 +71,13 @@ router.delete(
   DeleteEpisodeValidator(),
   validate,
   DeleteEpisodeController
+);
+
+router.post(
+  "/import/:patient_id",
+  ImportEpisodeValidator(),
+  validate,
+  ImportEpisodeController
 );
 
 export default router;
