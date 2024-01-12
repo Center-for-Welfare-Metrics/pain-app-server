@@ -1,6 +1,42 @@
 import { EpisodeModel } from "@models/episode";
 import { getSortObject } from "@utils/sortBy";
 
+type CreateEpisodeFromImportParams = {
+  name: string;
+  location: string;
+  diagnosis: string;
+  start_date: string;
+  comment: string;
+  patient_id: string;
+  creator_id: string;
+};
+
+export const CreateEpisodeFromImportImplementation = async (
+  params: CreateEpisodeFromImportParams
+) => {
+  const {
+    name,
+    location,
+    diagnosis,
+    start_date,
+    comment,
+    patient_id,
+    creator_id,
+  } = params;
+
+  const episode_created = await EpisodeModel.create({
+    name,
+    location,
+    diagnosis,
+    start_date,
+    comment,
+    patient_id,
+    creator_id,
+  });
+
+  return episode_created;
+};
+
 type CreateEpisodeParams = {
   name: string;
   patient_id?: string;
