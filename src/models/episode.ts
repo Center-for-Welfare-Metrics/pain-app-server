@@ -42,4 +42,16 @@ episodeSchema.virtual("tracks", {
 episodeSchema.set("toObject", { virtuals: true });
 episodeSchema.set("toJSON", { virtuals: true });
 
-export const EpisodeModel = model("episode", episodeSchema);
+export type Episode = {
+  name: string;
+  location: string;
+  diagnosis: string;
+  start_date: string;
+  comment: string;
+  patient_id: string;
+  creator_id: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export const EpisodeModel = model<Episode>("episode", episodeSchema);
