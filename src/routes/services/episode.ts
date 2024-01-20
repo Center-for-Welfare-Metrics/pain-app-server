@@ -30,6 +30,9 @@ import {
   ImportEpisodeController,
   ImportEpisodeValidator,
 } from "@useCases/episodeUseCases/importEpisodeUseCase/importEpisodeController";
+import { validationResult } from "express-validator";
+import { NOT_FOUND_ERROR } from "src/constants/validation";
+import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
 
 const router = Router();
 
@@ -55,6 +58,7 @@ router.get(
 router.get(
   "/:episode_id",
   GetEpisodeByIdValidator(),
+  Return404OnNotFound,
   validate,
   GetEpisodeByIdController
 );
@@ -62,6 +66,7 @@ router.get(
 router.patch(
   "/:episode_id",
   UpdateEpisodeValidator(),
+  Return404OnNotFound,
   validate,
   UpdateEpisodeController
 );
@@ -69,6 +74,7 @@ router.patch(
 router.delete(
   "/:episode_id",
   DeleteEpisodeValidator(),
+  Return404OnNotFound,
   validate,
   DeleteEpisodeController
 );

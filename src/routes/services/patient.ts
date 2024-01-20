@@ -19,6 +19,7 @@ import {
   DeletePatientController,
   DeletePatientValidator,
 } from "@useCases/patientUseCases/deletePatientUseCase/deletePatientController";
+import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
 
 const router = Router();
 
@@ -31,6 +32,7 @@ router.get("/", PaginationMiddleware, ListPatientsController);
 router.get(
   "/:id",
   GetPatiengByIdValidator(),
+  Return404OnNotFound,
   validate,
   GetPatientByIdController
 );
@@ -38,6 +40,7 @@ router.get(
 router.patch(
   "/:patient_id",
   UpdatePatientValidator(),
+  Return404OnNotFound,
   validate,
   UpdatePatientController
 );
@@ -45,6 +48,7 @@ router.patch(
 router.delete(
   "/:patient_id",
   DeletePatientValidator(),
+  Return404OnNotFound,
   validate,
   DeletePatientController
 );
