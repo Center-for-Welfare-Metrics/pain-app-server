@@ -1,5 +1,5 @@
 import { GetEpisodeByIdImplementation } from "@implementations/mongoose/episodes";
-import { NOT_FOUND_ERROR, NO_PERMISSION_ERROR } from "src/constants/validation";
+import { NOT_FOUND_ERROR, NO_PERMISSION_ERROR } from "@constants/validation";
 
 export const EpisodePermissionValidate = async (episode_id, { req }) => {
   const user_id = req.user._id;

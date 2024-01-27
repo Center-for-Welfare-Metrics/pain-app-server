@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { NOT_FOUND_ERROR } from "src/constants/validation";
+import { NOT_FOUND_ERROR } from "@constants/validation";
 
 export const Return404OnNotFound = (
   req: Request,

@@ -31,7 +31,7 @@ import {
   ImportEpisodeValidator,
 } from "@useCases/episodeUseCases/importEpisodeUseCase/importEpisodeController";
 import { validationResult } from "express-validator";
-import { NOT_FOUND_ERROR } from "src/constants/validation";
+import { NOT_FOUND_ERROR } from "@constants/validation";
 import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
 
 const router = Router();
