@@ -61,7 +61,12 @@ const intensityValuesSchema = new Schema(
 
 export const intensityTypeEnum = ["draw", "values"];
 export const segmentTimeUnitEnum = ["minutes", "hours", "days"];
-export const segmentEstimativeTypeEnum = ["reported", "measured", "inferred"];
+export const segmentEstimativeTypeEnum = [
+  "reported",
+  "measured",
+  "inferred",
+  "inferred_from_evidence",
+];
 export const segmentPainTypeEnum = ["acute", "chronic"];
 
 export const qualityTextureEnum = [
@@ -137,7 +142,11 @@ segmentSchema.set("toJSON", { virtuals: true });
 
 type IIntensityType = "draw" | "values";
 type ISegmentTimeUnit = "minutes" | "hours" | "days";
-type ISegmentEstimativeType = "reported" | "measured" | "inferred";
+type ISegmentEstimativeType =
+  | "reported"
+  | "measured"
+  | "inferred"
+  | "inferred_from_evidence";
 type ISegmentPainType = "acute" | "chronic";
 
 export type ISegmentIntensities = {

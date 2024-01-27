@@ -6,6 +6,7 @@ export const typeOfEvidenceEnum = [
   "neurological",
   "physiological",
   "pharmacological",
+  "evolutionary",
 ];
 
 const JustificationSchema = new Schema({
@@ -27,7 +28,8 @@ type IJustificationType =
   | "behavioral"
   | "neurological"
   | "physiological"
-  | "pharmacological";
+  | "pharmacological"
+  | "evolutionary";
 
 export type ISegmentJustification = {
   title?: string;
