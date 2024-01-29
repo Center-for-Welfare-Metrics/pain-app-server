@@ -8,7 +8,6 @@
     "start": "node -r ts-node/register -r tsconfig-paths/register dist/bin/server.js",
     "build": "tsc --project tsconfig.json && tsconfig-replace-paths --project tsconfig.json",
     "checkTs": "tsc --noEmit",
-    "prepare": "if [ -z \"$GOOGLE_FUNCTION_TARGET\" ]; then husky install; fi",
     "test": "jest",
     "test:watch": "jest --watch"
   },
