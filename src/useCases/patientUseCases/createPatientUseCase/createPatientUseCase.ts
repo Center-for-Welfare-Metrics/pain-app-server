@@ -16,7 +16,7 @@ export const CreatePatientUseCase = async (
 
   const newPatient = await CreatePatientImplementation({
     user_id,
-    name: `Patient ${patientsCount + 1}`,
+    name: `Subject ${patientsCount + 1}`,
     type: "human",
   });
 
