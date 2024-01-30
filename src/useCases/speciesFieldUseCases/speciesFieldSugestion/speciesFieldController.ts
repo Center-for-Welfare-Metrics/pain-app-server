@@ -27,5 +27,7 @@ export const SugestionSpeciesFieldController = async (
 };
 
 export const SugestionSpeciesFieldValidator = () => [
-  param("animal").isString(),
+  param("animal").isString().isLength({
+    max: 64,
+  }),
 ];

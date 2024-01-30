@@ -55,6 +55,5 @@ export const SugestionSpeciesFieldUseCase = async (
     max_tokens: 192,
     temperature: 0.1,
   });
-  console.log(JSON.stringify(response, null, 2));
   return JSON.parse(response.choices[0].message.function_call.arguments);
 };
