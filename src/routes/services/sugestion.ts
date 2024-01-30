@@ -9,7 +9,7 @@ import {
 const router = Router();
 router.use(useAuth);
 
-router.post(
+router.get(
   "/scientificName/:animal",
   SugestionSpeciesFieldValidator(),
   validate,
