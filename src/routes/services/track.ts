@@ -18,6 +18,7 @@ import {
   DeleteTrackController,
   DeleteTrackValidator,
 } from "@useCases/trackUseCases/deleteTrackUseCase/deleteTrackController";
+import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
 
 const router = Router();
 
@@ -28,9 +29,10 @@ router.post("/", CreateTrackValidator(), validate, CreateTrackController);
 router.get(
   "/",
   ListTracksValidator(),
+  Return404OnNotFound,
   validate,
   PaginationMiddleware,
-  ListTracksController
+  (req, res) => ListTracksController(req, res)
 );
 
 router.patch(

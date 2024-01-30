@@ -1,4 +1,5 @@
 import { GetEpisodeByIdImplementation } from "@implementations/mongoose/episodes";
+import { NOT_FOUND_ERROR, NO_PERMISSION_ERROR } from "@constants/validation";
 
 export const EpisodePermissionValidate = async (episode_id, { req }) => {
   const user_id = req.user._id;
@@ -8,11 +9,11 @@ export const EpisodePermissionValidate = async (episode_id, { req }) => {
   });
 
   if (!episode) {
-    throw new Error("Episode not found");
+    throw new Error(NOT_FOUND_ERROR);
   }
 
   if (episode.creator_id.toString() !== user_id) {
-    throw new Error("Episode not found");
+    throw new Error(NO_PERMISSION_ERROR);
   }
 };
 
@@ -22,10 +23,10 @@ export const GuestEpisodePermissionValidate = async (episode_id) => {
   });
 
   if (!episode) {
-    throw new Error("Episode not found");
+    throw new Error(NOT_FOUND_ERROR);
   }
 
   if (!!episode.creator_id?.toString()) {
-    throw new Error("Episode not found");
+    throw new Error(NO_PERMISSION_ERROR);
   }
 };

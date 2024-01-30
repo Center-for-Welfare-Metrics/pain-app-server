@@ -1,0 +1,3 @@
+export const NOT_FOUND_ERROR = "NOT_FOUND_ERROR";
+
+export const NO_PERMISSION_ERROR = "NO_PERMISSION_ERROR";

@@ -19,7 +19,8 @@
       "@app-config/*": ["app-config/*"],
       "@middlewares/*": ["src/middlewares/*"],
       "@useCases/*": ["src/useCases/*"],
-      "@implementations/*": ["src/implementations/*"]
+      "@implementations/*": ["src/implementations/*"],
+      "@constants/*": ["src/constants/*"]
     }
   },
   "exclude": ["node_modules", "dist", "tests"],

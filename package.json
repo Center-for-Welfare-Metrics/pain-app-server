@@ -1,5 +1,5 @@
 {
-  "name": "express-boilerplate",
+  "name": "pain-app-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,9 @@
     "dev": "ts-node-dev -r tsconfig-paths/register bin/server.ts",
     "start": "node -r ts-node/register -r tsconfig-paths/register dist/bin/server.js",
     "build": "tsc --project tsconfig.json && tsconfig-replace-paths --project tsconfig.json",
-    "checkTs": "tsc --noEmit"
+    "checkTs": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "author": "Santiago",
   "license": "ISC",
@@ -49,6 +51,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-standard": "^5.0.0",
+    "husky": "^9.0.6",
     "ts-node-dev": "^2.0.0",
     "tsconfig-replace-paths": "^0.0.14",
     "typescript": "^5.1.3"

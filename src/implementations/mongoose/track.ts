@@ -1,5 +1,27 @@
 import { ITrackPainType, TrackModel } from "@models/track";
 
+type CreateTrackaFromImportParams = {
+  name?: string;
+  episode_id: string;
+  pain_type?: ITrackPainType;
+  comment?: string;
+};
+
+export const CreateTrackFromImportImplementation = async (
+  params: CreateTrackaFromImportParams
+) => {
+  const { name, episode_id, pain_type, comment } = params;
+
+  const track_created = await TrackModel.create({
+    name,
+    episode_id,
+    pain_type,
+    comment,
+  });
+
+  return track_created;
+};
+
 type CreateTrackParams = {
   name: string;
   episode_id: string;

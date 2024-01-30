@@ -1,5 +1,22 @@
 import { ISegment, SegmentModel } from "@models/segment";
 
+type CreateSegmentFromImportParams = {
+  track_id: string;
+} & Omit<ISegment, "track_id" | "_id">;
+
+export const CreateSegmentFromImportImplementation = async (
+  params: CreateSegmentFromImportParams
+) => {
+  const { track_id, ...segmentData } = params;
+
+  const segment_created = await SegmentModel.create({
+    track_id: track_id,
+    ...segmentData,
+  });
+
+  return segment_created;
+};
+
 type CreateSegmentParams = {
   track_id: string;
 };
