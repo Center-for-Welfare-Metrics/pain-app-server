@@ -31,12 +31,6 @@ export const CreateEpisodeUseCase = async (
   await CreateTrackUseCase({
     episode_id,
   });
-  await CreateTrackUseCase({
-    episode_id,
-  });
-  await CreateTrackUseCase({
-    episode_id,
-  });
 
   if (!patient_id) {
     const newEpisode = AssigneUnsavedEpisodeUseCase({
