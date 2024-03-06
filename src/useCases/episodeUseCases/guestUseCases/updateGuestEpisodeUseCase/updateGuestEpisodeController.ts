@@ -47,6 +47,10 @@ export const UpdateGuestEpisodeValidator = () => [
   body("name").optional().isString(),
   body("location").optional().isString(),
   body("diagnosis").optional().isString(),
-  body("start_date").optional().isString(),
+  body("start_date")
+    .optional({
+      values: "null",
+    })
+    .isString(),
   body("comment").optional().isString(),
 ];
