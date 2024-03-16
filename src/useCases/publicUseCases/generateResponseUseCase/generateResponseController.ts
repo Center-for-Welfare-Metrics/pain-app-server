@@ -3,6 +3,7 @@ import { GenerateResponseUseCase } from "./generateResponseUseCase";
 import { body } from "express-validator";
 import { GetMainPromptAttributesImplementation } from "@implementations/mongoose/public";
 import { RecaptchaEnterpriseServiceClient } from "@google-cloud/recaptcha-enterprise";
+import { recaptchaValidation } from "@utils/recaptcha/validation";
 
 type GenerateResponseRequestBody = {
   attributes: any;
@@ -25,29 +26,7 @@ export const GenerateResponseController = async (
 };
 
 export const GenerateResponseValidator = () => [
-  body("recaptchaToken")
-    .isString()
-    .custom(async (recaptchaToken) => {
-      const client = new RecaptchaEnterpriseServiceClient();
-      const projectPath = client.projectPath(process.env.GOOGLE_PROJECT_ID);
-      const request = {
-        assessment: {
-          event: {
-            token: recaptchaToken,
-            siteKey: process.env.GOOGLE_RECAPTCHA_SITE_KEY,
-          },
-        },
-        parent: projectPath,
-      };
-      const [response] = await client.createAssessment(request);
-      if (!response.tokenProperties.valid) {
-        throw new Error("Invalid recaptcha token");
-      }
-      if (response.riskAnalysis.score < 0.5) {
-        throw new Error("Invalid recaptcha token");
-      }
-      return true;
-    }),
+  body("recaptchaToken").isString().custom(recaptchaValidation),
   body("attributes")
     .isObject()
     .custom(async (attributes) => {
