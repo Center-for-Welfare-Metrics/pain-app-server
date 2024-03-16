@@ -1,4 +1,8 @@
 import {
+  ContactFormController,
+  ContactFormValidator,
+} from "@useCases/publicUseCases/contactFormUseCase/contactFormController";
+import {
   GenerateResponseController,
   GenerateResponseValidator,
 } from "@useCases/publicUseCases/generateResponseUseCase/generateResponseController";
@@ -15,6 +19,13 @@ router.post(
   GenerateResponseValidator(),
   validate,
   GenerateResponseController
+);
+
+router.post(
+  "/contact-form",
+  ContactFormValidator(),
+  validate,
+  ContactFormController
 );
 
 export default router;
