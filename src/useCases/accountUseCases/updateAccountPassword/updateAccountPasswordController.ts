@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UpdateAccountPasswordUseCase } from "./updateAccountPasswordUseCase";
 import { body } from "express-validator";
+import { WrongPasswordError } from "./errors";
 
 type UpdateAccountPasswordBody = {
   current_password: string;
@@ -24,6 +25,9 @@ export const UpdateAccountPasswordController = async (
 
     return response.sendStatus(204);
   } catch (err) {
+    if (err instanceof WrongPasswordError) {
+      return response.status(401).json({ message: "Wrong password" });
+    }
     return response.sendStatus(500);
   }
 };

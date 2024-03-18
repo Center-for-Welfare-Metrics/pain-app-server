@@ -1,6 +1,7 @@
 import { UpdateAccountPasswordImplementation } from "@implementations/mongoose/account";
 import { GetUserByIdImplementation } from "@implementations/mongoose/auth";
 import { checkPassword, hashPassword } from "@utils/encryption";
+import { WrongPasswordError } from "./errors";
 
 type UpdateAccountPasswordUseCaseParams = {
   user_id: string;
@@ -18,7 +19,7 @@ export const UpdateAccountPasswordUseCase = async (
   const isPasswordCorrect = checkPassword(current_password, user.password);
 
   if (!isPasswordCorrect) {
-    throw new Error();
+    throw new WrongPasswordError();
   }
 
   const passwordHashed = hashPassword(new_password);
