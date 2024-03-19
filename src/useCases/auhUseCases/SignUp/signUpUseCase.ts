@@ -25,8 +25,6 @@ export const SignUpUseCase = async (params: SignUpUseCase) => {
   return {
     user: newUser,
     token: generateJwt({
-      email: newUser.email,
-      name: newUser.name,
       _id: newUser._id.toString(),
     }),
   };

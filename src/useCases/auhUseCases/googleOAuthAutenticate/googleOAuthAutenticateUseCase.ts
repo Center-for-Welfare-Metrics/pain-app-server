@@ -18,8 +18,6 @@ export const googleOAuthAutenticateUseCase = async (code: string) => {
     return {
       user: user,
       token: generateJwt({
-        email: user.email,
-        name: user.name,
         _id: user._id.toString(),
       }),
     };

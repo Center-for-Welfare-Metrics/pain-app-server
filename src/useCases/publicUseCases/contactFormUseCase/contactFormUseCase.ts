@@ -1,4 +1,4 @@
-import { sendContactEmail } from "@utils/email/sender";
+import { sendContactEmail } from "@utils/email/sendContactEmail";
 
 type ContactFormUseCaseParams = {
   email: string;

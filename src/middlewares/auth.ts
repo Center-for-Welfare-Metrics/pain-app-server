@@ -15,11 +15,9 @@ export const useAuth = (
   try {
     const [, token] = authHeader.split(" ");
     const user = verifyJwt(token);
-    const { email, name, _id } = user as any;
+    const { _id } = user as any;
 
     request["user"] = {
-      email,
-      name,
       _id,
     };
 
