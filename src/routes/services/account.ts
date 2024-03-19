@@ -17,6 +17,14 @@ import {
   ResetPasswordController,
   ResetPasswordValidator,
 } from "@useCases/accountUseCases/resetPassword/resetPasswordController";
+import {
+  RequestEmailChangeController,
+  RequestEmailChangeValidator,
+} from "@useCases/accountUseCases/requestEmailChangeUseCase/requestEmailChangeController";
+import {
+  ConfirmEmailChangeController,
+  ConfirmEmailChangeValidator,
+} from "@useCases/accountUseCases/confirmEmailChange/confirmEmailChangeController";
 
 const router = Router();
 
@@ -48,6 +56,22 @@ router.patch(
   ResetPasswordValidator(),
   validate,
   ResetPasswordController
+);
+
+router.post(
+  "/request-email-change",
+  useAuth,
+  RequestEmailChangeValidator(),
+  validate,
+  RequestEmailChangeController
+);
+
+router.patch(
+  "/confirm-email-change",
+  useAuth,
+  ConfirmEmailChangeValidator(),
+  validate,
+  ConfirmEmailChangeController
 );
 
 export default router;

@@ -46,3 +46,16 @@ export const UpdateAccountPasswordImplementation = async (
 
   await UserModel.findByIdAndUpdate(user_id, { password });
 };
+
+type UpdateAccountEmailImplementationParams = {
+  user_id: string;
+  email: string;
+};
+
+export const UpdateAccountEmailImplementation = async (
+  params: UpdateAccountEmailImplementationParams
+) => {
+  const { user_id, email } = params;
+
+  await UserModel.findByIdAndUpdate(user_id, { email });
+};

@@ -4,16 +4,9 @@ import {
   RecoveryPasswordCreateTokenImplementation,
   RemoveRecoveryPasswordByEmailImplementation,
 } from "@implementations/mongoose/recovery-password";
-import { sendRecoveryPasswordEmail } from "@utils/email/sender";
+import { sendRecoveryPasswordEmail } from "@utils/email/sendRecoveryPassword";
+import { checkIfTimeIsLessThan90Seconds, days } from "@utils/helpers/time";
 import { v4 as uuidv4 } from "uuid";
-
-const checkIfTimeIsLessThan90Seconds = (createdAt: Date) => {
-  const now = new Date();
-
-  const diffInSeconds = (now.getTime() - createdAt.getTime()) / 1000;
-
-  return diffInSeconds < 90;
-};
 
 const userHaveToWaitToSendEmail = async (email: string) => {
   const recoveryPasswordRecord = await GetRecoveryPasswordByEmailImplementation(
@@ -52,7 +45,7 @@ export const RecoveryPasswordUseCase = async (
 
   const token = uuidv4();
 
-  const expires_at = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  const expires_at = new Date(Date.now() + days(1));
 
   const user = await GetUserByEmailImplementation(email);
 
