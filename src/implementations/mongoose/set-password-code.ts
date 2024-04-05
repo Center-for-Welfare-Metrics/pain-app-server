@@ -65,7 +65,7 @@ type InvalidateCodeImplementationParams = {
   id: string;
 };
 
-export const InvalidateCodeImplementation = async (
+export const InvalidateSetPasswordCodeImplementation = async (
   params: InvalidateCodeImplementationParams
 ) => {
   const { id } = params;
