@@ -30,6 +30,10 @@ import {
   ConfirmSetPasswordCodeController,
   ConfirmSetPasswordCodeValidator,
 } from "@useCases/accountUseCases/confirmSetPasswordCode/confirmSetPasswordCodeController";
+import {
+  SetPasswordAccountController,
+  SetPasswordAccountValidator,
+} from "@useCases/accountUseCases/setPasswordAccountUseCase/setPasswordAccountController";
 
 const router = Router();
 
@@ -91,6 +95,14 @@ router.patch(
   ConfirmSetPasswordCodeValidator(),
   validate,
   ConfirmSetPasswordCodeController
+);
+
+router.patch(
+  "/set-password-account",
+  useAuth,
+  SetPasswordAccountValidator(),
+  validate,
+  SetPasswordAccountController
 );
 
 export default router;
