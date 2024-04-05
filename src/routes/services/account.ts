@@ -25,6 +25,7 @@ import {
   ConfirmEmailChangeController,
   ConfirmEmailChangeValidator,
 } from "@useCases/accountUseCases/confirmEmailChange/confirmEmailChangeController";
+import { RequestSetAccountPasswordController } from "@useCases/accountUseCases/requestSetAccountPasswordUseCase/requestSetAccountPasswordController";
 
 const router = Router();
 
@@ -72,6 +73,12 @@ router.patch(
   ConfirmEmailChangeValidator(),
   validate,
   ConfirmEmailChangeController
+);
+
+router.post(
+  "/request-set-account-password",
+  useAuth,
+  RequestSetAccountPasswordController
 );
 
 export default router;
