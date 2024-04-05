@@ -8,7 +8,7 @@ type SendData = {
   browser_name: string;
 };
 
-export const sendRequestEmailUpdate = async (to: string, data: SendData) => {
+export const sendSetPasswordEmail = async (to: string, data: SendData) => {
   const SES = new AWS.SES({
     accessKeyId: process.env.AWS_ID,
     secretAccessKey: process.env.AWS_SECRET_KEY,
@@ -19,7 +19,7 @@ export const sendRequestEmailUpdate = async (to: string, data: SendData) => {
       ToAddresses: [to],
     },
     Source: "no-reply@welfarefootprint.org",
-    Template: "REQUEST_EMAIL_CHANGE_CODE",
+    Template: "SET_PASSWORD",
     TemplateData: JSON.stringify({
       ...data,
       support_url: `${process.env.SUPPORT_URL}`,

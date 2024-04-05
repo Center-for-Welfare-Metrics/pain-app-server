@@ -25,6 +25,15 @@ import {
   ConfirmEmailChangeController,
   ConfirmEmailChangeValidator,
 } from "@useCases/accountUseCases/confirmEmailChange/confirmEmailChangeController";
+import { RequestSetAccountPasswordController } from "@useCases/accountUseCases/requestSetAccountPasswordUseCase/requestSetAccountPasswordController";
+import {
+  ConfirmSetPasswordCodeController,
+  ConfirmSetPasswordCodeValidator,
+} from "@useCases/accountUseCases/confirmSetPasswordCode/confirmSetPasswordCodeController";
+import {
+  SetPasswordAccountController,
+  SetPasswordAccountValidator,
+} from "@useCases/accountUseCases/setPasswordAccountUseCase/setPasswordAccountController";
 
 const router = Router();
 
@@ -72,6 +81,28 @@ router.patch(
   ConfirmEmailChangeValidator(),
   validate,
   ConfirmEmailChangeController
+);
+
+router.post(
+  "/request-set-account-password",
+  useAuth,
+  RequestSetAccountPasswordController
+);
+
+router.patch(
+  "/confirm-set-password-code",
+  useAuth,
+  ConfirmSetPasswordCodeValidator(),
+  validate,
+  ConfirmSetPasswordCodeController
+);
+
+router.patch(
+  "/set-password-account",
+  useAuth,
+  SetPasswordAccountValidator(),
+  validate,
+  SetPasswordAccountController
 );
 
 export default router;
