@@ -4,7 +4,7 @@ import {
   DeleteSetPasswordCodeByUserImplementation,
 } from "@implementations/mongoose/set-password-code";
 import { sendSetPasswordEmail } from "@utils/email/sendSetPasswordEmail";
-import { generateNumberCode } from "@utils/helpers/string";
+import { generateTextNumberCode } from "@utils/helpers/string";
 import { v4 } from "uuid";
 
 type RequestSetAccountPasswordUseCaseParams = {
@@ -26,7 +26,7 @@ export const RequestSetAccountPasswordUseCase = async (
 
   const secret_token = v4();
 
-  const code = generateNumberCode(6);
+  const code = generateTextNumberCode(6);
 
   const expires_at = new Date();
   expires_at.setHours(expires_at.getHours() + 1);

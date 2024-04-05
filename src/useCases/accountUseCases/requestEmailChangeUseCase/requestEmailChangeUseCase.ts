@@ -7,7 +7,7 @@ import {
   DeleteUpdateEmailCodeByUserImplementation,
 } from "@implementations/mongoose/update-email-code";
 import { sendRequestEmailUpdate } from "@utils/email/sendRequestEmailUpdate";
-import { generateNumberCode } from "@utils/helpers/string";
+import { generateTextNumberCode } from "@utils/helpers/string";
 
 type RequestEmailChangeUseCaseParams = {
   user_id: string;
@@ -33,7 +33,7 @@ export const RequestEmailChangeUseCase = async (
     throw new Error("Email already in use");
   }
 
-  const code = generateNumberCode(6);
+  const code = generateTextNumberCode(6);
 
   const expires_at = new Date();
   expires_at.setHours(expires_at.getHours() + 1);
