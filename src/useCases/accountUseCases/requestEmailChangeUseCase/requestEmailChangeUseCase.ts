@@ -51,7 +51,10 @@ export const RequestEmailChangeUseCase = async (
 
   const email = user.email;
 
+  const name = user.name;
+
   sendRequestEmailUpdate(email, {
+    name,
     code,
     browser_name,
     operating_system,

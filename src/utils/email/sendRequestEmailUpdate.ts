@@ -3,6 +3,7 @@ import AWS from "aws-sdk";
 AWS.config.update({ region: "us-east-1", apiVersion: "2010-12-01" });
 
 type SendData = {
+  name: string;
   code: string;
   operating_system: string;
   browser_name: string;
