@@ -42,7 +42,10 @@ export const RequestSetAccountPasswordUseCase = async (
 
   const email = user.email;
 
+  const name = user.name;
+
   sendSetPasswordEmail(email, {
+    name,
     browser_name,
     code,
     operating_system,
