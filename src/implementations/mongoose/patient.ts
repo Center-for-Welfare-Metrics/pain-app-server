@@ -1,5 +1,6 @@
 import { PatientModel, PatientTypeEnum } from "@models/patient";
 import { getSortObject } from "@utils/sortBy";
+import { DeleteEpisodesByPatientIdImplementation } from "./episodes";
 
 type CreatePatientImplementationParams = {
   name: string;
@@ -109,4 +110,25 @@ export const DeletePatientImplementation = async (
   const patient = await PatientModel.findByIdAndDelete(patient_id);
 
   return patient;
+};
+
+type DeletePatientsByUserIdParams = {
+  user_id: string;
+};
+
+export const DeletePatientsByUserIdImplementation = async (
+  params: DeletePatientsByUserIdParams
+) => {
+  const { user_id } = params;
+
+  const allPatients = await PatientModel.find({ creator_id: user_id });
+
+  for (const patient of allPatients) {
+    DeleteEpisodesByPatientIdImplementation({
+      patient_id: patient._id.toString(),
+    });
+    patient.deleteOne();
+  }
+
+  return;
 };

@@ -14,7 +14,7 @@
   "author": "Santiago",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/recaptcha-enterprise": "^3.4.1",
+    "@google-cloud/recaptcha-enterprise": "^5.6.0",
     "@grpc/grpc-js": "^1.8.15",
     "@grpc/proto-loader": "^0.7.7",
     "aws-sdk": "^2.1461.0",

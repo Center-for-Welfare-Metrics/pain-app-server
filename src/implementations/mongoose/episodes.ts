@@ -1,5 +1,6 @@
 import { EpisodeModel } from "@models/episode";
 import { getSortObject } from "@utils/sortBy";
+import { DeleteTrackByEpisodeIdImplementation } from "./track";
 
 type CreateEpisodeFromImportParams = {
   name: string;
@@ -142,9 +143,16 @@ export const DeleteEpisodesByPatientIdImplementation = async (
 ) => {
   const { patient_id } = params;
 
-  const episodes = await EpisodeModel.deleteMany({ patient_id });
+  const allEpisodesToDelete = await EpisodeModel.find({ patient_id });
 
-  return episodes;
+  for (const episode of allEpisodesToDelete) {
+    DeleteTrackByEpisodeIdImplementation({
+      episode_id: episode._id.toString(),
+    });
+    episode.deleteOne();
+  }
+
+  return;
 };
 
 type AssignePatientAndCreatorToEpiodeParams = {
