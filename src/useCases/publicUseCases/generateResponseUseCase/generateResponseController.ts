@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { GenerateResponseUseCase } from "./generateResponseUseCase";
 import { body } from "express-validator";
 import { GetMainPromptAttributesImplementation } from "@implementations/mongoose/public";
-import { RecaptchaEnterpriseServiceClient } from "@google-cloud/recaptcha-enterprise";
 import { recaptchaValidation } from "@utils/recaptcha/validation";
 
 type GenerateResponseRequestBody = {

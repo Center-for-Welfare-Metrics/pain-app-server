@@ -12,7 +12,9 @@ export const DeletePatientUseCase = async (
 
   await DeletePatientImplementation({ patient_id });
 
-  DeleteEpisodesByPatientIdImplementation({ patient_id });
+  DeleteEpisodesByPatientIdImplementation({
+    patient_id,
+  });
 
   return;
 };
