@@ -12,7 +12,7 @@ import trackGuest from "@routes/services/guest/track-guest";
 import segmentGuest from "@routes/services/guest/segment-guest";
 import segmentJustification from "@routes/services/segment-justification";
 import sugestion from "@routes/services/sugestion";
-
+import tests from "@routes/services/tests";
 import segmentJustificationGuest from "@routes/services/guest/segment-justification";
 
 const routes = (app: Express) => {
@@ -30,6 +30,9 @@ const routes = (app: Express) => {
   app.use("/segment-justification", segmentJustification);
   app.use("/segment-justification-guest", segmentJustificationGuest);
   app.use("/sugestion", sugestion);
+  if (process.env.ENV === "DEV") {
+    app.use("/tests", tests);
+  }
 };
 
 export default routes;
