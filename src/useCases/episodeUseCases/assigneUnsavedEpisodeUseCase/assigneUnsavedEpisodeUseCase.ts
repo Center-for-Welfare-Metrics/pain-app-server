@@ -13,6 +13,7 @@ export const AssigneUnsavedEpisodeUseCase = async (
 
   const newPatient = await CreatePatientUseCase({
     user_id,
+    createdAsGuest: true,
   });
 
   const newEpisode = await AssignePatientAndCreatorToEpiodeImplementation({
