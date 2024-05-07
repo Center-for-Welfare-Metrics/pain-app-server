@@ -1,6 +1,7 @@
 import { PatientModel, PatientTypeEnum } from "@models/patient";
 import { getSortObject } from "@utils/sortBy";
 import { DeleteEpisodesByPatientIdImplementation } from "./episodes";
+import { PatientsBookmarkModel } from "@models/patients-bookmark";
 
 type CreatePatientImplementationParams = {
   name: string;
@@ -131,4 +132,61 @@ export const DeletePatientsByUserIdImplementation = async (
   }
 
   return;
+};
+
+type AddToBookMarkImplementation = {
+  patient_id: string;
+  user_id: string;
+};
+
+export const AddToBookMarkImplementation = async (
+  params: AddToBookMarkImplementation
+) => {
+  const { patient_id, user_id } = params;
+
+  PatientsBookmarkModel.create({
+    patient_id: patient_id,
+    user_id: user_id,
+  });
+
+  return;
+};
+
+type ListSuggestionPatientsParams = {
+  limit: number;
+  page: number;
+  user_id: string;
+  sortBy?: string;
+};
+
+export const ListPatientsSuggestionImplementation = async (
+  params: ListSuggestionPatientsParams
+) => {
+  const { limit, page, sortBy, user_id } = params;
+
+  const sortObject = getSortObject(sortBy);
+
+  const patients = await PatientModel.find({
+    creator_id: { $ne: user_id },
+  })
+    .sort(sortObject)
+    .limit(limit)
+    .skip(page * limit)
+    .populate("episodes_count");
+
+  return patients;
+};
+
+type CountPatientsSuggestionParams = {
+  user_id: string;
+};
+
+export const CountPatientsSuggestionImplementation = async ({
+  user_id,
+}: CountPatientsSuggestionParams) => {
+  const count = await PatientModel.countDocuments({
+    creator_id: { $ne: user_id },
+  });
+
+  return count;
 };

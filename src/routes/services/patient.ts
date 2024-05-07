@@ -20,6 +20,7 @@ import {
   DeletePatientValidator,
 } from "@useCases/patientUseCases/deletePatientUseCase/deletePatientController";
 import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
+import { ListPatientsSuggestionController } from "@useCases/patientUseCases/listPatientsSuggestion/listPatientsSuggestionController";
 
 const router = Router();
 
@@ -28,6 +29,12 @@ router.use(useAuth);
 router.post("/", CreatePatientValidator(), validate, CreatePatientController);
 
 router.get("/", PaginationMiddleware, ListPatientsController);
+
+router.get(
+  "/suggestion",
+  PaginationMiddleware,
+  ListPatientsSuggestionController
+);
 
 router.get(
   "/:id",
