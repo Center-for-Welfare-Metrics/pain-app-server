@@ -4,6 +4,20 @@ export const patientTypeEnum = ["human", "animal"] as const;
 
 export type PatientTypeEnum = (typeof patientTypeEnum)[number];
 
+export type PatientType = {
+  name: string;
+  birth_date?: string;
+  creator_id: string;
+  type: PatientTypeEnum;
+  production_system?: string;
+  life_fate?: string;
+  about?: string;
+  location?: string;
+  common_name?: string;
+  scientific_name?: string;
+  episodes_count: number;
+};
+
 const patientSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -32,4 +46,4 @@ patientSchema.virtual("episodes_count", {
 patientSchema.set("toObject", { virtuals: true });
 patientSchema.set("toJSON", { virtuals: true });
 
-export const PatientModel = model("patient", patientSchema);
+export const PatientModel = model<PatientType>("patient", patientSchema);

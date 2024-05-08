@@ -144,12 +144,46 @@ export const AddToBookMarkImplementation = async (
 ) => {
   const { patient_id, user_id } = params;
 
-  PatientsBookmarkModel.create({
+  const bookmarkCreated = await PatientsBookmarkModel.create({
     patient_id: patient_id,
     user_id: user_id,
   });
 
-  return;
+  await bookmarkCreated.populate([
+    {
+      path: "patient",
+      populate: {
+        path: "episodes_count",
+      },
+    },
+  ]);
+
+  return bookmarkCreated;
+};
+
+type GetPatientOnBookMark = {
+  patient_id: string;
+  user_id: string;
+};
+
+export const GetBookMarkPatientImplementation = async (
+  params: GetPatientOnBookMark
+) => {
+  const { patient_id, user_id } = params;
+
+  const bookmarkedPatient = await PatientsBookmarkModel.findOne({
+    patient_id,
+    user_id,
+  }).populate([
+    {
+      path: "patient",
+      populate: {
+        path: "episodes_count",
+      },
+    },
+  ]);
+
+  return bookmarkedPatient;
 };
 
 type ListSuggestionPatientsParams = {

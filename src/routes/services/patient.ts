@@ -21,6 +21,7 @@ import {
 } from "@useCases/patientUseCases/deletePatientUseCase/deletePatientController";
 import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
 import { ListPatientsSuggestionController } from "@useCases/patientUseCases/listPatientsSuggestion/listPatientsSuggestionController";
+import { AddToBookMarkController } from "@useCases/patientUseCases/addToBookmark/addToBookMarkController";
 
 const router = Router();
 
@@ -51,6 +52,8 @@ router.patch(
   validate,
   UpdatePatientController
 );
+
+router.post("/bookmark", AddToBookMarkController);
 
 router.delete(
   "/:patient_id",

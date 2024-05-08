@@ -1,5 +1,6 @@
 import {
   AddToBookMarkImplementation,
+  GetBookMarkPatientImplementation,
   GetPatientByIdImplementation,
 } from "@implementations/mongoose/patient";
 
@@ -13,12 +14,19 @@ export const AddToBookMarkUseCase = async (
 ) => {
   const { patient_id, user_id } = params;
 
-  await AddToBookMarkImplementation({
+  const patientBookMarkFinded = await GetBookMarkPatientImplementation({
     patient_id,
     user_id,
   });
 
-  const patient = await GetPatientByIdImplementation(patient_id);
+  if (patientBookMarkFinded) {
+    return patientBookMarkFinded.patient;
+  }
 
-  return patient;
+  const bookmarkCreated = await AddToBookMarkImplementation({
+    patient_id,
+    user_id,
+  });
+
+  return bookmarkCreated.patient;
 };

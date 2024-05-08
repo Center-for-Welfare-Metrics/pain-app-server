@@ -19,7 +19,14 @@ export const ListBookmarkPatientsImplementation = async (
     .sort(sortObject)
     .limit(limit)
     .skip(page * limit)
-    .populate("patient");
+    .populate([
+      {
+        path: "patient",
+        populate: {
+          path: "episodes_count",
+        },
+      },
+    ]);
 
   return patients;
 };
