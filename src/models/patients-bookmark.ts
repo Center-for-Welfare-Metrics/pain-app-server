@@ -12,11 +12,13 @@ const PatientsBookmarkSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Patient",
     required: true,
+    index: true,
   },
   user_id: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
+    index: true,
   },
 });
 

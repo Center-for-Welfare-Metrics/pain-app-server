@@ -1,4 +1,11 @@
-export const getSortObject = (sortBy: string | undefined) => {
+type SortObjectOptions = {
+  isAggregation?: boolean;
+};
+
+export const getSortObject = (
+  sortBy: string | undefined,
+  sortAggregation?: SortObjectOptions
+) => {
   if (!sortBy) {
     return {};
   }
@@ -11,7 +18,11 @@ export const getSortObject = (sortBy: string | undefined) => {
 
   const fieldName = isDesc ? sortBy.substring(1) : sortBy;
 
-  sortObject[fieldName] = sortDirection;
+  if (sortAggregation?.isAggregation) {
+    sortObject[fieldName] = sortDirection === "asc" ? 1 : -1;
+  } else {
+    sortObject[fieldName] = sortDirection;
+  }
 
   return sortObject;
 };

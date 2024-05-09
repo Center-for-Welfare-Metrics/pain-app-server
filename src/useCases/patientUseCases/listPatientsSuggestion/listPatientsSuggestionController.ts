@@ -27,6 +27,7 @@ export const ListPatientsSuggestionController = async (
 
     return response.status(200).json(patientsSugestionWithPagination);
   } catch (err) {
+    console.log(err);
     return response.sendStatus(500);
   }
 };

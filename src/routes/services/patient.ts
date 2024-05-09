@@ -22,6 +22,7 @@ import {
 import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
 import { ListPatientsSuggestionController } from "@useCases/patientUseCases/listPatientsSuggestion/listPatientsSuggestionController";
 import { AddToBookMarkController } from "@useCases/patientUseCases/addToBookmark/addToBookMarkController";
+import { RemoveFromBookMarkController } from "@useCases/patientUseCases/removeFromBookMark/removeFromBookMarkController";
 
 const router = Router();
 
@@ -54,6 +55,8 @@ router.patch(
 );
 
 router.post("/bookmark", AddToBookMarkController);
+
+router.delete("/bookmark", RemoveFromBookMarkController);
 
 router.delete(
   "/:patient_id",

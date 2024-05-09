@@ -2,6 +2,7 @@ import { PatientModel, PatientTypeEnum } from "@models/patient";
 import { getSortObject } from "@utils/sortBy";
 import { DeleteEpisodesByPatientIdImplementation } from "./episodes";
 import { PatientsBookmarkModel } from "@models/patients-bookmark";
+import mongoose from "mongoose";
 
 type CreatePatientImplementationParams = {
   name: string;
@@ -40,7 +41,8 @@ export const ListPatientsImplementation = async (
     .sort(sortObject)
     .limit(limit)
     .skip(page * limit)
-    .populate("episodes_count");
+    .populate("episodes_count")
+    .populate("bookmarked");
 
   return patients;
 };
@@ -198,15 +200,80 @@ export const ListPatientsSuggestionImplementation = async (
 ) => {
   const { limit, page, sortBy, user_id } = params;
 
-  const sortObject = getSortObject(sortBy);
+  const sortObject = getSortObject(sortBy, {
+    isAggregation: true,
+  });
 
-  const patients = await PatientModel.find({
-    creator_id: { $ne: user_id },
-  })
-    .sort(sortObject)
-    .limit(limit)
-    .skip(page * limit)
-    .populate("episodes_count");
+  // const patients = await PatientModel.find({
+  //   creator_id: { $ne: user_id },
+  // })
+  //   .sort(sortObject)
+  //   .limit(limit)
+  //   .skip(page * limit)
+  //   .populate("episodes_count");
+
+  const patients = await PatientModel.aggregate([
+    {
+      $match: {
+        creator_id: {
+          $ne: mongoose.mongo.BSON.ObjectId.createFromHexString(user_id),
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "patients_bookmark",
+        let: { patient_id: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  // { $eq: ["$patient_id", "$$patient_id"] },
+                  {
+                    $eq: [
+                      "$user_id",
+                      mongoose.mongo.BSON.ObjectId.createFromHexString(user_id),
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+        ],
+        as: "matched_records",
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $eq: [{ $size: "$matched_records" }, 0],
+        },
+      },
+    },
+    {
+      $limit: limit,
+    },
+    {
+      $skip: page * limit,
+    },
+    {
+      $lookup: {
+        from: "episodes",
+        localField: "_id",
+        foreignField: "patient_id",
+        as: "episodes_count",
+      },
+    },
+    {
+      $addFields: {
+        episodes_count: { $size: "$episodes_count" },
+      },
+    },
+    {
+      $sort: sortObject,
+    },
+  ]);
 
   return patients;
 };
@@ -221,6 +288,24 @@ export const CountPatientsSuggestionImplementation = async ({
   const count = await PatientModel.countDocuments({
     creator_id: { $ne: user_id },
   });
-
+  console.log(count);
   return count;
+};
+
+type RemoveBookMarkImplementation = {
+  patient_id: string;
+  user_id: string;
+};
+
+export const RemoveBookMarkImplementation = async (
+  params: RemoveBookMarkImplementation
+) => {
+  const { patient_id, user_id } = params;
+
+  const bookmarkedPatient = await PatientsBookmarkModel.findOneAndDelete({
+    patient_id,
+    user_id,
+  });
+
+  return bookmarkedPatient;
 };
