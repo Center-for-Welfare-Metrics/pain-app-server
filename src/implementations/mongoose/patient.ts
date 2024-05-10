@@ -204,39 +204,27 @@ export const ListPatientsSuggestionImplementation = async (
     isAggregation: true,
   });
 
-  // const patients = await PatientModel.find({
-  //   creator_id: { $ne: user_id },
-  // })
-  //   .sort(sortObject)
-  //   .limit(limit)
-  //   .skip(page * limit)
-  //   .populate("episodes_count");
+  const userObjectId =
+    mongoose.mongo.BSON.ObjectId.createFromHexString(user_id);
 
   const patients = await PatientModel.aggregate([
     {
       $match: {
         creator_id: {
-          $ne: mongoose.mongo.BSON.ObjectId.createFromHexString(user_id),
+          $ne: userObjectId,
         },
       },
     },
     {
       $lookup: {
-        from: "patients_bookmark",
-        let: { patient_id: "$_id" },
+        from: "patients_bookmarks",
+        foreignField: "patient_id",
+        localField: "_id",
         pipeline: [
           {
             $match: {
-              $expr: {
-                $and: [
-                  // { $eq: ["$patient_id", "$$patient_id"] },
-                  {
-                    $eq: [
-                      "$user_id",
-                      mongoose.mongo.BSON.ObjectId.createFromHexString(user_id),
-                    ],
-                  },
-                ],
+              user_id: {
+                $eq: userObjectId,
               },
             },
           },
@@ -250,12 +238,6 @@ export const ListPatientsSuggestionImplementation = async (
           $eq: [{ $size: "$matched_records" }, 0],
         },
       },
-    },
-    {
-      $limit: limit,
-    },
-    {
-      $skip: page * limit,
     },
     {
       $lookup: {
@@ -273,6 +255,12 @@ export const ListPatientsSuggestionImplementation = async (
     {
       $sort: sortObject,
     },
+    {
+      $skip: page * limit,
+    },
+    {
+      $limit: limit,
+    },
   ]);
 
   return patients;
@@ -285,11 +273,47 @@ type CountPatientsSuggestionParams = {
 export const CountPatientsSuggestionImplementation = async ({
   user_id,
 }: CountPatientsSuggestionParams) => {
-  const count = await PatientModel.countDocuments({
-    creator_id: { $ne: user_id },
-  });
-  console.log(count);
-  return count;
+  const userObjectId =
+    mongoose.mongo.BSON.ObjectId.createFromHexString(user_id);
+
+  const count = await PatientModel.aggregate([
+    {
+      $match: {
+        creator_id: {
+          $ne: userObjectId,
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "patients_bookmarks",
+        foreignField: "patient_id",
+        localField: "_id",
+        pipeline: [
+          {
+            $match: {
+              user_id: {
+                $eq: userObjectId,
+              },
+            },
+          },
+        ],
+        as: "matched_records",
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $eq: [{ $size: "$matched_records" }, 0],
+        },
+      },
+    },
+    {
+      $count: "count",
+    },
+  ]);
+
+  return count[0].count;
 };
 
 type RemoveBookMarkImplementation = {
