@@ -248,6 +248,16 @@ export const ListPatientsSuggestionImplementation = async (
       },
     },
     {
+      $project: {
+        name: 1,
+        episodes_count: 1,
+        type: 1,
+        birth_date: 1,
+        createdAt: 1,
+        updatedAt: 1,
+      },
+    },
+    {
       $addFields: {
         episodes_count: { $size: "$episodes_count" },
       },
