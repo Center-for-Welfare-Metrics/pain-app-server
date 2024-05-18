@@ -20,7 +20,7 @@ export type PatientType = {
 
 const patientSchema = new Schema(
   {
-    name: { type: String, required: true },
+    name: { type: String, required: false },
     birth_date: { type: Date, required: false },
     creator_id: { type: Schema.Types.ObjectId, ref: "user", required: true },
     type: { type: String, enum: patientTypeEnum, required: true },
