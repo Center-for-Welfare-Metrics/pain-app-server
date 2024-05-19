@@ -45,3 +45,18 @@ export const CountBookmarkPatientsImplementation = async (
 
   return count;
 };
+
+type DeleteBookmarkRecordByPatientIdParams = {
+  patient_id: string;
+};
+
+export const DeleteBookmarkRecordsByPatientIdImplementation = async (
+  params: DeleteBookmarkRecordByPatientIdParams
+) => {
+  const { patient_id } = params;
+  await PatientsBookmarkModel.deleteMany({
+    patient_id,
+  });
+
+  return;
+};

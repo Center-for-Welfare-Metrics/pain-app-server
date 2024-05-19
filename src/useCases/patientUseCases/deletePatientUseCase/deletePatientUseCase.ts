@@ -1,3 +1,4 @@
+import { DeleteBookmarkRecordsByPatientIdImplementation } from "@implementations/mongoose/bookmark-patients";
 import { DeleteEpisodesByPatientIdImplementation } from "@implementations/mongoose/episodes";
 import { DeletePatientImplementation } from "@implementations/mongoose/patient";
 
@@ -12,9 +13,21 @@ export const DeletePatientUseCase = async (
 
   await DeletePatientImplementation({ patient_id });
 
-  DeleteEpisodesByPatientIdImplementation({
-    patient_id,
-  });
+  try {
+    DeleteEpisodesByPatientIdImplementation({
+      patient_id,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+
+  try {
+    DeleteBookmarkRecordsByPatientIdImplementation({
+      patient_id,
+    });
+  } catch (e) {
+    console.error(e);
+  }
 
   return;
 };
