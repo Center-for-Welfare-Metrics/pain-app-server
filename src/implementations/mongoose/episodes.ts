@@ -1,6 +1,7 @@
 import { EpisodeModel } from "@models/episode";
 import { getSortObject } from "@utils/sortBy";
 import { DeleteTrackByEpisodeIdImplementation } from "./track";
+import mongoose from "mongoose";
 
 type CreateEpisodeFromImportParams = {
   name: string;
@@ -214,4 +215,145 @@ export const FullExportEpisodeImplementation = async (
   ]);
 
   return episode;
+};
+
+type ListSuggestionEpisodesParams = {
+  limit: number;
+  page: number;
+  user_id: string;
+  sortBy?: string;
+};
+
+export const ListEpisodesSuggestionImplementation = async (
+  params: ListSuggestionEpisodesParams
+) => {
+  const { limit, page, sortBy, user_id } = params;
+
+  const sortObject = getSortObject(sortBy, {
+    isAggregation: true,
+  });
+
+  const userObjectId =
+    mongoose.mongo.BSON.ObjectId.createFromHexString(user_id);
+
+  const episodes = await EpisodeModel.aggregate([
+    {
+      $match: {
+        creator_id: {
+          $ne: userObjectId,
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "episodes_bookmarks",
+        foreignField: "episode_id",
+        localField: "_id",
+        pipeline: [
+          {
+            $match: {
+              user_id: {
+                $eq: userObjectId,
+              },
+            },
+          },
+        ],
+        as: "matched_records",
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $eq: [{ $size: "$matched_records" }, 0],
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "tracks",
+        localField: "_id",
+        foreignField: "episode_id",
+        as: "tracks_count",
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        location: 1,
+        diagnosis: 1,
+        start_date: 1,
+        comment: 1,
+        patient_id: 1,
+        creator_id: 1,
+        tracks_count: 1,
+        createdAt: 1,
+      },
+    },
+    {
+      $addFields: {
+        tracks_count: { $size: "$tracks_count" },
+      },
+    },
+    {
+      $sort: sortObject,
+    },
+    {
+      $skip: page * limit,
+    },
+    {
+      $limit: limit,
+    },
+  ]);
+
+  return episodes;
+};
+
+type CountEpisodesSuggestionParams = {
+  user_id: string;
+};
+
+export const CountEpisodesSuggestionImplementation = async ({
+  user_id,
+}: CountEpisodesSuggestionParams) => {
+  const userObjectId =
+    mongoose.mongo.BSON.ObjectId.createFromHexString(user_id);
+
+  const count = await EpisodeModel.aggregate([
+    {
+      $match: {
+        creator_id: {
+          $ne: userObjectId,
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "episodes_bookmarks",
+        foreignField: "episode_id",
+        localField: "_id",
+        pipeline: [
+          {
+            $match: {
+              user_id: {
+                $eq: userObjectId,
+              },
+            },
+          },
+        ],
+        as: "matched_records",
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $eq: [{ $size: "$matched_records" }, 0],
+        },
+      },
+    },
+    {
+      $count: "count",
+    },
+  ]);
+
+  return count[0].count;
 };

@@ -1,4 +1,4 @@
-import { DeleteBookmarkRecordsByPatientIdImplementation } from "@implementations/mongoose/bookmark-patients";
+import { DeleteBookmarkRecordsByPatientIdImplementation } from "@implementations/mongoose/patients-bookmark";
 import { DeleteEpisodesByPatientIdImplementation } from "@implementations/mongoose/episodes";
 import { DeletePatientImplementation } from "@implementations/mongoose/patient";
 

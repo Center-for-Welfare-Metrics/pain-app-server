@@ -33,6 +33,7 @@ import {
 import { validationResult } from "express-validator";
 import { NOT_FOUND_ERROR } from "@constants/validation";
 import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
+import { ListEpisodesSuggestionController } from "@useCases/episodeUseCases/listEpisodesSuggestion/listEpisodesSuggestionController";
 
 const router = Router();
 
@@ -46,6 +47,12 @@ router.get(
   validate,
   PaginationMiddleware,
   ListEpisodesController
+);
+
+router.get(
+  "/suggestion",
+  PaginationMiddleware,
+  ListEpisodesSuggestionController
 );
 
 router.get(

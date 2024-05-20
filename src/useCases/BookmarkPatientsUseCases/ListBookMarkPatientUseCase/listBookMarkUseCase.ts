@@ -1,7 +1,7 @@
 import {
   CountBookmarkPatientsImplementation,
   ListBookmarkPatientsImplementation,
-} from "@implementations/mongoose/bookmark-patients";
+} from "@implementations/mongoose/patients-bookmark";
 import { MakePagination } from "@utils/pagination";
 
 type ListPatientsUseCaseParams = {

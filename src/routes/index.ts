@@ -14,7 +14,7 @@ import segmentJustification from "@routes/services/segment-justification";
 import sugestion from "@routes/services/sugestion";
 import tests from "@routes/services/tests";
 import segmentJustificationGuest from "@routes/services/guest/segment-justification";
-import bookmarkPatients from "@routes/services/bookmark-patients";
+import bookmarkPatients from "@routes/services/patients-bookmark";
 
 const routes = (app: Express) => {
   app.use("/auth", authRouter);
