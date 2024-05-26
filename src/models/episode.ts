@@ -39,6 +39,14 @@ episodeSchema.virtual("tracks", {
   foreignField: "episode_id",
 });
 
+episodeSchema.virtual("bookmarked", {
+  ref: "episodes_bookmark",
+  localField: "_id",
+  foreignField: "episode_id",
+  count: true,
+  match: (patient) => ({ user_id: patient.creator_id }),
+});
+
 episodeSchema.set("toObject", { virtuals: true });
 episodeSchema.set("toJSON", { virtuals: true });
 

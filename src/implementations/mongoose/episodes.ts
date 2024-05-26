@@ -2,6 +2,7 @@ import { EpisodeModel } from "@models/episode";
 import { getSortObject } from "@utils/sortBy";
 import { DeleteTrackByEpisodeIdImplementation } from "./track";
 import mongoose from "mongoose";
+import { EpisodesBookmarkModel } from "@models/episodes-bookmark";
 
 type CreateEpisodeFromImportParams = {
   name: string;
@@ -102,7 +103,8 @@ export const ListEpisodesImplementation = async (
     .sort(sortObject)
     .limit(limit)
     .skip(page * limit)
-    .populate("tracks_count");
+    .populate("tracks_count")
+    .populate("bookmarked");
 
   return episodes;
 };
@@ -222,6 +224,58 @@ type ListSuggestionEpisodesParams = {
   page: number;
   user_id: string;
   sortBy?: string;
+};
+
+type AddToBookMarkImplementation = {
+  episode_id: string;
+  user_id: string;
+};
+
+export const AddEpisodeToBookMarkImplementation = async (
+  params: AddToBookMarkImplementation
+) => {
+  const { episode_id, user_id } = params;
+
+  const bookmarkCreated = await EpisodesBookmarkModel.create({
+    episode_id: episode_id,
+    user_id: user_id,
+  });
+
+  await bookmarkCreated.populate([
+    {
+      path: "episode",
+      populate: {
+        path: "tracks_count",
+      },
+    },
+  ]);
+
+  return bookmarkCreated;
+};
+
+type GetEpisodeOnBookMark = {
+  episode_id: string;
+  user_id: string;
+};
+
+export const GetBookMarkPatientImplementation = async (
+  params: GetEpisodeOnBookMark
+) => {
+  const { episode_id, user_id } = params;
+
+  const bookmarkedEpisode = await EpisodesBookmarkModel.findOne({
+    episode_id,
+    user_id,
+  }).populate([
+    {
+      path: "episode",
+      populate: {
+        path: "tracks_count",
+      },
+    },
+  ]);
+
+  return bookmarkedEpisode;
 };
 
 export const ListEpisodesSuggestionImplementation = async (
@@ -356,4 +410,22 @@ export const CountEpisodesSuggestionImplementation = async ({
   ]);
 
   return count[0].count;
+};
+
+type RemoveEpisodeBookMarkImplementation = {
+  episode_id: string;
+  user_id: string;
+};
+
+export const RemoveBookMarkImplementation = async (
+  params: RemoveEpisodeBookMarkImplementation
+) => {
+  const { episode_id, user_id } = params;
+
+  const bookmarkedEpisode = await EpisodesBookmarkModel.findOneAndDelete({
+    episode_id,
+    user_id,
+  });
+
+  return bookmarkedEpisode;
 };
