@@ -295,6 +295,7 @@ export const ListEpisodesSuggestionImplementation = async (
       $match: {
         creator_id: {
           $ne: userObjectId,
+          $exists: true,
         },
       },
     },
@@ -331,6 +332,19 @@ export const ListEpisodesSuggestionImplementation = async (
       },
     },
     {
+      $lookup: {
+        from: "patients",
+        localField: "patient_id",
+        foreignField: "_id",
+        as: "patient",
+      },
+    },
+    {
+      $addFields: {
+        patient: { $arrayElemAt: ["$patient", 0] },
+      },
+    },
+    {
       $project: {
         name: 1,
         location: 1,
@@ -340,6 +354,7 @@ export const ListEpisodesSuggestionImplementation = async (
         patient_id: 1,
         creator_id: 1,
         tracks_count: 1,
+        patient: { type: 1, scientific_name: 1 },
         createdAt: 1,
       },
     },
@@ -377,6 +392,7 @@ export const CountEpisodesSuggestionImplementation = async ({
       $match: {
         creator_id: {
           $ne: userObjectId,
+          $exists: true,
         },
       },
     },

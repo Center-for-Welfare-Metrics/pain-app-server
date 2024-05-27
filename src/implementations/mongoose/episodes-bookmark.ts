@@ -22,9 +22,12 @@ export const ListBookmarkEpisodesImplementation = async (
     .populate([
       {
         path: "episode",
-        populate: {
-          path: "tracks_count",
-        },
+        populate: [
+          {
+            path: "tracks_count",
+          },
+          { path: "patient" },
+        ],
       },
     ]);
 
