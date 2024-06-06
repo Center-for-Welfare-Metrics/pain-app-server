@@ -13,9 +13,9 @@ export const GetPatientByIdUseCase = async (
   const patient = await GetPatientByIdImplementation(id);
 
   if (patient) {
-    if (patient.creator_id.toString() === user_id) {
-      return patient;
-    }
+    // if (patient.creator_id.toString() === user_id) {
+    return patient;
+    // }
   }
 
   throw new Error("Patient not found");

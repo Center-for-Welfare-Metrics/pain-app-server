@@ -30,9 +30,10 @@ import {
   ImportEpisodeController,
   ImportEpisodeValidator,
 } from "@useCases/episodeUseCases/importEpisodeUseCase/importEpisodeController";
-import { validationResult } from "express-validator";
-import { NOT_FOUND_ERROR } from "@constants/validation";
 import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
+import { ListEpisodesSuggestionController } from "@useCases/episodeUseCases/listEpisodesSuggestion/listEpisodesSuggestionController";
+import { AddEpisodeToBookMarkController } from "@useCases/episodeUseCases/addToBookmark/addToBookMarkController";
+import { RemoveEpisodeFromBookMarkController } from "@useCases/episodeUseCases/removeEpisodeFromBookMark/removeEpisodeFromBookMarkController";
 
 const router = Router();
 
@@ -46,6 +47,12 @@ router.get(
   validate,
   PaginationMiddleware,
   ListEpisodesController
+);
+
+router.get(
+  "/suggestion",
+  PaginationMiddleware,
+  ListEpisodesSuggestionController
 );
 
 router.get(
@@ -70,6 +77,10 @@ router.patch(
   validate,
   UpdateEpisodeController
 );
+
+router.post("/bookmark", AddEpisodeToBookMarkController);
+
+router.delete("/bookmark", RemoveEpisodeFromBookMarkController);
 
 router.delete(
   "/:episode_id",

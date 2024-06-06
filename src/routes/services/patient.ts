@@ -20,6 +20,9 @@ import {
   DeletePatientValidator,
 } from "@useCases/patientUseCases/deletePatientUseCase/deletePatientController";
 import { Return404OnNotFound } from "@utils/helpers/validation-helpers";
+import { ListPatientsSuggestionController } from "@useCases/patientUseCases/listPatientsSuggestion/listPatientsSuggestionController";
+import { AddToBookMarkController } from "@useCases/patientUseCases/addToBookmark/addToBookMarkController";
+import { RemoveFromBookMarkController } from "@useCases/patientUseCases/removeFromBookMark/removeFromBookMarkController";
 
 const router = Router();
 
@@ -28,6 +31,12 @@ router.use(useAuth);
 router.post("/", CreatePatientValidator(), validate, CreatePatientController);
 
 router.get("/", PaginationMiddleware, ListPatientsController);
+
+router.get(
+  "/suggestion",
+  PaginationMiddleware,
+  ListPatientsSuggestionController
+);
 
 router.get(
   "/:id",
@@ -44,6 +53,10 @@ router.patch(
   validate,
   UpdatePatientController
 );
+
+router.post("/bookmark", AddToBookMarkController);
+
+router.delete("/bookmark", RemoveFromBookMarkController);
 
 router.delete(
   "/:patient_id",

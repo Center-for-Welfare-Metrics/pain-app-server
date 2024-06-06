@@ -14,6 +14,8 @@ import segmentJustification from "@routes/services/segment-justification";
 import sugestion from "@routes/services/sugestion";
 import tests from "@routes/services/tests";
 import segmentJustificationGuest from "@routes/services/guest/segment-justification";
+import bookmarkPatients from "@routes/services/patients-bookmark";
+import bookmarkEpisodes from "@routes/services/episodes-bookmark";
 
 const routes = (app: Express) => {
   app.use("/auth", authRouter);
@@ -30,6 +32,8 @@ const routes = (app: Express) => {
   app.use("/segment-justification", segmentJustification);
   app.use("/segment-justification-guest", segmentJustificationGuest);
   app.use("/sugestion", sugestion);
+  app.use("/bookmark-patients", bookmarkPatients);
+  app.use("/bookmark-episodes", bookmarkEpisodes);
   if (process.env.ENV === "DEV") {
     app.use("/tests", tests);
   }

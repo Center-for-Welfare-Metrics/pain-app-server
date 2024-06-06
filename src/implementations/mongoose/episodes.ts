@@ -1,6 +1,8 @@
 import { EpisodeModel } from "@models/episode";
 import { getSortObject } from "@utils/sortBy";
 import { DeleteTrackByEpisodeIdImplementation } from "./track";
+import mongoose from "mongoose";
+import { EpisodesBookmarkModel } from "@models/episodes-bookmark";
 
 type CreateEpisodeFromImportParams = {
   name: string;
@@ -101,7 +103,8 @@ export const ListEpisodesImplementation = async (
     .sort(sortObject)
     .limit(limit)
     .skip(page * limit)
-    .populate("tracks_count");
+    .populate("tracks_count")
+    .populate("bookmarked");
 
   return episodes;
 };
@@ -214,4 +217,231 @@ export const FullExportEpisodeImplementation = async (
   ]);
 
   return episode;
+};
+
+type ListSuggestionEpisodesParams = {
+  limit: number;
+  page: number;
+  user_id: string;
+  sortBy?: string;
+};
+
+type AddToBookMarkImplementation = {
+  episode_id: string;
+  user_id: string;
+};
+
+export const AddEpisodeToBookMarkImplementation = async (
+  params: AddToBookMarkImplementation
+) => {
+  const { episode_id, user_id } = params;
+
+  const bookmarkCreated = await EpisodesBookmarkModel.create({
+    episode_id: episode_id,
+    user_id: user_id,
+  });
+
+  await bookmarkCreated.populate([
+    {
+      path: "episode",
+      populate: {
+        path: "tracks_count",
+      },
+    },
+  ]);
+
+  return bookmarkCreated;
+};
+
+type GetEpisodeOnBookMark = {
+  episode_id: string;
+  user_id: string;
+};
+
+export const GetBookMarkPatientImplementation = async (
+  params: GetEpisodeOnBookMark
+) => {
+  const { episode_id, user_id } = params;
+
+  const bookmarkedEpisode = await EpisodesBookmarkModel.findOne({
+    episode_id,
+    user_id,
+  }).populate([
+    {
+      path: "episode",
+      populate: {
+        path: "tracks_count",
+      },
+    },
+  ]);
+
+  return bookmarkedEpisode;
+};
+
+export const ListEpisodesSuggestionImplementation = async (
+  params: ListSuggestionEpisodesParams
+) => {
+  const { limit, page, sortBy, user_id } = params;
+
+  const sortObject = getSortObject(sortBy, {
+    isAggregation: true,
+  });
+
+  const userObjectId =
+    mongoose.mongo.BSON.ObjectId.createFromHexString(user_id);
+
+  const episodes = await EpisodeModel.aggregate([
+    {
+      $match: {
+        creator_id: {
+          $ne: userObjectId,
+          $exists: true,
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "episodes_bookmarks",
+        foreignField: "episode_id",
+        localField: "_id",
+        pipeline: [
+          {
+            $match: {
+              user_id: {
+                $eq: userObjectId,
+              },
+            },
+          },
+        ],
+        as: "matched_records",
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $eq: [{ $size: "$matched_records" }, 0],
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "tracks",
+        localField: "_id",
+        foreignField: "episode_id",
+        as: "tracks_count",
+      },
+    },
+    {
+      $lookup: {
+        from: "patients",
+        localField: "patient_id",
+        foreignField: "_id",
+        as: "patient",
+      },
+    },
+    {
+      $addFields: {
+        patient: { $arrayElemAt: ["$patient", 0] },
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        location: 1,
+        diagnosis: 1,
+        start_date: 1,
+        comment: 1,
+        patient_id: 1,
+        creator_id: 1,
+        tracks_count: 1,
+        patient: { type: 1, scientific_name: 1 },
+        createdAt: 1,
+      },
+    },
+    {
+      $addFields: {
+        tracks_count: { $size: "$tracks_count" },
+      },
+    },
+    {
+      $sort: sortObject,
+    },
+    {
+      $skip: page * limit,
+    },
+    {
+      $limit: limit,
+    },
+  ]);
+
+  return episodes;
+};
+
+type CountEpisodesSuggestionParams = {
+  user_id: string;
+};
+
+export const CountEpisodesSuggestionImplementation = async ({
+  user_id,
+}: CountEpisodesSuggestionParams) => {
+  const userObjectId =
+    mongoose.mongo.BSON.ObjectId.createFromHexString(user_id);
+
+  const count = await EpisodeModel.aggregate([
+    {
+      $match: {
+        creator_id: {
+          $ne: userObjectId,
+          $exists: true,
+        },
+      },
+    },
+    {
+      $lookup: {
+        from: "episodes_bookmarks",
+        foreignField: "episode_id",
+        localField: "_id",
+        pipeline: [
+          {
+            $match: {
+              user_id: {
+                $eq: userObjectId,
+              },
+            },
+          },
+        ],
+        as: "matched_records",
+      },
+    },
+    {
+      $match: {
+        $expr: {
+          $eq: [{ $size: "$matched_records" }, 0],
+        },
+      },
+    },
+    {
+      $count: "count",
+    },
+  ]);
+
+  return count[0].count;
+};
+
+type RemoveEpisodeBookMarkImplementation = {
+  episode_id: string;
+  user_id: string;
+};
+
+export const RemoveBookMarkImplementation = async (
+  params: RemoveEpisodeBookMarkImplementation
+) => {
+  const { episode_id, user_id } = params;
+
+  const bookmarkedEpisode = await EpisodesBookmarkModel.findOneAndDelete({
+    episode_id,
+    user_id,
+  });
+
+  return bookmarkedEpisode;
 };

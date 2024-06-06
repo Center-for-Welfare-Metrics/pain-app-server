@@ -42,8 +42,8 @@ export const ListEpisodesValidator = () => [
         throw new Error("Patient not found");
       }
 
-      if (patient.creator_id.toString() !== user_id) {
-        throw new Error("Patient not found");
-      }
+      // if (patient.creator_id.toString() !== user_id) {
+      //   throw new Error("Patient not found");
+      // }
     }),
 ];
