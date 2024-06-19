@@ -1,4 +1,5 @@
 import { DiscussionModel } from "@models/discussion";
+import { getSortObject } from "@utils/sortBy";
 
 type CreateDiscussionImplementation = {
   path: string;
@@ -27,19 +28,45 @@ export const createDiscussionImplementation = async (
 };
 
 type ListDiscussionImplementation = {
-  episode_id?: string;
-  patient_id?: string;
+  limit: number;
+  page: number;
+  episode_id: string | null;
+  patient_id: string | null;
+  sortBy?: string;
 };
 
-export const listDiscussionImplementation = async (
+export const ListDiscussionImplementation = async (
   params: ListDiscussionImplementation
 ) => {
-  const { episode_id, patient_id } = params;
+  const { episode_id, patient_id, limit, page, sortBy } = params;
+
+  const sortObject = getSortObject(sortBy);
 
   const discussions = await DiscussionModel.find({
     episode_id,
     patient_id,
-  });
+  })
+    .sort(sortObject)
+    .limit(limit)
+    .skip(page * limit);
 
   return discussions;
+};
+
+type CountDiscussionImplementation = {
+  patient_id: string | null;
+  episode_id: string | null;
+};
+
+export const CountDiscussionImplementation = async (
+  params: CountDiscussionImplementation
+) => {
+  const { patient_id, episode_id } = params;
+
+  const count = await DiscussionModel.countDocuments({
+    patient_id,
+    episode_id,
+  });
+
+  return count;
 };

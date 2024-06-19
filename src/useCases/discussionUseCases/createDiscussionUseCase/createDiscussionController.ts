@@ -31,6 +31,7 @@ export const CreateDiscussionController = async (
 
     return response.status(201).json(discussion);
   } catch (error) {
+    console.log(error);
     return response.sendStatus(500);
   }
 };
