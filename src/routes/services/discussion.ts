@@ -10,6 +10,10 @@ import {
   ListDiscussionValidator,
 } from "@useCases/discussionUseCases/listDiscussionUseCase/listDiscussionController";
 import { PaginationMiddleware } from "@utils/pagination";
+import {
+  GetDiscussionByIdController,
+  GetDiscussionByIdValidator,
+} from "@useCases/discussionUseCases/getDiscussionByIdUseCase/getDiscussionByIdController";
 
 const router = Router();
 
@@ -28,6 +32,13 @@ router.get(
   validate,
   PaginationMiddleware,
   ListDiscussionController
+);
+
+router.get(
+  "/:discussion_id",
+  GetDiscussionByIdValidator(),
+  validate,
+  GetDiscussionByIdController
 );
 
 export default router;

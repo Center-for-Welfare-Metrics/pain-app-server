@@ -8,22 +8,22 @@ type CreateDiscussionRequestBody = {
   episode_id: string | undefined;
   parent_id: string | null;
   text: string;
-  path: string;
+  title?: string;
 };
 
 export const CreateDiscussionController = async (
   request: Request<any, any, CreateDiscussionRequestBody>,
   response: Response
 ) => {
-  const { patient_id, episode_id, parent_id, text } = request.body;
+  const { patient_id, episode_id, parent_id, text, title } = request.body;
 
   try {
     const user_id = request["user"]._id;
-    const text = request.body.text;
 
     const discussion = await CreateDiscussionUseCase({
       user_id,
       text,
+      title,
       patient_id,
       episode_id,
       parent_id,
@@ -44,4 +44,6 @@ export const CreateDiscussionValidator = () => [
       values: "null",
     })
     .isMongoId(),
+  body("text").isString().notEmpty(),
+  body("title").optional().isString(),
 ];

@@ -7,6 +7,7 @@ type ListDiscussionRequestQuery = {
   limit: number;
   episode_id: string | null;
   patient_id: string | null;
+  parent_id: string | null;
   sortBy?: string;
 };
 
@@ -15,11 +16,13 @@ export const ListDiscussionController = async (
   response: Response
 ) => {
   try {
-    const { page, limit, sortBy, patient_id, episode_id } = request.query;
+    const { page, limit, sortBy, patient_id, episode_id, parent_id } =
+      request.query;
 
     const discussionWithPagination = await ListDiscussionUseCase({
       patient_id,
       episode_id,
+      parent_id,
       page,
       limit,
       sortBy,
