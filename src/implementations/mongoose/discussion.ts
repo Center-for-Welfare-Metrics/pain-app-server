@@ -51,10 +51,15 @@ export const ListDiscussionImplementation = async (
     episode_id,
     parent_id,
   })
-    .populate({
-      path: "user",
-      select: "name",
-    })
+    .populate([
+      {
+        path: "user",
+        select: "name",
+      },
+      {
+        path: "replies_count",
+      },
+    ])
     .sort(sortObject)
     .limit(limit)
     .skip(page * limit);
@@ -90,10 +95,15 @@ export const GetDiscussionByIdImplementation = async (
 ) => {
   const { discussion_id } = params;
 
-  const discussion = await DiscussionModel.findById(discussion_id).populate({
-    path: "user",
-    select: "name",
-  });
+  const discussion = await DiscussionModel.findById(discussion_id).populate([
+    {
+      path: "user",
+      select: "name",
+    },
+    {
+      path: "replies_count",
+    },
+  ]);
 
   return discussion;
 };

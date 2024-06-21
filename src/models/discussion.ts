@@ -55,6 +55,13 @@ discussionSchema.virtual("user", {
   justOne: true,
 });
 
+discussionSchema.virtual("replies_count", {
+  ref: "discussion",
+  localField: "_id",
+  foreignField: "parent_id",
+  count: true,
+});
+
 discussionSchema.set("toObject", { virtuals: true });
 discussionSchema.set("toJSON", { virtuals: true });
 
