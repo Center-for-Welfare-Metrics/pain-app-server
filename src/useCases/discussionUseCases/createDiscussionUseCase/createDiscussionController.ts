@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { CreateDiscussionUseCase } from "./createDiscussionUseCase";
 import { body } from "express-validator";
-import { GetPatientByIdImplementation } from "@implementations/mongoose/patient";
 
 type CreateDiscussionRequestBody = {
   patient_id: string | undefined;
@@ -37,8 +36,12 @@ export const CreateDiscussionController = async (
 };
 
 export const CreateDiscussionValidator = () => [
-  body("patient_id").optional().isMongoId(),
-  body("episode_id").optional().isMongoId(),
+  body("patient_id").isMongoId(),
+  body("episode_id")
+    .optional({
+      values: "null",
+    })
+    .isMongoId(),
   body("parent_id")
     .optional({
       values: "null",
