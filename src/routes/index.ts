@@ -16,6 +16,7 @@ import tests from "@routes/services/tests";
 import segmentJustificationGuest from "@routes/services/guest/segment-justification";
 import bookmarkPatients from "@routes/services/patients-bookmark";
 import bookmarkEpisodes from "@routes/services/episodes-bookmark";
+import discussion from "@routes/services/discussion";
 
 const routes = (app: Express) => {
   app.use("/auth", authRouter);
@@ -34,6 +35,7 @@ const routes = (app: Express) => {
   app.use("/sugestion", sugestion);
   app.use("/bookmark-patients", bookmarkPatients);
   app.use("/bookmark-episodes", bookmarkEpisodes);
+  app.use("/discussion", discussion);
   if (process.env.ENV === "DEV") {
     app.use("/tests", tests);
   }
