@@ -5,9 +5,11 @@ import { query } from "express-validator";
 type ListDiscussionRequestQuery = {
   page: number;
   limit: number;
+  patient_id: string;
   episode_id: string | null;
-  patient_id: string | null;
   parent_id: string | null;
+  track_id: string | null;
+  segment_id: string | null;
   sortBy?: string;
 };
 
@@ -16,12 +18,22 @@ export const ListDiscussionController = async (
   response: Response
 ) => {
   try {
-    const { page, limit, sortBy, patient_id, episode_id, parent_id } =
-      request.query;
+    const {
+      page,
+      limit,
+      sortBy,
+      patient_id,
+      episode_id,
+      parent_id,
+      track_id,
+      segment_id,
+    } = request.query;
 
     const discussionWithPagination = await ListDiscussionUseCase({
       patient_id,
-      episode_id,
+      episode_id: episode_id ?? null,
+      track_id: track_id ?? null,
+      segment_id: segment_id ?? null,
       parent_id,
       page,
       limit,

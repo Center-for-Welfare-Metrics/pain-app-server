@@ -8,23 +8,36 @@ type CreateDiscussionImplementation = {
   title?: string;
   patient_id?: string;
   episode_id?: string;
+  track_id?: string;
+  segment_id?: string;
   parent_id: string | null;
 };
 
 export const createDiscussionImplementation = async (
   discussion: CreateDiscussionImplementation
 ) => {
-  const { path, user_id, text, patient_id, episode_id, parent_id, title } =
-    discussion;
+  const {
+    path,
+    user_id,
+    text,
+    patient_id,
+    episode_id,
+    parent_id,
+    title,
+    track_id,
+    segment_id,
+  } = discussion;
 
   const discussionCreated = await DiscussionModel.create({
     path,
     user_id,
     text,
     title,
+    parent_id,
     patient_id,
     episode_id,
-    parent_id,
+    track_id,
+    segment_id,
   });
 
   return discussionCreated;
@@ -33,8 +46,10 @@ export const createDiscussionImplementation = async (
 type ListDiscussionImplementation = {
   limit: number;
   page: number;
+  patient_id: string;
   episode_id: string | null;
-  patient_id: string | null;
+  track_id: string | null;
+  segment_id: string | null;
   parent_id: string | null;
   sortBy?: string;
 };
@@ -42,7 +57,16 @@ type ListDiscussionImplementation = {
 export const ListDiscussionImplementation = async (
   params: ListDiscussionImplementation
 ) => {
-  const { episode_id, patient_id, limit, page, sortBy, parent_id } = params;
+  const {
+    episode_id,
+    patient_id,
+    limit,
+    page,
+    sortBy,
+    parent_id,
+    segment_id,
+    track_id,
+  } = params;
 
   const sortObject = getSortObject(sortBy);
 
@@ -50,6 +74,8 @@ export const ListDiscussionImplementation = async (
     patient_id,
     episode_id,
     parent_id,
+    track_id,
+    segment_id,
   })
     .populate([
       {
@@ -67,20 +93,24 @@ export const ListDiscussionImplementation = async (
 };
 
 type CountDiscussionImplementation = {
+  parent_id: string | null;
   patient_id: string | null;
   episode_id: string | null;
-  parent_id: string | null;
+  track_id: string | null;
+  segment_id: string | null;
 };
 
 export const CountDiscussionImplementation = async (
   params: CountDiscussionImplementation
 ) => {
-  const { patient_id, episode_id, parent_id } = params;
+  const { patient_id, episode_id, parent_id, segment_id, track_id } = params;
 
   const count = await DiscussionModel.countDocuments({
+    parent_id,
     patient_id,
     episode_id,
-    parent_id,
+    track_id,
+    segment_id,
   });
 
   return count;

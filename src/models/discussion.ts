@@ -4,9 +4,11 @@ type DiscussionType = {
   path: string;
   user_id: string;
   text: string;
-  patient_id?: string;
-  episode_id?: string;
   parent_id: string | null;
+  patient_id: string;
+  episode_id?: string;
+  track_id?: string;
+  segment_id?: string;
 };
 
 const discussionSchema = new Schema(
@@ -36,6 +38,14 @@ const discussionSchema = new Schema(
     episode_id: {
       type: Schema.Types.ObjectId,
       ref: "Episode",
+    },
+    track_id: {
+      type: Schema.Types.ObjectId,
+      ref: "Track",
+    },
+    segment_id: {
+      type: Schema.Types.ObjectId,
+      ref: "Segment",
     },
     parent_id: {
       type: Schema.Types.ObjectId,
