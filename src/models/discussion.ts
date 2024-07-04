@@ -28,7 +28,7 @@ const discussionSchema = new Schema(
       required: false,
     },
     text: {
-      type: String,
+      type: JSON,
       required: true,
     },
     patient_id: {

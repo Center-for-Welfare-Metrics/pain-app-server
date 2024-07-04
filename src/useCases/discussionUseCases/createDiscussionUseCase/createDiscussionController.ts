@@ -8,7 +8,7 @@ type CreateDiscussionRequestBody = {
   track_id: string | null;
   segment_id: string | null;
   parent_id: string | null;
-  text: string;
+  text: any;
   title?: string;
 };
 
@@ -59,6 +59,6 @@ export const CreateDiscussionValidator = () => [
       values: "null",
     })
     .isMongoId(),
-  body("text").isString().notEmpty(),
+  body("text").isObject().notEmpty(),
   body("title").optional().isString(),
 ];

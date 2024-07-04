@@ -4,7 +4,7 @@ import { getSortObject } from "@utils/sortBy";
 type CreateDiscussionImplementation = {
   path: string;
   user_id: string;
-  text: string;
+  text: any;
   title?: string;
   patient_id?: string;
   episode_id?: string;

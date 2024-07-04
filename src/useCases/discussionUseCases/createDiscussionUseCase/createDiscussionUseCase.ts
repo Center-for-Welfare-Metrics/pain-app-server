@@ -2,7 +2,7 @@ import { createDiscussionImplementation } from "@implementations/mongoose/discus
 
 type CreateDiscussionUseCaseParams = {
   user_id: string;
-  text: string;
+  text: any;
   title?: string;
   parent_id: string | null;
   patient_id: string | null;
