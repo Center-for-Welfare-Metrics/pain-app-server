@@ -43,6 +43,43 @@ export const createDiscussionImplementation = async (
   return discussionCreated;
 };
 
+type UpdateDiscussionTextImplementation = {
+  discussion_id: string;
+  text: string;
+};
+
+export const UpdateDiscussionTextImplementation = async (
+  params: UpdateDiscussionTextImplementation
+) => {
+  const { discussion_id, text } = params;
+
+  const discussion = await DiscussionModel.findByIdAndUpdate(
+    discussion_id,
+    { text },
+    { new: true }
+  );
+
+  return discussion;
+};
+
+type DeleteDiscussionImplementation = {
+  discussion_id: string;
+};
+
+export const DeleteDiscussionImplementation = async (
+  params: DeleteDiscussionImplementation
+) => {
+  const { discussion_id } = params;
+
+  const discussion = await DiscussionModel.findByIdAndUpdate(
+    discussion_id,
+    { deletedAt: new Date() },
+    { new: true }
+  );
+
+  return discussion;
+};
+
 type ListDiscussionImplementation = {
   limit: number;
   page: number;

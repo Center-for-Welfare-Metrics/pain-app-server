@@ -9,6 +9,9 @@ type DiscussionType = {
   episode_id?: string;
   track_id?: string;
   segment_id?: string;
+  deleted?: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 const discussionSchema = new Schema(
@@ -52,6 +55,10 @@ const discussionSchema = new Schema(
       ref: "Discussion",
       default: null,
     },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -72,8 +79,25 @@ discussionSchema.virtual("replies_count", {
   count: true,
 });
 
+discussionSchema.virtual("edited").get(function (this: DiscussionType) {
+  return this.createdAt.toString() !== this.updatedAt.toString();
+});
+
 discussionSchema.set("toObject", { virtuals: true });
 discussionSchema.set("toJSON", { virtuals: true });
+
+discussionSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+
+  if (!!obj.deletedAt) {
+    return {
+      ...obj,
+      text: null,
+    };
+  }
+
+  return obj;
+};
 
 export const DiscussionModel = model<DiscussionType>(
   "discussion",

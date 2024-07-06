@@ -14,6 +14,14 @@ import {
   GetDiscussionByIdController,
   GetDiscussionByIdValidator,
 } from "@useCases/discussionUseCases/getDiscussionByIdUseCase/getDiscussionByIdController";
+import {
+  UpdateDiscussionTextController,
+  UpdateDiscussionTextValidator,
+} from "@useCases/discussionUseCases/updateDiscussionTextUseCase/updateDiscussionTextController";
+import {
+  DeleteDiscussionController,
+  DeleteDiscussionValidator,
+} from "@useCases/discussionUseCases/deleteDiscussionUseCase/deleteDiscussionController";
 
 const router = Router();
 
@@ -39,6 +47,20 @@ router.get(
   GetDiscussionByIdValidator(),
   validate,
   GetDiscussionByIdController
+);
+
+router.patch(
+  "/:discussion_id",
+  UpdateDiscussionTextValidator(),
+  validate,
+  UpdateDiscussionTextController
+);
+
+router.delete(
+  "/:discussion_id",
+  DeleteDiscussionValidator(),
+  validate,
+  DeleteDiscussionController
 );
 
 export default router;
