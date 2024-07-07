@@ -92,6 +92,11 @@ discussionSchema.methods.toJSON = function () {
   if (!!obj.deletedAt) {
     return {
       ...obj,
+      user: {
+        ...obj.user,
+        name: "",
+      },
+      title: "",
       text: null,
     };
   }
