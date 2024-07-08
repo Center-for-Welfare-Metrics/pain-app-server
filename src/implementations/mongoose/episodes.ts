@@ -104,7 +104,8 @@ export const ListEpisodesImplementation = async (
     .limit(limit)
     .skip(page * limit)
     .populate("tracks_count")
-    .populate("bookmarked");
+    .populate("bookmarked")
+    .populate("discussions_count");
 
   return episodes;
 };
@@ -332,6 +333,11 @@ export const ListEpisodesSuggestionImplementation = async (
       },
     },
     {
+      $addFields: {
+        tracks_count: { $size: "$tracks_count" },
+      },
+    },
+    {
       $lookup: {
         from: "patients",
         localField: "patient_id",
@@ -345,6 +351,19 @@ export const ListEpisodesSuggestionImplementation = async (
       },
     },
     {
+      $lookup: {
+        from: "discussions",
+        localField: "_id",
+        foreignField: "episode_id",
+        as: "discussions_count",
+      },
+    },
+    {
+      $addFields: {
+        discussions_count: { $size: "$discussions_count" },
+      },
+    },
+    {
       $project: {
         name: 1,
         location: 1,
@@ -354,13 +373,9 @@ export const ListEpisodesSuggestionImplementation = async (
         patient_id: 1,
         creator_id: 1,
         tracks_count: 1,
+        discussions_count: 1,
         patient: { type: 1, scientific_name: 1 },
         createdAt: 1,
-      },
-    },
-    {
-      $addFields: {
-        tracks_count: { $size: "$tracks_count" },
       },
     },
     {

@@ -51,6 +51,13 @@ patientSchema.virtual("bookmarked", {
   match: (patient) => ({ user_id: patient.creator_id }),
 });
 
+patientSchema.virtual("discussions_count", {
+  ref: "discussion",
+  localField: "_id",
+  foreignField: "patient_id",
+  count: true,
+});
+
 patientSchema.set("toObject", { virtuals: true });
 patientSchema.set("toJSON", { virtuals: true });
 

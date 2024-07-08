@@ -29,7 +29,8 @@ export const ListBookmarkEpisodesImplementation = async (
           { path: "patient" },
         ],
       },
-    ]);
+    ])
+    .populate("discussions_count");
 
   return episodes;
 };

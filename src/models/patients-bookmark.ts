@@ -31,6 +31,13 @@ PatientsBookmarkSchema.virtual("patient", {
   justOne: true,
 });
 
+PatientsBookmarkSchema.virtual("discussions_count", {
+  ref: "discussion",
+  localField: "patient_id",
+  foreignField: "patient_id",
+  count: true,
+});
+
 PatientsBookmarkSchema.set("toObject", { virtuals: true });
 PatientsBookmarkSchema.set("toJSON", { virtuals: true });
 
