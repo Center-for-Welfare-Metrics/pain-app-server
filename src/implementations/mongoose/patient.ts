@@ -42,7 +42,8 @@ export const ListPatientsImplementation = async (
     .limit(limit)
     .skip(page * limit)
     .populate("episodes_count")
-    .populate("bookmarked");
+    .populate("bookmarked")
+    .populate("discussions_count");
 
   return patients;
 };
@@ -176,14 +177,16 @@ export const GetBookMarkPatientImplementation = async (
   const bookmarkedPatient = await PatientsBookmarkModel.findOne({
     patient_id,
     user_id,
-  }).populate([
-    {
-      path: "patient",
-      populate: {
-        path: "episodes_count",
+  })
+    .populate([
+      {
+        path: "patient",
+        populate: {
+          path: "episodes_count",
+        },
       },
-    },
-  ]);
+    ])
+    .populate("discussions_count");
 
   return bookmarkedPatient;
 };
@@ -248,20 +251,43 @@ export const ListPatientsSuggestionImplementation = async (
       },
     },
     {
+      $addFields: {
+        episodes_count: { $size: "$episodes_count" },
+      },
+    },
+    {
+      $lookup: {
+        from: "discussions",
+        localField: "_id",
+        foreignField: "patient_id",
+        as: "discussions_count",
+        pipeline: [
+          {
+            $match: {
+              parent_id: null,
+              deletedAt: null,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $addFields: {
+        discussions_count: { $size: "$discussions_count" },
+      },
+    },
+    {
       $project: {
         name: 1,
         episodes_count: 1,
+        discussions_count: 1,
         type: 1,
         birth_date: 1,
         createdAt: 1,
         updatedAt: 1,
       },
     },
-    {
-      $addFields: {
-        episodes_count: { $size: "$episodes_count" },
-      },
-    },
+
     {
       $sort: sortObject,
     },
