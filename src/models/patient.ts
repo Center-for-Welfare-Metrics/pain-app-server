@@ -56,6 +56,10 @@ patientSchema.virtual("discussions_count", {
   localField: "_id",
   foreignField: "patient_id",
   count: true,
+  match: {
+    parent_id: null,
+    deletedAt: null,
+  },
 });
 
 patientSchema.set("toObject", { virtuals: true });

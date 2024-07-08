@@ -52,6 +52,10 @@ episodeSchema.virtual("discussions_count", {
   localField: "_id",
   foreignField: "episode_id",
   count: true,
+  match: {
+    parent_id: null,
+    deletedAt: null,
+  },
 });
 
 episodeSchema.set("toObject", { virtuals: true });

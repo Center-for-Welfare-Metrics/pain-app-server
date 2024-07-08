@@ -261,6 +261,14 @@ export const ListPatientsSuggestionImplementation = async (
         localField: "_id",
         foreignField: "patient_id",
         as: "discussions_count",
+        pipeline: [
+          {
+            $match: {
+              parent_id: null,
+              deletedAt: null,
+            },
+          },
+        ],
       },
     },
     {

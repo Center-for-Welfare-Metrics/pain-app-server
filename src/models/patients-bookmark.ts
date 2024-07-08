@@ -36,6 +36,10 @@ PatientsBookmarkSchema.virtual("discussions_count", {
   localField: "patient_id",
   foreignField: "patient_id",
   count: true,
+  match: {
+    parent_id: null,
+    deletedAt: null,
+  },
 });
 
 PatientsBookmarkSchema.set("toObject", { virtuals: true });

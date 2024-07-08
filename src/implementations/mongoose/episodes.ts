@@ -356,6 +356,14 @@ export const ListEpisodesSuggestionImplementation = async (
         localField: "_id",
         foreignField: "episode_id",
         as: "discussions_count",
+        pipeline: [
+          {
+            $match: {
+              parent_id: null,
+              deletedAt: null,
+            },
+          },
+        ],
       },
     },
     {

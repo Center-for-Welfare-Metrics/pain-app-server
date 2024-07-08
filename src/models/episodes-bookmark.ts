@@ -36,6 +36,10 @@ EpisodesBookmarkSchema.virtual("discussions_count", {
   localField: "episode_id",
   foreignField: "episode_id",
   count: true,
+  match: {
+    parent_id: null,
+    deletedAt: null,
+  },
 });
 
 EpisodesBookmarkSchema.set("toObject", { virtuals: true });
