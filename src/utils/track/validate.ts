@@ -51,9 +51,9 @@ export const TrackGuestPermissionValidateAsync = async (track_id) => {
       throw new Error("Episode not found");
     }
 
-    if (!!episode.creator_id?.toString()) {
-      throw new Error("Episode not found");
-    }
+    // if (!!episode.creator_id?.toString()) {
+    //   throw new Error("Episode not found");
+    // }
 
     resolve(true);
   });

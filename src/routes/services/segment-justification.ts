@@ -9,7 +9,10 @@ import {
   UpdateSegmentJustificationValidator,
 } from "@useCases/segmentJustificationUseCases/updateSegmentJustificationUseCase/updateSegmentJustificationController";
 import { DeleteSegmentJustificationController } from "@useCases/segmentJustificationUseCases/deleteSegmentJustificationUseCase/deleteSegmentJustificationController";
-import { ListSegmentJustificationController } from "@useCases/segmentJustificationUseCases/listSegmentJustificationUseCase/listSegmentJustificationController";
+import {
+  ListSegmentJustificationController,
+  ListSegmentJustificationValidator,
+} from "@useCases/segmentJustificationUseCases/listSegmentJustificationUseCase/listSegmentJustificationController";
 
 const router = Router();
 
@@ -38,7 +41,7 @@ router.delete(
 
 router.get(
   "/:segment_id",
-  UpdateSegmentValidator(),
+  ListSegmentJustificationValidator(),
   validate,
   ListSegmentJustificationController
 );
