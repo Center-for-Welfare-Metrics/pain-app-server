@@ -18,7 +18,7 @@
     "@grpc/grpc-js": "^1.8.15",
     "@grpc/proto-loader": "^0.7.7",
     "aws-sdk": "^2.1461.0",
-    "axios": "^1.4.0",
+    "axios": "^1.18.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "convert-units": "^2.3.4",
