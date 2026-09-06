@@ -1,12 +1,26 @@
 # painapp server backend
 
-### steps to run the server
+This public repository is the canonical Welfare Footprint Institute source for the current-generation Pain Track backend.
+
+## Current status
+
+Pain Track is intentionally paused. The retained Cloud Run services remain hibernated/private, and the three former Cloud Build triggers are disabled. A merge to `main` does not automatically deploy this repository.
+
+The `main` branch requires a pull request and one approving review. This protects changes but does not resolve the known dependency, authorization, credential, recovery, or integration work required before any future reactivation.
+
+No public backend, new deployment, database migration, or credential change was created as part of the ownership transfer.
+
+Canonical public system documentation: [`welfare-footprint-institute/pain-track-docs`](https://github.com/welfare-footprint-institute/pain-track-docs)
+
+## Local development
 
 - `npm install`
-- `configure your .env file`
+- configure a local, non-production `.env` file
 - `npm run dev`
 
-### how folders are structured
+Do not use production credentials or reactivate provider integrations merely to run the source locally.
+
+## Folder structure
 
 - `src` folder contains all the source code
 
@@ -21,3 +35,7 @@
 - `src/middlewares` folder contains all the middlewares of the server. A middleware is a function that is executed before the controller of a route. For example, the `src/middlewares/useAuth` is a middleware that verifies if the token is valid and if the user is logged in.
 
 - `src/types` folder contains all the typescript types of the server.
+
+## Change boundary
+
+Any reactivation requires a separately reviewed plan covering dependency/security remediation, an institutional backup and restoration check, secrets and database users, OAuth, reCAPTCHA, transactional email, OpenAI, deployment controls, and end-to-end tests.
